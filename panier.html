@@ -1,1 +1,258 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panier — REDSKINS</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<style>
+  .page-hero {
+    padding: 160px 48px 60px;
+    position: relative; z-index: 2;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .page-hero h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(4rem, 8vw, 7rem);
+    letter-spacing: 4px; line-height: 0.9;
+  }
+  .cart-container {
+    position: relative; z-index: 2;
+    display: grid; grid-template-columns: 1fr 380px;
+    gap: 48px; padding: 60px 48px 120px; align-items: start;
+  }
+  .cart-items { display: flex; flex-direction: column; gap: 2px; }
+  .cart-empty {
+    text-align: center; padding: 80px 40px;
+    font-family: 'Barlow Condensed', sans-serif; color: var(--warm-grey);
+  }
+  .cart-empty h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.5rem; letter-spacing: 3px; margin-bottom: 12px;
+  }
+  .cart-empty a {
+    display: inline-block; margin-top: 24px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.8rem; letter-spacing: 3px; text-transform: uppercase;
+    background: var(--red); color: var(--off-white);
+    padding: 14px 32px; text-decoration: none; transition: background 0.2s;
+  }
+  .cart-empty a:hover { background: var(--dark-red); }
+  .cart-item {
+    display: grid; grid-template-columns: 100px 1fr auto;
+    gap: 24px; align-items: center; padding: 24px;
+    background: #0e0e0e; border: 1px solid rgba(255,255,255,0.04);
+    transition: border-color 0.2s;
+  }
+  .cart-item:hover { border-color: rgba(192,0,26,0.3); }
+  .cart-item-img { width: 100px; height: 120px; object-fit: cover; filter: saturate(0.7); }
+  .cart-item-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1rem; font-weight: 600; letter-spacing: 1px;
+    text-transform: uppercase; margin-bottom: 6px;
+  }
+  .cart-item-price {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem; color: var(--red); letter-spacing: 1px; margin-bottom: 12px;
+  }
+  .qty-controls { display: flex; align-items: center; }
+  .qty-btn {
+    width: 32px; height: 32px; background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1); color: var(--off-white);
+    cursor: pointer; font-size: 1rem; transition: background 0.2s;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .qty-btn:hover { background: var(--red); border-color: var(--red); }
+  .qty-num {
+    width: 40px; height: 32px; text-align: center;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-left: none; border-right: none; color: var(--off-white);
+    font-family: 'Barlow Condensed', sans-serif; font-size: 0.9rem;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .remove-btn {
+    background: transparent; border: none; color: var(--warm-grey);
+    cursor: pointer; font-size: 0.75rem; letter-spacing: 2px;
+    font-family: 'Barlow Condensed', sans-serif; text-transform: uppercase;
+    padding: 8px 0; transition: color 0.2s; margin-top: 8px; display: block;
+  }
+  .remove-btn:hover { color: var(--red); }
+  .cart-summary {
+    background: #0c0c0c; border: 1px solid rgba(255,255,255,0.05);
+    padding: 40px 32px; position: sticky; top: 100px;
+  }
+  .summary-title {
+    font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; letter-spacing: 3px;
+    margin-bottom: 32px; padding-bottom: 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .summary-line {
+    display: flex; justify-content: space-between; margin-bottom: 14px;
+    font-size: 0.875rem; color: var(--warm-grey); font-weight: 300;
+  }
+  .summary-line.total {
+    font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem;
+    color: var(--off-white); letter-spacing: 2px;
+    margin-top: 20px; padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.08); margin-bottom: 28px;
+  }
+  .summary-line.total span:last-child { color: var(--red); }
+  .checkout-btn {
+    width: 100%; padding: 18px; background: var(--red); color: var(--off-white);
+    border: none; font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.2rem; letter-spacing: 3px; cursor: pointer;
+    transition: background 0.2s; margin-bottom: 12px;
+  }
+  .checkout-btn:hover { background: var(--dark-red); }
+  .continue-btn {
+    width: 100%; padding: 14px; background: transparent; color: var(--warm-grey);
+    border: 1px solid rgba(255,255,255,0.1);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase;
+    cursor: pointer; transition: all 0.2s; text-decoration: none;
+    display: block; text-align: center;
+  }
+  .continue-btn:hover { border-color: var(--red); color: var(--off-white); }
+  .summary-note {
+    font-size: 0.75rem; color: rgba(168,160,154,0.5);
+    text-align: center; margin-top: 16px; line-height: 1.6;
+  }
+  @media (max-width: 900px) {
+    .page-hero { padding: 140px 24px 48px; }
+    .cart-container { grid-template-columns: 1fr; padding: 40px 24px 80px; }
+  }
+</style>
+</head>
+<body>
 
+<div id="cursor"><div id="cursor-dot"></div></div>
+<div id="cursor-ring"></div>
+
+<nav>
+  <a href="index.html" class="nav-logo">RED<span>SKINS</span></a>
+  <ul class="nav-links">
+    <li><a href="collections.html">Collections</a></li>
+    <li><a href="index.html#homme">Homme</a></li>
+    <li><a href="index.html#maroquinerie">Maroquinerie</a></li>
+    <li><a href="index.html#about">La Marque</a></li>
+    <li><a href="panier.html" class="nav-cta">🛒 Panier (<span id="nav-cart-count">0</span>)</a></li>
+  </ul>
+</nav>
+
+<section class="page-hero">
+  <p class="section-label">Mon panier</p>
+  <h1>MON<br>PANIER</h1>
+</section>
+
+<div class="cart-container">
+  <div class="cart-items" id="cart-items"></div>
+  <div class="cart-summary">
+    <h2 class="summary-title">RÉCAPITULATIF</h2>
+    <div class="summary-line"><span>Sous-total</span><span id="subtotal">0 €</span></div>
+    <div class="summary-line"><span>Livraison</span><span id="shipping">—</span></div>
+    <div class="summary-line total"><span>TOTAL</span><span id="total">0 €</span></div>
+    <button class="checkout-btn" onclick="checkout()">COMMANDER</button>
+    <a href="collections.html" class="continue-btn">Continuer mes achats</a>
+    <p class="summary-note">Livraison offerte dès 100 € · Retours gratuits sous 30 jours</p>
+  </div>
+</div>
+
+<script>
+const dot = document.getElementById('cursor-dot');
+const ring = document.getElementById('cursor-ring');
+const cursorEl = document.getElementById('cursor');
+let cx = 0, cy = 0, ringX = 0, ringY = 0, cursorVisible = false;
+
+document.addEventListener('mousemove', (e) => {
+  cx = e.clientX; cy = e.clientY;
+  if (!cursorVisible) { cursorEl.style.opacity = '1'; ring.style.opacity = '1'; cursorVisible = true; }
+  dot.style.left = cx + 'px'; dot.style.top = cy + 'px';
+});
+document.addEventListener('mouseleave', () => { cursorEl.style.opacity = '0'; ring.style.opacity = '0'; });
+document.addEventListener('mouseenter', () => { cursorEl.style.opacity = '1'; ring.style.opacity = '1'; });
+
+function animateCursor() {
+  ringX += (cx - ringX) * 0.12; ringY += (cy - ringY) * 0.12;
+  ring.style.left = ringX + 'px'; ring.style.top = ringY + 'px';
+  requestAnimationFrame(animateCursor);
+}
+animateCursor();
+
+let cart = JSON.parse(localStorage.getItem('redskins-cart') || '[]');
+
+const images = {
+  'Blouson Raptor Memory': 'https://images.unsplash.com/photo-1520975954732-35dd22299614?w=200&q=80',
+  'Veste Cuir Urban': 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=200&q=80',
+  'Sac Besace Cuir': 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=200&q=80',
+  'Veste Femme Perfecto': 'https://images.unsplash.com/photo-1509631179647-0177331693ae?w=200&q=80',
+  'Ceinture Cuir Classic': 'https://images.unsplash.com/photo-1611010344444-5f9e4d86a6a1?w=200&q=80',
+  'Bomber Cuir Aviateur': 'https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?w=200&q=80',
+  'Veste Junior Cuir': 'https://images.unsplash.com/photo-1503944583220-79d8926ad5e2?w=200&q=80',
+  'Portefeuille Cuir': 'https://images.unsplash.com/photo-1590874103328-eac38a683ce7?w=200&q=80',
+};
+
+function saveCart() { localStorage.setItem('redskins-cart', JSON.stringify(cart)); }
+
+function updateCartCount() {
+  const total = cart.reduce((sum, i) => sum + i.qty, 0);
+  document.getElementById('nav-cart-count').textContent = total;
+}
+
+function renderCart() {
+  const container = document.getElementById('cart-items');
+  updateCartCount();
+  if (cart.length === 0) {
+    container.innerHTML = `
+      <div class="cart-empty">
+        <h2>PANIER VIDE</h2>
+        <p>Vous n'avez pas encore ajouté d'articles.</p>
+        <a href="collections.html">Découvrir nos collections</a>
+      </div>`;
+    document.getElementById('subtotal').textContent = '0 €';
+    document.getElementById('total').textContent = '0 €';
+    document.getElementById('shipping').textContent = '—';
+    return;
+  }
+  container.innerHTML = cart.map((item, idx) => `
+    <div class="cart-item">
+      <img class="cart-item-img" src="${images[item.name] || ''}" alt="${item.name}">
+      <div>
+        <p class="cart-item-name">${item.name}</p>
+        <p class="cart-item-price">${item.price} €</p>
+        <div class="qty-controls">
+          <button class="qty-btn" onclick="changeQty(${idx}, -1)">−</button>
+          <div class="qty-num">${item.qty}</div>
+          <button class="qty-btn" onclick="changeQty(${idx}, 1)">+</button>
+        </div>
+        <button class="remove-btn" onclick="removeItem(${idx})">✕ Supprimer</button>
+      </div>
+      <div style="text-align:right;">
+        <p style="font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:var(--red);">${item.price * item.qty} €</p>
+      </div>
+    </div>
+  `).join('');
+
+  const subtotal = cart.reduce((sum, i) => sum + i.price * i.qty, 0);
+  const shipping = subtotal >= 100 ? 'Gratuite' : '9,90 €';
+  const total = subtotal >= 100 ? subtotal : subtotal + 9.9;
+  document.getElementById('subtotal').textContent = subtotal + ' €';
+  document.getElementById('shipping').textContent = shipping;
+  document.getElementById('total').textContent = total.toFixed(2) + ' €';
+}
+
+function changeQty(idx, delta) {
+  cart[idx].qty += delta;
+  if (cart[idx].qty <= 0) cart.splice(idx, 1);
+  saveCart(); renderCart();
+}
+
+function removeItem(idx) { cart.splice(idx, 1); saveCart(); renderCart(); }
+
+function checkout() { alert('Fonctionnalité de paiement à intégrer (Stripe, PayPal...)'); }
+
+renderCart();
+</script>
+</body>
+</html>
