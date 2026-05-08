@@ -24,13 +24,14 @@ body {
   position: fixed; top: 0; left: 0; z-index: 9999;
   pointer-events: none;
   mix-blend-mode: difference;
+  opacity: 0;
+  transition: opacity 0.3s;
 }
 #cursor-dot {
   width: 8px; height: 8px;
   background: var(--off-white);
   border-radius: 50%;
   transform: translate(-50%, -50%);
-  transition: transform 0.1s;
 }
 #cursor-ring {
   position: fixed; top: 0; left: 0;
@@ -38,9 +39,10 @@ body {
   border: 1px solid var(--red);
   border-radius: 50%;
   transform: translate(-50%, -50%);
-  transition: transform 0.15s ease, width 0.3s, height 0.3s;
   pointer-events: none;
   z-index: 9998;
+  opacity: 0;
+  transition: width 0.3s, height 0.3s, opacity 0.3s;
 }
 
 /* ── CANVAS ── */
@@ -239,16 +241,13 @@ nav {
   perspective: 1000px;
 }
 .card-3d {
-  position: relative;
-  aspect-ratio: 2/3;
-  cursor: none;
-  transform-style: preserve-3d;
+  position: relative; aspect-ratio: 2/3;
+  cursor: none; transform-style: preserve-3d;
   transition: transform 0.1s ease;
 }
 .card-3d-inner {
   position: relative; width: 100%; height: 100%;
-  background: #111;
-  overflow: hidden;
+  background: #111; overflow: hidden;
   border: 1px solid rgba(255,255,255,0.05);
 }
 .card-3d-inner img {
@@ -265,8 +264,7 @@ nav {
   background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%),
     rgba(255,255,255,0.08) 0%, transparent 60%);
   pointer-events: none; z-index: 2;
-  transition: opacity 0.3s;
-  opacity: 0;
+  transition: opacity 0.3s; opacity: 0;
 }
 .card-3d:hover .card-shine { opacity: 1; }
 .card-overlay {
@@ -316,8 +314,7 @@ nav {
   border-bottom: 1px solid rgba(255,255,255,0.05);
 }
 .featured-visual {
-  position: relative; overflow: hidden;
-  background: #0e0e0e;
+  position: relative; overflow: hidden; background: #0e0e0e;
 }
 .featured-visual img {
   width: 100%; height: 100%; object-fit: cover;
@@ -333,12 +330,10 @@ nav {
   position: absolute; top: 40px; left: 40px;
   font-family: 'Bebas Neue', sans-serif;
   font-size: 0.9rem; letter-spacing: 4px;
-  color: var(--red); border: 1px solid var(--red);
-  padding: 8px 16px;
+  color: var(--red); border: 1px solid var(--red); padding: 8px 16px;
 }
 .featured-info {
-  background: #0c0c0c;
-  padding: 80px 64px;
+  background: #0c0c0c; padding: 80px 64px;
   display: flex; flex-direction: column; justify-content: center;
   position: relative;
 }
@@ -352,21 +347,18 @@ nav {
 }
 .price-tag {
   font-family: 'Barlow Condensed', sans-serif;
-  font-size: 0.8rem; letter-spacing: 3px; color: var(--warm-grey);
-  margin-bottom: 8px;
+  font-size: 0.8rem; letter-spacing: 3px; color: var(--warm-grey); margin-bottom: 8px;
 }
 .price-num {
   font-family: 'Bebas Neue', sans-serif;
-  font-size: 3rem; color: var(--red); letter-spacing: 2px;
-  margin-bottom: 32px;
+  font-size: 3rem; color: var(--red); letter-spacing: 2px; margin-bottom: 32px;
 }
 .featured-desc {
   font-size: 0.95rem; color: var(--warm-grey);
   line-height: 1.9; font-weight: 300; margin-bottom: 40px;
 }
 .specs-grid {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 20px; margin-bottom: 48px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 48px;
 }
 .spec { border-left: 2px solid var(--red); padding-left: 14px; }
 .spec-label {
@@ -387,26 +379,20 @@ nav {
   font-size: 1rem; color: var(--warm-grey);
   line-height: 1.9; font-weight: 300; margin-bottom: 20px;
 }
-.stats-grid {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 2px;
-}
+.stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
 .stat {
-  padding: 40px 36px;
-  background: #0e0e0e;
-  position: relative; overflow: hidden;
-  transition: background 0.3s;
+  padding: 40px 36px; background: #0e0e0e;
+  position: relative; overflow: hidden; transition: background 0.3s;
 }
 .stat::before {
   content: ''; position: absolute; top: 0; left: 0;
-  width: 0; height: 2px; background: var(--red);
-  transition: width 0.4s;
+  width: 0; height: 2px; background: var(--red); transition: width 0.4s;
 }
 .stat:hover { background: #111; }
 .stat:hover::before { width: 100%; }
 .stat-num {
   font-family: 'Bebas Neue', sans-serif;
-  font-size: 4rem; color: var(--red); line-height: 1;
-  margin-bottom: 8px;
+  font-size: 4rem; color: var(--red); line-height: 1; margin-bottom: 8px;
 }
 .stat-label {
   font-family: 'Barlow Condensed', sans-serif;
@@ -425,8 +411,7 @@ nav {
 }
 .newsletter-title {
   font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(2.5rem, 4vw, 3.5rem);
-  letter-spacing: 3px; line-height: 1.05;
+  font-size: clamp(2.5rem, 4vw, 3.5rem); letter-spacing: 3px; line-height: 1.05;
 }
 .newsletter-title em { font-style: normal; color: var(--red); }
 .newsletter-sub {
@@ -449,8 +434,7 @@ nav {
   border: none; padding: 18px 28px;
   font-family: 'Barlow Condensed', sans-serif;
   font-size: 0.75rem; letter-spacing: 3px; text-transform: uppercase;
-  font-weight: 600; cursor: none;
-  transition: background 0.2s;
+  font-weight: 600; cursor: none; transition: background 0.2s;
 }
 .newsletter-form button:hover { background: var(--dark-red); }
 
@@ -482,14 +466,12 @@ footer {
 .footer-col li { margin-bottom: 12px; }
 .footer-col a {
   font-size: 0.875rem; color: var(--warm-grey);
-  text-decoration: none; font-weight: 300;
-  transition: color 0.2s;
+  text-decoration: none; font-weight: 300; transition: color 0.2s;
 }
 .footer-col a:hover { color: var(--red); }
 .footer-bottom {
   display: flex; justify-content: space-between; align-items: center;
-  padding-top: 32px;
-  border-top: 1px solid rgba(255,255,255,0.05);
+  padding-top: 32px; border-top: 1px solid rgba(255,255,255,0.05);
   font-size: 0.78rem; color: rgba(168,160,154,0.4);
 }
 .footer-bottom span { color: var(--red); }
