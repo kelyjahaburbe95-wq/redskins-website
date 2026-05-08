@@ -1,1 +1,320 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Collections — REDSKINS</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<style>
+  .page-hero {
+    padding: 160px 48px 80px;
+    position: relative; z-index: 2;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .page-hero h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(4rem, 8vw, 7rem);
+    letter-spacing: 4px; line-height: 0.9;
+  }
+  .page-hero p {
+    font-size: 1rem; color: var(--warm-grey);
+    font-weight: 300; margin-top: 16px; max-width: 500px; line-height: 1.8;
+  }
+  .filters {
+    padding: 40px 48px;
+    display: flex; gap: 12px; flex-wrap: wrap;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    position: relative; z-index: 2;
+    background: var(--black);
+  }
+  .filter-btn {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase;
+    padding: 10px 20px; border: 1px solid rgba(255,255,255,0.15);
+    background: transparent; color: var(--warm-grey);
+    cursor: pointer; transition: all 0.2s;
+  }
+  .filter-btn:hover, .filter-btn.active {
+    border-color: var(--red); color: var(--off-white); background: var(--red);
+  }
+  .products-grid {
+    padding: 60px 48px 120px;
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 24px; position: relative; z-index: 2;
+  }
+  .product-card { cursor: pointer; position: relative; }
+  .product-img {
+    position: relative; aspect-ratio: 3/4; overflow: hidden;
+    background: #111; margin-bottom: 16px;
+  }
+  .product-img img {
+    width: 100%; height: 100%; object-fit: cover;
+    filter: saturate(0.7) brightness(0.8);
+    transition: transform 0.5s, filter 0.4s;
+  }
+  .product-card:hover .product-img img {
+    transform: scale(1.05); filter: saturate(0.9) brightness(0.7);
+  }
+  .product-badge {
+    position: absolute; top: 12px; left: 12px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase;
+    background: var(--red); color: var(--off-white); padding: 4px 10px;
+  }
+  .product-actions {
+    position: absolute; bottom: 0; left: 0; right: 0; padding: 16px;
+    background: linear-gradient(to top, rgba(8,8,8,0.95), transparent);
+    display: flex; justify-content: center;
+    opacity: 0; transform: translateY(8px);
+    transition: opacity 0.3s, transform 0.3s;
+  }
+  .product-card:hover .product-actions { opacity: 1; transform: translateY(0); }
+  .add-cart-btn {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase;
+    background: var(--red); color: var(--off-white);
+    border: none; padding: 12px 24px; cursor: pointer;
+    font-weight: 600; width: 100%; transition: background 0.2s;
+  }
+  .add-cart-btn:hover { background: var(--dark-red); }
+  .product-info { padding: 0 4px; }
+  .product-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1rem; font-weight: 600; letter-spacing: 1px;
+    text-transform: uppercase; margin-bottom: 4px;
+  }
+  .product-cat {
+    font-size: 0.75rem; color: var(--warm-grey);
+    font-weight: 300; margin-bottom: 8px;
+  }
+  .product-price {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.3rem; color: var(--red); letter-spacing: 1px;
+  }
+  .toast {
+    position: fixed; bottom: 40px; right: 40px; z-index: 9999;
+    background: #111; border: 1px solid var(--red);
+    padding: 16px 24px; display: flex; align-items: center; gap: 12px;
+    transform: translateY(100px); opacity: 0;
+    transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), opacity 0.4s;
+  }
+  .toast.show { transform: translateY(0); opacity: 1; }
+  .toast-icon { color: var(--red); font-size: 1.2rem; }
+  .toast-text { font-family: 'Barlow Condensed', sans-serif; font-size: 0.9rem; letter-spacing: 1px; }
+  .toast-link {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--red); text-decoration: none;
+    border-bottom: 1px solid var(--red); padding-bottom: 1px; margin-left: 8px;
+  }
+  @media (max-width: 900px) {
+    .page-hero { padding: 140px 24px 60px; }
+    .filters { padding: 24px; }
+    .products-grid { grid-template-columns: repeat(2, 1fr); padding: 40px 24px 80px; gap: 16px; }
+  }
+  @media (max-width: 500px) {
+    .products-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
 
+<div id="cursor"><div id="cursor-dot"></div></div>
+<div id="cursor-ring"></div>
+
+<nav>
+  <a href="index.html" class="nav-logo">RED<span>SKINS</span></a>
+  <ul class="nav-links">
+    <li><a href="collections.html" style="color:var(--off-white);">Collections</a></li>
+    <li><a href="index.html#homme">Homme</a></li>
+    <li><a href="index.html#maroquinerie">Maroquinerie</a></li>
+    <li><a href="index.html#about">La Marque</a></li>
+    <li><a href="panier.html" class="nav-cta">🛒 Panier (<span id="nav-cart-count">0</span>)</a></li>
+  </ul>
+</nav>
+
+<section class="page-hero">
+  <p class="section-label">Toutes nos pièces</p>
+  <h1>NOS<br>COLLECTIONS</h1>
+  <p>Découvrez l'intégralité de la collection Redskins — blousons, maroquinerie, prêt-à-porter et accessoires.</p>
+</section>
+
+<div class="filters">
+  <button class="filter-btn active" onclick="filterProducts('tous')">Tous</button>
+  <button class="filter-btn" onclick="filterProducts('homme')">Homme</button>
+  <button class="filter-btn" onclick="filterProducts('femme')">Femme</button>
+  <button class="filter-btn" onclick="filterProducts('maroquinerie')">Maroquinerie</button>
+  <button class="filter-btn" onclick="filterProducts('junior')">Junior</button>
+</div>
+
+<div class="products-grid" id="products-grid">
+  <div class="product-card" data-cat="homme">
+    <div class="product-img">
+      <img src="https://images.unsplash.com/photo-1520975954732-35dd22299614?w=600&q=80" alt="Blouson Raptor">
+      <span class="product-badge">Nouveau</span>
+      <div class="product-actions">
+        <button class="add-cart-btn" onclick="addToCart('Blouson Raptor Memory', 349)">Ajouter au panier</button>
+      </div>
+    </div>
+    <div class="product-info">
+      <p class="product-name">Blouson Raptor Memory</p>
+      <p class="product-cat">Homme — Cuir agneau</p>
+      <p class="product-price">349 €</p>
+    </div>
+  </div>
+  <div class="product-card" data-cat="homme">
+    <div class="product-img">
+      <img src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=600&q=80" alt="Veste Cuir">
+      <div class="product-actions">
+        <button class="add-cart-btn" onclick="addToCart('Veste Cuir Urban', 289)">Ajouter au panier</button>
+      </div>
+    </div>
+    <div class="product-info">
+      <p class="product-name">Veste Cuir Urban</p>
+      <p class="product-cat">Homme — Cuir vachette</p>
+      <p class="product-price">289 €</p>
+    </div>
+  </div>
+  <div class="product-card" data-cat="maroquinerie">
+    <div class="product-img">
+      <img src="https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=600&q=80" alt="Sac">
+      <span class="product-badge">Bestseller</span>
+      <div class="product-actions">
+        <button class="add-cart-btn" onclick="addToCart('Sac Besace Cuir', 129)">Ajouter au panier</button>
+      </div>
+    </div>
+    <div class="product-info">
+      <p class="product-name">Sac Besace Cuir</p>
+      <p class="product-cat">Maroquinerie</p>
+      <p class="product-price">129 €</p>
+    </div>
+  </div>
+  <div class="product-card" data-cat="femme">
+    <div class="product-img">
+      <img src="https://images.unsplash.com/photo-1509631179647-0177331693ae?w=600&q=80" alt="Veste Femme">
+      <div class="product-actions">
+        <button class="add-cart-btn" onclick="addToCart('Veste Femme Perfecto', 319)">Ajouter au panier</button>
+      </div>
+    </div>
+    <div class="product-info">
+      <p class="product-name">Veste Femme Perfecto</p>
+      <p class="product-cat">Femme — Cuir agneau</p>
+      <p class="product-price">319 €</p>
+    </div>
+  </div>
+  <div class="product-card" data-cat="maroquinerie">
+    <div class="product-img">
+      <img src="https://images.unsplash.com/photo-1611010344444-5f9e4d86a6a1?w=600&q=80" alt="Ceinture">
+      <div class="product-actions">
+        <button class="add-cart-btn" onclick="addToCart('Ceinture Cuir Classic', 59)">Ajouter au panier</button>
+      </div>
+    </div>
+    <div class="product-info">
+      <p class="product-name">Ceinture Cuir Classic</p>
+      <p class="product-cat">Maroquinerie</p>
+      <p class="product-price">59 €</p>
+    </div>
+  </div>
+  <div class="product-card" data-cat="homme">
+    <div class="product-img">
+      <img src="https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?w=600&q=80" alt="Bomber">
+      <span class="product-badge">Nouveau</span>
+      <div class="product-actions">
+        <button class="add-cart-btn" onclick="addToCart('Bomber Cuir Aviateur', 379)">Ajouter au panier</button>
+      </div>
+    </div>
+    <div class="product-info">
+      <p class="product-name">Bomber Cuir Aviateur</p>
+      <p class="product-cat">Homme — Cuir nappa</p>
+      <p class="product-price">379 €</p>
+    </div>
+  </div>
+  <div class="product-card" data-cat="junior">
+    <div class="product-img">
+      <img src="https://images.unsplash.com/photo-1503944583220-79d8926ad5e2?w=600&q=80" alt="Junior">
+      <div class="product-actions">
+        <button class="add-cart-btn" onclick="addToCart('Veste Junior Cuir', 189)">Ajouter au panier</button>
+      </div>
+    </div>
+    <div class="product-info">
+      <p class="product-name">Veste Junior Cuir</p>
+      <p class="product-cat">Junior — 6 à 16 ans</p>
+      <p class="product-price">189 €</p>
+    </div>
+  </div>
+  <div class="product-card" data-cat="maroquinerie">
+    <div class="product-img">
+      <img src="https://images.unsplash.com/photo-1590874103328-eac38a683ce7?w=600&q=80" alt="Portefeuille">
+      <div class="product-actions">
+        <button class="add-cart-btn" onclick="addToCart('Portefeuille Cuir', 79)">Ajouter au panier</button>
+      </div>
+    </div>
+    <div class="product-info">
+      <p class="product-name">Portefeuille Cuir</p>
+      <p class="product-cat">Maroquinerie</p>
+      <p class="product-price">79 €</p>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast">
+  <span class="toast-icon">✔</span>
+  <span class="toast-text" id="toast-text">Produit ajouté au panier</span>
+  <a href="panier.html" class="toast-link">Voir le panier</a>
+</div>
+
+<script>
+const dot = document.getElementById('cursor-dot');
+const ring = document.getElementById('cursor-ring');
+const cursorEl = document.getElementById('cursor');
+let cx = 0, cy = 0, ringX = 0, ringY = 0, cursorVisible = false;
+
+document.addEventListener('mousemove', (e) => {
+  cx = e.clientX; cy = e.clientY;
+  if (!cursorVisible) { cursorEl.style.opacity = '1'; ring.style.opacity = '1'; cursorVisible = true; }
+  dot.style.left = cx + 'px'; dot.style.top = cy + 'px';
+});
+document.addEventListener('mouseleave', () => { cursorEl.style.opacity = '0'; ring.style.opacity = '0'; });
+document.addEventListener('mouseenter', () => { cursorEl.style.opacity = '1'; ring.style.opacity = '1'; });
+
+function animateCursor() {
+  ringX += (cx - ringX) * 0.12; ringY += (cy - ringY) * 0.12;
+  ring.style.left = ringX + 'px'; ring.style.top = ringY + 'px';
+  requestAnimationFrame(animateCursor);
+}
+animateCursor();
+
+let cart = JSON.parse(localStorage.getItem('redskins-cart') || '[]');
+
+function updateCartCount() {
+  const total = cart.reduce((sum, item) => sum + item.qty, 0);
+  document.getElementById('nav-cart-count').textContent = total;
+}
+updateCartCount();
+
+function addToCart(name, price) {
+  const existing = cart.find(i => i.name === name);
+  if (existing) { existing.qty++; } else { cart.push({ name, price, qty: 1 }); }
+  localStorage.setItem('redskins-cart', JSON.stringify(cart));
+  updateCartCount();
+  showToast(name);
+}
+
+function showToast(name) {
+  const toast = document.getElementById('toast');
+  document.getElementById('toast-text').textContent = `"${name}" ajouté !`;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 3000);
+}
+
+function filterProducts(cat) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  document.querySelectorAll('.product-card').forEach(card => {
+    card.style.display = (cat === 'tous' || card.dataset.cat === cat) ? 'block' : 'none';
+  });
+}
+</script>
+</body>
+</html>
