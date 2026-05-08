@@ -25,7 +25,7 @@
     <li><a href="#homme">Homme</a></li>
     <li><a href="#maroquinerie">Maroquinerie</a></li>
     <li><a href="#about">La Marque</a></li>
-    <li><a href="#contact" class="nav-cta">Boutique</a></li>
+    <li><a href="panier.html" class="nav-cta">🛒 Panier</a></li>
   </ul>
 </nav>
 
@@ -68,7 +68,7 @@
       <p class="section-label">Explorer</p>
       <h2 class="section-title">NOS UNIVERS</h2>
     </div>
-    <a href="#" class="btn-outline" style="font-size:0.75rem; padding:12px 28px;">Tout voir</a>
+    <a href="collections.html" class="btn-outline" style="font-size:0.75rem; padding:12px 28px;">Tout voir</a>
   </div>
   <div class="cards-grid">
     <div class="card-3d" id="homme">
@@ -79,7 +79,7 @@
           <p class="card-tag">Collection Homme</p>
           <h3 class="card-name">HOMME</h3>
           <p class="card-desc">Blousons, vestes, t-shirts et accessoires. L'élégance urbaine sans compromis.</p>
-          <a href="#" class="card-link">Découvrir</a>
+          <a href="collections.html" class="card-link">Découvrir</a>
         </div>
       </div>
     </div>
@@ -91,7 +91,7 @@
           <p class="card-tag">Accessoires</p>
           <h3 class="card-name">MAROQUINERIE</h3>
           <p class="card-desc">Sacs, ceintures, portefeuilles en cuir pleine fleur. La finition Redskins.</p>
-          <a href="#" class="card-link">Découvrir</a>
+          <a href="collections.html" class="card-link">Découvrir</a>
         </div>
       </div>
     </div>
@@ -103,7 +103,7 @@
           <p class="card-tag">Collection Femme</p>
           <h3 class="card-name">FEMME</h3>
           <p class="card-desc">Silhouettes affirmées, matières premium. La femme Redskins s'assume.</p>
-          <a href="#" class="card-link">Découvrir</a>
+          <a href="collections.html" class="card-link">Découvrir</a>
         </div>
       </div>
     </div>
@@ -129,7 +129,7 @@
       <div class="spec"><p class="spec-label">Couleurs</p><p class="spec-value">Noir, Cognac, Kaki</p></div>
       <div class="spec"><p class="spec-label">Tailles</p><p class="spec-value">XS → 3XL</p></div>
     </div>
-    <a href="#" class="btn-primary" style="display:inline-block; text-align:center;"><span>Ajouter au panier</span></a>
+    <a href="panier.html" class="btn-primary" style="display:inline-block; text-align:center;" onclick="addToCartFromIndex('Blouson Raptor Memory', 349)"><span>Ajouter au panier</span></a>
   </div>
 </section>
 
@@ -174,11 +174,11 @@
     <div class="footer-col">
       <h4>Collections</h4>
       <ul>
-        <li><a href="#">Homme</a></li>
-        <li><a href="#">Femme</a></li>
-        <li><a href="#">Maroquinerie</a></li>
-        <li><a href="#">Junior</a></li>
-        <li><a href="#">Patrouille de France</a></li>
+        <li><a href="collections.html">Homme</a></li>
+        <li><a href="collections.html">Femme</a></li>
+        <li><a href="collections.html">Maroquinerie</a></li>
+        <li><a href="collections.html">Junior</a></li>
+        <li><a href="collections.html">Patrouille de France</a></li>
       </ul>
     </div>
     <div class="footer-col">
@@ -209,5 +209,13 @@
 </footer>
 
 <script src="js/main.js"></script>
+<script>
+function addToCartFromIndex(name, price) {
+  let cart = JSON.parse(localStorage.getItem('redskins-cart') || '[]');
+  const existing = cart.find(i => i.name === name);
+  if (existing) { existing.qty++; } else { cart.push({ name, price, qty: 1 }); }
+  localStorage.setItem('redskins-cart', JSON.stringify(cart));
+}
+</script>
 </body>
 </html>
