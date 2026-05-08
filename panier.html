@@ -6,20 +6,19 @@
 <title>Panier — REDSKINS</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
+<script src="https://js.stripe.com/v3/"></script>
 <style>
   .page-hero {
-    padding: 160px 48px 60px;
-    position: relative; z-index: 2;
+    padding: 160px 48px 60px; position: relative; z-index: 2;
     border-bottom: 1px solid rgba(255,255,255,0.05);
   }
   .page-hero h1 {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(4rem, 8vw, 7rem);
-    letter-spacing: 4px; line-height: 0.9;
+    font-size: clamp(4rem, 8vw, 7rem); letter-spacing: 4px; line-height: 0.9;
   }
   .cart-container {
     position: relative; z-index: 2;
-    display: grid; grid-template-columns: 1fr 380px;
+    display: grid; grid-template-columns: 1fr 400px;
     gap: 48px; padding: 60px 48px 120px; align-items: start;
   }
   .cart-items { display: flex; flex-direction: column; gap: 2px; }
@@ -27,35 +26,26 @@
     text-align: center; padding: 80px 40px;
     font-family: 'Barlow Condensed', sans-serif; color: var(--warm-grey);
   }
-  .cart-empty h2 {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 2.5rem; letter-spacing: 3px; margin-bottom: 12px;
-  }
+  .cart-empty h2 { font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem; letter-spacing: 3px; margin-bottom: 12px; }
   .cart-empty a {
     display: inline-block; margin-top: 24px;
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 0.8rem; letter-spacing: 3px; text-transform: uppercase;
-    background: var(--red); color: var(--off-white);
-    padding: 14px 32px; text-decoration: none; transition: background 0.2s;
+    font-family: 'Barlow Condensed', sans-serif; font-size: 0.8rem; letter-spacing: 3px; text-transform: uppercase;
+    background: var(--red); color: var(--off-white); padding: 14px 32px; text-decoration: none; transition: background 0.2s;
   }
   .cart-empty a:hover { background: var(--dark-red); }
   .cart-item {
     display: grid; grid-template-columns: 100px 1fr auto;
     gap: 24px; align-items: center; padding: 24px;
     background: #0e0e0e; border: 1px solid rgba(255,255,255,0.04);
-    transition: border-color 0.2s;
+    transition: border-color 0.2s; margin-bottom: 2px;
   }
   .cart-item:hover { border-color: rgba(192,0,26,0.3); }
   .cart-item-img { width: 100px; height: 120px; object-fit: cover; filter: saturate(0.7); }
   .cart-item-name {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 1rem; font-weight: 600; letter-spacing: 1px;
-    text-transform: uppercase; margin-bottom: 6px;
+    font-family: 'Barlow Condensed', sans-serif; font-size: 1rem; font-weight: 600;
+    letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px;
   }
-  .cart-item-price {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.4rem; color: var(--red); letter-spacing: 1px; margin-bottom: 12px;
-  }
+  .cart-item-price { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; color: var(--red); letter-spacing: 1px; margin-bottom: 12px; }
   .qty-controls { display: flex; align-items: center; }
   .qty-btn {
     width: 32px; height: 32px; background: rgba(255,255,255,0.05);
@@ -66,27 +56,26 @@
   .qty-btn:hover { background: var(--red); border-color: var(--red); }
   .qty-num {
     width: 40px; height: 32px; text-align: center;
-    background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1);
     border-left: none; border-right: none; color: var(--off-white);
     font-family: 'Barlow Condensed', sans-serif; font-size: 0.9rem;
     display: flex; align-items: center; justify-content: center;
   }
   .remove-btn {
-    background: transparent; border: none; color: var(--warm-grey);
-    cursor: pointer; font-size: 0.75rem; letter-spacing: 2px;
-    font-family: 'Barlow Condensed', sans-serif; text-transform: uppercase;
-    padding: 8px 0; transition: color 0.2s; margin-top: 8px; display: block;
+    background: transparent; border: none; color: var(--warm-grey); cursor: pointer;
+    font-size: 0.75rem; letter-spacing: 2px; font-family: 'Barlow Condensed', sans-serif;
+    text-transform: uppercase; padding: 8px 0; transition: color 0.2s; margin-top: 8px; display: block;
   }
   .remove-btn:hover { color: var(--red); }
+
+  /* RÉCAP */
   .cart-summary {
     background: #0c0c0c; border: 1px solid rgba(255,255,255,0.05);
     padding: 40px 32px; position: sticky; top: 100px;
   }
   .summary-title {
     font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; letter-spacing: 3px;
-    margin-bottom: 32px; padding-bottom: 16px;
-    border-bottom: 1px solid rgba(255,255,255,0.08);
+    margin-bottom: 32px; padding-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.08);
   }
   .summary-line {
     display: flex; justify-content: space-between; margin-bottom: 14px;
@@ -99,26 +88,79 @@
     border-top: 1px solid rgba(255,255,255,0.08); margin-bottom: 28px;
   }
   .summary-line.total span:last-child { color: var(--red); }
-  .checkout-btn {
-    width: 100%; padding: 18px; background: var(--red); color: var(--off-white);
-    border: none; font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.2rem; letter-spacing: 3px; cursor: pointer;
-    transition: background 0.2s; margin-bottom: 12px;
+
+  /* PAIEMENT */
+  .payment-section { margin-bottom: 20px; }
+  .test-badge {
+    display: inline-block; background: #f59e0b; color: #000;
+    font-family: 'Barlow Condensed', sans-serif; font-size: 0.65rem;
+    letter-spacing: 2px; text-transform: uppercase; padding: 3px 8px; margin-bottom: 16px;
   }
-  .checkout-btn:hover { background: var(--dark-red); }
+  .payment-tabs { display: flex; gap: 2px; margin-bottom: 20px; }
+  .payment-tab {
+    flex: 1; padding: 10px; background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08); color: var(--warm-grey);
+    font-family: 'Barlow Condensed', sans-serif; font-size: 0.75rem;
+    letter-spacing: 2px; text-transform: uppercase; cursor: pointer;
+    transition: all 0.2s; text-align: center;
+  }
+  .payment-tab.active { background: var(--red); border-color: var(--red); color: var(--off-white); }
+  .stripe-panel { display: block; }
+  .paypal-panel { display: none; }
+  .payment-label {
+    font-family: 'Barlow Condensed', sans-serif; font-size: 0.7rem;
+    letter-spacing: 3px; text-transform: uppercase; color: var(--warm-grey);
+    margin-bottom: 12px; display: block;
+  }
+  .stripe-field {
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1);
+    padding: 14px 16px; margin-bottom: 12px; transition: border-color 0.3s;
+  }
+  .stripe-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .test-card-info {
+    background: rgba(245,158,11,0.08); border: 1px solid rgba(245,158,11,0.2);
+    padding: 12px 16px; margin-bottom: 16px;
+    font-size: 0.78rem; color: rgba(245,158,11,0.8);
+    font-family: 'Barlow Condensed', sans-serif; line-height: 1.7;
+  }
+  .test-card-info strong { color: #f59e0b; display: block; margin-bottom: 4px; letter-spacing: 1px; }
+  #payment-error {
+    color: #e53e3e; font-size: 0.8rem; margin-bottom: 12px;
+    font-family: 'Barlow Condensed', sans-serif; letter-spacing: 1px; display: none;
+  }
+  .pay-btn {
+    width: 100%; padding: 18px; border: none; font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.2rem; letter-spacing: 3px; cursor: pointer; transition: background 0.2s; margin-bottom: 12px;
+  }
+  .pay-stripe-btn { background: var(--red); color: var(--off-white); }
+  .pay-stripe-btn:hover { background: var(--dark-red); }
+  .pay-stripe-btn:disabled { background: #444; cursor: not-allowed; }
+  .spinner {
+    display: none; width: 20px; height: 20px;
+    border: 2px solid rgba(255,255,255,0.3); border-top-color: var(--off-white);
+    border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 12px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .payment-success { display: none; text-align: center; padding: 32px 16px; }
+  .payment-success h3 {
+    font-family: 'Bebas Neue', sans-serif; font-size: 2rem;
+    letter-spacing: 3px; color: #22c55e; margin-bottom: 12px;
+  }
+  .payment-success p { font-size: 0.875rem; color: var(--warm-grey); line-height: 1.7; }
   .continue-btn {
     width: 100%; padding: 14px; background: transparent; color: var(--warm-grey);
-    border: 1px solid rgba(255,255,255,0.1);
-    font-family: 'Barlow Condensed', sans-serif;
+    border: 1px solid rgba(255,255,255,0.1); font-family: 'Barlow Condensed', sans-serif;
     font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase;
-    cursor: pointer; transition: all 0.2s; text-decoration: none;
-    display: block; text-align: center;
+    cursor: pointer; transition: all 0.2s; text-decoration: none; display: block; text-align: center;
   }
   .continue-btn:hover { border-color: var(--red); color: var(--off-white); }
-  .summary-note {
-    font-size: 0.75rem; color: rgba(168,160,154,0.5);
-    text-align: center; margin-top: 16px; line-height: 1.6;
+  .security-badges { display: flex; gap: 12px; justify-content: center; margin-top: 16px; flex-wrap: wrap; }
+  .security-badge {
+    font-family: 'Barlow Condensed', sans-serif; font-size: 0.65rem;
+    letter-spacing: 1px; text-transform: uppercase; color: rgba(168,160,154,0.4);
   }
+  .summary-note { font-size: 0.75rem; color: rgba(168,160,154,0.4); text-align: center; margin-top: 12px; line-height: 1.6; }
+
   @media (max-width: 900px) {
     .page-hero { padding: 140px 24px 48px; }
     .cart-container { grid-template-columns: 1fr; padding: 40px 24px 80px; }
@@ -148,23 +190,79 @@
 
 <div class="cart-container">
   <div class="cart-items" id="cart-items"></div>
+
   <div class="cart-summary">
     <h2 class="summary-title">RÉCAPITULATIF</h2>
     <div class="summary-line"><span>Sous-total</span><span id="subtotal">0 €</span></div>
     <div class="summary-line"><span>Livraison</span><span id="shipping">—</span></div>
     <div class="summary-line total"><span>TOTAL</span><span id="total">0 €</span></div>
-    <button class="checkout-btn" onclick="checkout()">COMMANDER</button>
+
+    <div class="payment-section" id="payment-section" style="display:none;">
+      <span class="test-badge" id="test-badge">⚠ Mode Test</span>
+
+      <div class="payment-tabs" id="payment-tabs">
+        <button class="payment-tab active" onclick="switchTab('stripe', this)">💳 Carte</button>
+        <button class="payment-tab" onclick="switchTab('paypal', this)">🅿 PayPal</button>
+      </div>
+
+      <!-- STRIPE -->
+      <div class="stripe-panel" id="stripe-panel">
+        <div class="test-card-info">
+          <strong>🧪 Carte de test Stripe</strong>
+          Numéro : 4242 4242 4242 4242<br>
+          Date : 12/34 — CVC : 123
+        </div>
+        <span class="payment-label">Numéro de carte</span>
+        <div id="card-number-element" class="stripe-field"></div>
+        <div class="stripe-row">
+          <div>
+            <span class="payment-label">Expiration</span>
+            <div id="card-expiry-element" class="stripe-field"></div>
+          </div>
+          <div>
+            <span class="payment-label">CVC</span>
+            <div id="card-cvc-element" class="stripe-field"></div>
+          </div>
+        </div>
+        <div id="payment-error"></div>
+        <div class="spinner" id="spinner"></div>
+        <button class="pay-btn pay-stripe-btn" id="pay-btn" onclick="payWithStripe()">PAYER PAR CARTE</button>
+      </div>
+
+      <!-- PAYPAL -->
+      <div class="paypal-panel" id="paypal-panel">
+        <div class="test-card-info">
+          <strong>🅿 Simulation PayPal</strong>
+          Cliquez sur le bouton pour simuler<br>un paiement PayPal réussi.
+        </div>
+        <button class="pay-btn" style="background:#FFC439;color:#000;" onclick="showSuccess()">
+          🅿 PAYER AVEC PAYPAL
+        </button>
+      </div>
+
+      <!-- SUCCÈS -->
+      <div class="payment-success" id="payment-success">
+        <h3>✓ PAIEMENT RÉUSSI !</h3>
+        <p>Merci pour votre commande Redskins.<br>Vous recevrez une confirmation par email.</p>
+      </div>
+    </div>
+
     <a href="collections.html" class="continue-btn">Continuer mes achats</a>
+    <div class="security-badges">
+      <span class="security-badge">🔒 SSL</span>
+      <span class="security-badge">🛡 Sécurisé Stripe</span>
+      <span class="security-badge">↩ 30 jours</span>
+    </div>
     <p class="summary-note">Livraison offerte dès 100 € · Retours gratuits sous 30 jours</p>
   </div>
 </div>
 
 <script>
+// ── CURSOR ──
 const dot = document.getElementById('cursor-dot');
 const ring = document.getElementById('cursor-ring');
 const cursorEl = document.getElementById('cursor');
 let cx = 0, cy = 0, ringX = 0, ringY = 0, cursorVisible = false;
-
 document.addEventListener('mousemove', (e) => {
   cx = e.clientX; cy = e.clientY;
   if (!cursorVisible) { cursorEl.style.opacity = '1'; ring.style.opacity = '1'; cursorVisible = true; }
@@ -172,7 +270,6 @@ document.addEventListener('mousemove', (e) => {
 });
 document.addEventListener('mouseleave', () => { cursorEl.style.opacity = '0'; ring.style.opacity = '0'; });
 document.addEventListener('mouseenter', () => { cursorEl.style.opacity = '1'; ring.style.opacity = '1'; });
-
 function animateCursor() {
   ringX += (cx - ringX) * 0.12; ringY += (cy - ringY) * 0.12;
   ring.style.left = ringX + 'px'; ring.style.top = ringY + 'px';
@@ -180,8 +277,8 @@ function animateCursor() {
 }
 animateCursor();
 
+// ── PANIER ──
 let cart = JSON.parse(localStorage.getItem('redskins-cart') || '[]');
-
 const images = {
   'Blouson Raptor Memory': 'https://images.unsplash.com/photo-1520975954732-35dd22299614?w=200&q=80',
   'Veste Cuir Urban': 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=200&q=80',
@@ -194,27 +291,22 @@ const images = {
 };
 
 function saveCart() { localStorage.setItem('redskins-cart', JSON.stringify(cart)); }
-
 function updateCartCount() {
-  const total = cart.reduce((sum, i) => sum + i.qty, 0);
-  document.getElementById('nav-cart-count').textContent = total;
+  document.getElementById('nav-cart-count').textContent = cart.reduce((s, i) => s + i.qty, 0);
 }
 
 function renderCart() {
   const container = document.getElementById('cart-items');
   updateCartCount();
   if (cart.length === 0) {
-    container.innerHTML = `
-      <div class="cart-empty">
-        <h2>PANIER VIDE</h2>
-        <p>Vous n'avez pas encore ajouté d'articles.</p>
-        <a href="collections.html">Découvrir nos collections</a>
-      </div>`;
+    container.innerHTML = `<div class="cart-empty"><h2>PANIER VIDE</h2><p>Vous n'avez pas encore ajouté d'articles.</p><a href="collections.html">Découvrir nos collections</a></div>`;
     document.getElementById('subtotal').textContent = '0 €';
     document.getElementById('total').textContent = '0 €';
     document.getElementById('shipping').textContent = '—';
+    document.getElementById('payment-section').style.display = 'none';
     return;
   }
+  document.getElementById('payment-section').style.display = 'block';
   container.innerHTML = cart.map((item, idx) => `
     <div class="cart-item">
       <img class="cart-item-img" src="${images[item.name] || ''}" alt="${item.name}">
@@ -231,15 +323,15 @@ function renderCart() {
       <div style="text-align:right;">
         <p style="font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:var(--red);">${item.price * item.qty} €</p>
       </div>
-    </div>
-  `).join('');
+    </div>`).join('');
 
-  const subtotal = cart.reduce((sum, i) => sum + i.price * i.qty, 0);
+  const subtotal = cart.reduce((s, i) => s + i.price * i.qty, 0);
   const shipping = subtotal >= 100 ? 'Gratuite' : '9,90 €';
   const total = subtotal >= 100 ? subtotal : subtotal + 9.9;
   document.getElementById('subtotal').textContent = subtotal + ' €';
   document.getElementById('shipping').textContent = shipping;
   document.getElementById('total').textContent = total.toFixed(2) + ' €';
+  document.getElementById('pay-btn').textContent = `PAYER ${total.toFixed(2)} €`;
 }
 
 function changeQty(idx, delta) {
@@ -247,12 +339,7 @@ function changeQty(idx, delta) {
   if (cart[idx].qty <= 0) cart.splice(idx, 1);
   saveCart(); renderCart();
 }
-
 function removeItem(idx) { cart.splice(idx, 1); saveCart(); renderCart(); }
 
-function checkout() { alert('Fonctionnalité de paiement à intégrer (Stripe, PayPal...)'); }
-
-renderCart();
-</script>
-</body>
-</html>
+// ── STRIPE ──
+const stripe = Stripe('pk_test_51TUp5MDOhDU6rSpa1eVLb
