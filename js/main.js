@@ -118,18 +118,17 @@ window.addEventListener('resize', () => {
   renderer.setSize(window.innerWidth, window.innerHeight);
 });
 
-// ── CUSTOM CURSOR ──  ← ICI C'EST CE QUI MANQUAIT
-const dot = document.getElementById('cursor-dot');
-const ring = document.getElementById('cursor-ring');
-const cursorEl = document.getElementById('cursor');
-let cx = 0, cy = 0, ringX = 0, ringY = 0;
-let cursorVisible = false;
+//── CURSOR ──
+* {
+  cursor: default !important;
+}
+
 
 document.addEventListener('mousemove', (e) => {
   cx = e.clientX; cy = e.clientY;
 
   if (!cursorVisible) {
-    cursorEl.style.opacity = '1';
+    cursorEl.style.opacity = '0';
     ring.style.opacity = '1';
     cursorVisible = true;
   }
