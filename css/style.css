@@ -16,7 +16,7 @@ body {
   background: var(--black);
   color: var(--off-white);
   overflow-x: hidden;
-  cursor: none;
+  cursor: default;
 }
 
 /* ── CUSTOM CURSOR ── */
