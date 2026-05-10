@@ -118,54 +118,6 @@ window.addEventListener('resize', () => {
   renderer.setSize(window.innerWidth, window.innerHeight);
 });
 
-//── CURSOR ──
-* {
-  cursor: default !important;
-}
-
-
-document.addEventListener('mousemove', (e) => {
-  cx = e.clientX; cy = e.clientY;
-
-  if (!cursorVisible) {
-    cursorEl.style.opacity = '0';
-    ring.style.opacity = '1';
-    cursorVisible = true;
-  }
-
-  dot.style.left = cx + 'px';
-  dot.style.top = cy + 'px';
-});
-
-document.addEventListener('mouseleave', () => {
-  cursorEl.style.opacity = '0';
-  ring.style.opacity = '0';
-});
-document.addEventListener('mouseenter', () => {
-  cursorEl.style.opacity = '1';
-  ring.style.opacity = '1';
-});
-
-function animateCursor() {
-  ringX += (cx - ringX) * 0.12;
-  ringY += (cy - ringY) * 0.12;
-  ring.style.left = ringX + 'px';
-  ring.style.top = ringY + 'px';
-  requestAnimationFrame(animateCursor);
-}
-animateCursor();
-
-document.querySelectorAll('a, button, .card-3d, .stat').forEach(el => {
-  el.addEventListener('mouseenter', () => {
-    ring.style.width = '60px';
-    ring.style.height = '60px';
-  });
-  el.addEventListener('mouseleave', () => {
-    ring.style.width = '40px';
-    ring.style.height = '40px';
-  });
-});
-
 // ── TILT 3D SUR LES CARTES ──
 document.querySelectorAll('.card-3d').forEach(card => {
   const shine = card.querySelector('.card-shine');
