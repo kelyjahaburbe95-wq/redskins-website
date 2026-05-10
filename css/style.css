@@ -1,4 +1,7 @@
 /* ── RESET & VARIABLES ── */
+* {
+  cursor: auto !important;
+}
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
@@ -16,7 +19,7 @@ body {
   background: var(--black);
   color: var(--off-white);
   overflow-x: hidden;
-  cursor: default;
+  cursor:none;
 }
 
 /* ── CUSTOM CURSOR ── */
