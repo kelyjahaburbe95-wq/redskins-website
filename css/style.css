@@ -1,7 +1,4 @@
 /* ── RESET & VARIABLES ── */
-* {
-  cursor: auto !important;
-}
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
@@ -19,33 +16,7 @@ body {
   background: var(--black);
   color: var(--off-white);
   overflow-x: hidden;
-  cursor:none;
-}
-
-/* ── CUSTOM CURSOR ── */
-#cursor {
-  position: fixed; top: 0; left: 0; z-index: 9999;
-  pointer-events: none;
-  mix-blend-mode: difference;
-  opacity: 0;
-  transition: opacity 0.3s;
-}
-#cursor-dot {
-  width: 8px; height: 8px;
-  background: var(--off-white);
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-}
-#cursor-ring {
-  position: fixed; top: 0; left: 0;
-  width: 40px; height: 40px;
-  border: 1px solid var(--red);
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-  z-index: 9998;
-  opacity: 0;
-  transition: width 0.3s, height 0.3s, opacity 0.3s;
+  cursor: auto;
 }
 
 /* ── CANVAS ── */
@@ -153,7 +124,7 @@ nav {
   padding: 16px 40px;
   font-family: 'Barlow Condensed', sans-serif;
   font-size: 0.8rem; letter-spacing: 3px; text-transform: uppercase;
-  font-weight: 600; text-decoration: none; border: none; cursor: none;
+  font-weight: 600; text-decoration: none; border: none; cursor: pointer;
   position: relative; overflow: hidden;
   transition: transform 0.2s;
   display: inline-block;
@@ -174,7 +145,7 @@ nav {
   font-family: 'Barlow Condensed', sans-serif;
   font-size: 0.8rem; letter-spacing: 3px; text-transform: uppercase;
   font-weight: 600; text-decoration: none;
-  border: 1px solid rgba(245,242,238,0.3); cursor: none;
+  border: 1px solid rgba(245,242,238,0.3); cursor: pointer;
   transition: border-color 0.3s, transform 0.2s;
   display: inline-block;
 }
@@ -245,7 +216,7 @@ nav {
 }
 .card-3d {
   position: relative; aspect-ratio: 2/3;
-  cursor: none; transform-style: preserve-3d;
+  cursor: pointer; transform-style: preserve-3d;
   transition: transform 0.1s ease;
 }
 .card-3d-inner {
@@ -437,7 +408,7 @@ nav {
   border: none; padding: 18px 28px;
   font-family: 'Barlow Condensed', sans-serif;
   font-size: 0.75rem; letter-spacing: 3px; text-transform: uppercase;
-  font-weight: 600; cursor: none; transition: background 0.2s;
+  font-weight: 600; cursor: pointer; transition: background 0.2s;
 }
 .newsletter-form button:hover { background: var(--dark-red); }
 
@@ -445,7 +416,7 @@ nav {
 footer {
   position: relative; z-index: 2;
   background: #060606; padding: 80px 48px 40px;
-  border-top: 1px solid rgba(192,0,26,0.15);
+  border-top: 1line solid rgba(192,0,26,0.15);
 }
 .footer-grid {
   display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
