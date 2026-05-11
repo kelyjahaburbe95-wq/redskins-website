@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TIMBERLAND — Redskins Franconville</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<style>
+  * { cursor: default !important; }
+  a, button { cursor: pointer !important; }
+
+  .collection-hero {
+    padding: 160px 48px 80px;
+    position: relative;
+    z-index: 1;
+    background: linear-gradient(to bottom, #0a0a0a, var(--black));
+    border-bottom: 1px solid rgba(192,0,26,0.2);
+  }
+  .back-link {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.75rem; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--warm-grey); text-decoration: none;
+    display: inline-flex; align-items: center; gap: 8px;
+    margin-bottom: 40px; transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--red); }
+  .brand-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(4rem, 10vw, 8rem);
+    letter-spacing: 6px; line-height: 0.9;
+    color: var(--off-white);
+  }
+  .brand-name span { color: var(--red); }
+  .brand-desc {
+    font-size: 1rem; color: var(--warm-grey);
+    font-weight: 300; line-height: 1.8;
+    max-width: 600px; margin-top: 24px;
+  }
+  .brand-tags {
+    display: flex; gap: 12px; flex-wrap: wrap; margin-top: 20px;
+  }
+  .brand-tag {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase;
+    border: 1px solid rgba(192,0,26,0.4);
+    color: var(--red); padding: 6px 16px;
+  }
+
+  .collection-section {
+    padding: 80px 48px;
+    position: relative; z-index: 1;
+  }
+  .collection-section + .collection-section {
+    border-top: 1px solid rgba(255,255,255,0.04);
+  }
+  .cat-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem; letter-spacing: 3px;
+    margin-bottom: 40px; display: flex; align-items: center; gap: 16px;
+  }
+  .cat-title::after {
+    content: ''; flex: 1; height: 1px;
+    background: rgba(255,255,255,0.06);
+  }
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 2px;
+  }
+  .product-card {
+    background: #0e0e0e;
+    border: 1px solid rgba(255,255,255,0.04);
+    overflow: hidden;
+    transition: border-color 0.3s;
+    position: relative;
+  }
+  .product-card:hover { border-color: rgba(192,0,26,0.3); }
+  .product-card::before {
+    content: ''; position: absolute; top: 0; left: 0;
+    width: 0; height: 2px; background: var(--red);
+    transition: width 0.4s; z-index: 1;
+  }
+  .product-card:hover::before { width: 100%; }
+  .product-img {
+    width: 100%; aspect-ratio: 3/4;
+    object-fit: cover;
+    filter: saturate(0.7) brightness(0.8);
+    transition: filter 0.4s, transform 0.4s;
+    display: block;
+  }
+  .product-card:hover .product-img {
+    filter: saturate(0.9) brightness(0.7);
+    transform: scale(1.03);
+  }
+  .product-img-wrap { overflow: hidden; }
+  .product-info { padding: 20px; }
+  .product-brand {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.65rem; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--red); margin-bottom: 6px;
+  }
+  .product-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.2rem; letter-spacing: 1px;
+    color: var(--off-white); margin-bottom: 8px;
+  }
+  .product-price {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.1rem; color: var(--warm-grey);
+    letter-spacing: 1px;
+  }
+  .product-price strong { color: var(--off-white); }
+
+  .strip {
+    position: relative; z-index: 2;
+    background: var(--red); padding: 12px 0;
+    overflow: hidden; white-space: nowrap;
+    margin-bottom: 0;
+  }
+  .strip-track {
+    display: inline-flex;
+    animation: marquee 18s linear infinite;
+  }
+  .strip-track span {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.9rem; letter-spacing: 5px;
+    color: var(--off-white); padding: 0 40px; opacity: 0.9;
+  }
+
+  @media (max-width: 900px) {
+    .collection-hero { padding: 120px 24px 60px; }
+    .collection-section { padding: 60px 24px; }
+    .products-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 500px) {
+    .products-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">REDSKINS <span>FRANCONVILLE</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html#collections">Collections</a></li>
+    <li><a href="index.html#marques">Marques</a></li>
+    <li><a href="index.html#about">La Boutique</a></li>
+    <li><a href="index.html#contact">Contact</a></li>
+    <li><a href="panier.html" class="nav-cta">🛒 Panier</a></li>
+  </ul>
+</nav>
+
+<div class="collection-hero">
+  <a href="index.html#marques" class="back-link">← Retour aux marques</a>
+  <div class="brand-name">TIMBERLAND</div>
+  <p class="brand-desc">La robustesse et le style outdoor depuis 1973. Retrouvez la collection vêtements Timberland chez Redskins Franconville pour affronter toutes les saisons avec style.</p>
+  <div class="brand-tags">
+    <span class="brand-tag">Vêtements</span>
+  </div>
+</div>
+
+<div class="strip"><div class="strip-track">
+  <span>TIMBERLAND</span><span>VÊTEMENTS</span><span>OUTDOOR</span><span>AUTHENTIQUE</span>
+  <span>TIMBERLAND</span><span>VÊTEMENTS</span><span>OUTDOOR</span><span>AUTHENTIQUE</span>
+</div></div>
+
+<section class="collection-section">
+  <div class="cat-title">🌲 VÊTEMENTS</div>
+  <div class="products-grid">
+    <div class="product-card"><div class="product-img-wrap"><img class="product-img" src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=600&q=80" alt="Parka Timberland"></div><div class="product-info"><div class="product-brand">Timberland</div><div class="product-name">PARKA WATERPROOF</div><div class="product-price"><strong>249 €</strong></div></div></div>
+    <div class="product-card"><div class="product-img-wrap"><img class="product-img" src="https://images.unsplash.com/photo-1516826957135-700dedea698c?w=600&q=80" alt="Flanelle Timberland"></div><div class="product-info"><div class="product-brand">Timberland</div><div class="product-name">CHEMISE FLANELLE</div><div class="product-price"><strong>89 €</strong></div></div></div>
+    <div class="product-card"><div class="product-img-wrap"><img class="product-img" src="https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=600&q=80" alt="T-shirt Timberland"></div><div class="product-info"><div class="product-brand">Timberland</div><div class="product-name">T-SHIRT TREE LOGO</div><div class="product-price"><strong>45 €</strong></div></div></div>
+    <div class="product-card"><div class="product-img-wrap"><img class="product-img" src="https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=600&q=80" alt="Pantalon Timberland"></div><div class="product-info"><div class="product-brand">Timberland</div><div class="product-name">PANTALON CHINO</div><div class="product-price"><strong>99 €</strong></div></div></div>
+    <div class="product-card"><div class="product-img-wrap"><img class="product-img" src="https://images.unsplash.com/photo-1604176354204-9268737828e4?w=600&q=80" alt="Hoodie Timberland"></div><div class="product-info"><div class="product-brand">Timberland</div><div class="product-name">HOODIE OUTDOOR</div><div class="product-price"><strong>119 €</strong></div></div></div>
+    <div class="product-card"><div class="product-img-wrap"><img class="product-img" src="https://images.unsplash.com/photo-1503341504253-dff4815485f1?w=600&q=80" alt="Doudoune Timberland"></div><div class="product-info"><div class="product-brand">Timberland</div><div class="product-name">DOUDOUNE LÉGÈRE</div><div class="product-price"><strong>199 €</strong></div></div></div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div>
+      <p class="footer-logo">REDSKINS <span>FRANCONVILLE</span></p>
+      <p class="footer-desc">La boutique Redskins de Franconville — Cuir premium et grandes marques depuis 1984.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Nos Marques</h4>
+      <ul>
+        <li><a href="guess.html">Guess</a></li>
+        <li><a href="boss.html">Boss</a></li>
+        <li><a href="hugo.html">Hugo</a></li>
+        <li><a href="levis.html">Levi's</a></li>
+        <li><a href="timberland.html">Timberland</a></li>
+        <li><a href="lacoste.html">Lacoste</a></li>
+        <li><a href="chabranc.html">Chabranc</a></li>
+        <li><a href="redskins.html">Redskins</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>La Boutique</h4>
+      <ul>
+        <li><a href="index.html">Accueil</a></li>
+        <li><a href="index.html#about">Notre histoire</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 <span>Redskins Franconville</span>. Tous droits réservés.</p>
+    <p>Politique de confidentialité · Mentions légales · CGV</p>
+  </div>
+</footer>
+</body>
+</html>
