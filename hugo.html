@@ -172,7 +172,10 @@
     <div class="product-card"><div class="product-img-wrap"><img class="product-img" src="https://images.unsplash.com/photo-1520975954732-35dd22299614?w=600&q=80" alt="Veste Hugo"></div><div class="product-info"><div class="product-brand">Hugo</div><div class="product-name">VESTE STRUCTURÉE</div><div class="product-price"><strong>289 €</strong></div></div></div>
     <div class="product-card"><div class="product-img-wrap"><img class="product-img" src="https://images.unsplash.com/photo-1516826957135-700dedea698c?w=600&q=80" alt="T-shirt Hugo"></div><div class="product-info"><div class="product-brand">Hugo</div><div class="product-name">T-SHIRT LOGO OVERSIZE</div><div class="product-price"><strong>79 €</strong></div></div></div>
     <div class="product-card"><div class="product-img-wrap"><img class="product-img" src="https://images.unsplash.com/photo-1604176354204-9268737828e4?w=600&q=80" alt="Hoodie Hugo"></div><div class="product-info"><div class="product-brand">Hugo</div><div class="product-name">HOODIE COTON BIO</div><div class="product-price"><strong>149 €</strong></div></div></div>
-    <div class="product-card"><div class="product-img-wrap"><img class="product-img" src="https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=600&q=80" alt="Pantalon Hugo"></div><div class="product-info"><div class="product-brand">Hugo</div><div class="product-name">PANTALON CARGO</div><div class="product-price"><strong>169 €</strong></div></div></div>
+    <div class="product-card"><div class="product-img-wrap"><img class="product-img" src="https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=600&q=80" alt="Pantalon Hugo"></div><div class="product-info"><div class="product-brand">Hugo</div><div class="product-name">PANTALON CARGO</div><div class="product-price"><strong>169 €</strong></div>
+        <button onclick="addToCart(this.closest('.product-card').querySelector('.product-name').textContent, 169, 'Hugo')" style="margin-top:12px;width:100%;background:var(--red);color:#F5F2EE;border:none;padding:10px;font-family:'Barlow Condensed',sans-serif;font-size:0.75rem;letter-spacing:2px;text-transform:uppercase;font-weight:600;transition:background 0.2s;" onmouseover="this.style.background='#8B0012'" onmouseout="this.style.background='var(--red)'">Ajouter au panier</button>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -181,7 +184,10 @@
   <div class="products-grid">
     <div class="product-card"><div class="product-img-wrap"><img class="product-img" src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&q=80" alt="Sneakers Hugo"></div><div class="product-info"><div class="product-brand">Hugo</div><div class="product-name">SNEAKERS RUNNER</div><div class="product-price"><strong>189 €</strong></div></div></div>
     <div class="product-card"><div class="product-img-wrap"><img class="product-img" src="https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=600&q=80" alt="Boots Hugo"></div><div class="product-info"><div class="product-brand">Hugo</div><div class="product-name">BOOTS CUIR LACETS</div><div class="product-price"><strong>229 €</strong></div></div></div>
-    <div class="product-card"><div class="product-img-wrap"><img class="product-img" src="https://images.unsplash.com/photo-1539185441755-769473a23570?w=600&q=80" alt="Loafer Hugo"></div><div class="product-info"><div class="product-brand">Hugo</div><div class="product-name">LOAFER SUÈDE</div><div class="product-price"><strong>199 €</strong></div></div></div>
+    <div class="product-card"><div class="product-img-wrap"><img class="product-img" src="https://images.unsplash.com/photo-1539185441755-769473a23570?w=600&q=80" alt="Loafer Hugo"></div><div class="product-info"><div class="product-brand">Hugo</div><div class="product-name">LOAFER SUÈDE</div><div class="product-price"><strong>199 €</strong></div>
+        <button onclick="addToCart(this.closest('.product-card').querySelector('.product-name').textContent, 199, 'Hugo')" style="margin-top:12px;width:100%;background:var(--red);color:#F5F2EE;border:none;padding:10px;font-family:'Barlow Condensed',sans-serif;font-size:0.75rem;letter-spacing:2px;text-transform:uppercase;font-weight:600;transition:background 0.2s;" onmouseover="this.style.background='#8B0012'" onmouseout="this.style.background='var(--red)'">Ajouter au panier</button>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -218,5 +224,15 @@
     <p>Politique de confidentialité · Mentions légales · CGV</p>
   </div>
 </footer>
+
+<script>
+function addToCart(name, price, brand) {
+  const cart = JSON.parse(localStorage.getItem('redskins-cart') || '[]');
+  const existing = cart.find(i => i.name === name);
+  if (existing) { existing.qty++; } else { cart.push({ name, price, brand, qty: 1 }); }
+  localStorage.setItem('redskins-cart', JSON.stringify(cart));
+  alert('✓ "' + name + '" ajouté au panier !');
+}
+</script>
 </body>
 </html>
