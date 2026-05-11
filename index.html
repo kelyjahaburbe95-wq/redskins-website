@@ -10,6 +10,68 @@
 <style>
   * { cursor: default !important; }
   a, button { cursor: pointer !important; }
+
+  /* MARQUES */
+  .marques-section {
+    position: relative; z-index: 2;
+    padding: 120px 48px;
+    background: var(--black);
+  }
+  .marques-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+    margin-top: 64px;
+  }
+  .marque-card {
+    background: #0e0e0e;
+    border: 1px solid rgba(255,255,255,0.04);
+    padding: 48px 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    transition: background 0.3s, border-color 0.3s;
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+  }
+  .marque-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0;
+    width: 0; height: 2px;
+    background: var(--red);
+    transition: width 0.4s;
+  }
+  .marque-card:hover { background: #141414; border-color: rgba(192,0,26,0.2); }
+  .marque-card:hover::before { width: 100%; }
+  .marque-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    letter-spacing: 4px;
+    color: var(--off-white);
+    text-align: center;
+    transition: color 0.3s;
+  }
+  .marque-card:hover .marque-logo { color: var(--red); }
+  .marque-tag {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--warm-grey);
+    text-align: center;
+  }
+  .marque-icon { font-size: 2.5rem; }
+
+  @media (max-width: 900px) {
+    .marques-section { padding: 80px 24px; }
+    .marques-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 500px) {
+    .marques-grid { grid-template-columns: 1fr; }
+  }
 </style>
 </head>
 <body>
@@ -22,9 +84,9 @@
   <a href="#" class="nav-logo">REDSKINS <span>FRANCONVILLE</span></a>
   <ul class="nav-links">
     <li><a href="#collections">Collections</a></li>
-    <li><a href="#homme">Homme</a></li>
-    <li><a href="#maroquinerie">Maroquinerie</a></li>
-    <li><a href="#about">La Marque</a></li>
+    <li><a href="#marques">Marques</a></li>
+    <li><a href="#about">La Boutique</a></li>
+    <li><a href="#contact">Contact</a></li>
     <li><a href="panier.html" class="nav-cta">🛒 Panier</a></li>
   </ul>
 </nav>
@@ -32,15 +94,15 @@
 <!-- HERO -->
 <section class="hero">
   <div class="hero-content">
-    <p class="hero-eyebrow">Nouvelle Collection Automne — Hiver 2025</p>
+    <p class="hero-eyebrow">Boutique Multimarques — Franconville</p>
     <h1 class="hero-title">
       <span class="line1">L'ESPRIT</span>
-      <span class="line2">DU CUIR.</span>
+      <span class="line2">DU STYLE.</span>
     </h1>
-    <p class="hero-sub">Audacieux, anticonformiste, charismatique. Redskins incarne depuis 1984 le style urbain français, forgé dans les meilleures peaux.</p>
+    <p class="hero-sub">Guess, Boss, Hugo, Levi's, Timberland, Lacoste, Chabrançon, Redskins — Les plus grandes marques réunies à Franconville depuis 1984.</p>
     <div class="hero-buttons">
-      <a href="#collections" class="btn-primary"><span>Découvrir la Collection</span></a>
-      <a href="#about" class="btn-outline">Notre Histoire</a>
+      <a href="#marques" class="btn-primary"><span>Voir les Marques</span></a>
+      <a href="#about" class="btn-outline">Notre Boutique</a>
     </div>
   </div>
   <div class="scroll-indicator">
@@ -52,14 +114,75 @@
 <!-- STRIP -->
 <div class="strip">
   <div class="strip-track">
-    <span>CUIR PREMIUM</span><span>FAIT EN FRANCE</span><span>DEPUIS 1984</span>
-    <span>MAROQUINERIE</span><span>PRÊT-À-PORTER</span><span>COLLECTION AH 2025</span>
-    <span>LIVRAISON OFFERTE DÈS 100€</span><span>PATROUILLE DE FRANCE</span>
-    <span>CUIR PREMIUM</span><span>FAIT EN FRANCE</span><span>DEPUIS 1984</span>
-    <span>MAROQUINERIE</span><span>PRÊT-À-PORTER</span><span>COLLECTION AH 2025</span>
-    <span>LIVRAISON OFFERTE DÈS 100€</span><span>PATROUILLE DE FRANCE</span>
+    <span>GUESS</span><span>BOSS</span><span>HUGO</span>
+    <span>LEVI'S</span><span>TIMBERLAND</span><span>LACOSTE</span>
+    <span>CHABRANC</span><span>REDSKINS</span>
+    <span>GUESS</span><span>BOSS</span><span>HUGO</span>
+    <span>LEVI'S</span><span>TIMBERLAND</span><span>LACOSTE</span>
+    <span>CHABRANC</span><span>REDSKINS</span>
   </div>
 </div>
+
+<!-- MARQUES -->
+<section class="marques-section" id="marques">
+  <div style="display:flex; justify-content:space-between; align-items:flex-end;">
+    <div>
+      <p class="section-label">Notre Sélection</p>
+      <h2 class="section-title">NOS MARQUES</h2>
+    </div>
+  </div>
+  <div class="marques-grid">
+
+    <div class="marque-card">
+      <div class="marque-icon">👗</div>
+      <div class="marque-logo">GUESS</div>
+      <div class="marque-tag">Mode & Accessoires</div>
+    </div>
+
+    <div class="marque-card">
+      <div class="marque-icon">🕴️</div>
+      <div class="marque-logo">BOSS</div>
+      <div class="marque-tag">Prêt-à-Porter Premium</div>
+    </div>
+
+    <div class="marque-card">
+      <div class="marque-icon">✨</div>
+      <div class="marque-logo">HUGO</div>
+      <div class="marque-tag">Mode Contemporaine</div>
+    </div>
+
+    <div class="marque-card">
+      <div class="marque-icon">👖</div>
+      <div class="marque-logo">LEVI'S</div>
+      <div class="marque-tag">Denim & Lifestyle</div>
+    </div>
+
+    <div class="marque-card">
+      <div class="marque-icon">🥾</div>
+      <div class="marque-logo">TIMBERLAND</div>
+      <div class="marque-tag">Chaussures & Outdoor</div>
+    </div>
+
+    <div class="marque-card">
+      <div class="marque-icon">🐊</div>
+      <div class="marque-logo">LACOSTE</div>
+      <div class="marque-tag">Sport & Élégance</div>
+    </div>
+
+    <div class="marque-card">
+      <div class="marque-icon">🧣</div>
+      <div class="marque-logo">CHABRANC</div>
+      <div class="marque-tag">Maroquinerie & Cuir</div>
+    </div>
+
+    <div class="marque-card">
+      <div class="marque-icon">🧥</div>
+      <div class="marque-logo">REDSKINS</div>
+      <div class="marque-tag">Cuir Premium Depuis 1984</div>
+    </div>
+
+  </div>
+</section>
 
 <!-- COLLECTIONS -->
 <section class="cards-section" id="collections">
@@ -68,7 +191,6 @@
       <p class="section-label">Explorer</p>
       <h2 class="section-title">NOS UNIVERS</h2>
     </div>
-    <a href="collections.html" class="btn-outline" style="font-size:0.75rem; padding:12px 28px;">Tout voir</a>
   </div>
   <div class="cards-grid">
 
@@ -85,19 +207,6 @@
       </div>
     </div>
 
-    <div class="card-3d" id="maroquinerie">
-      <div class="card-3d-inner">
-        <img src="https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=700&q=80" alt="Maroquinerie">
-        <div class="card-shine"></div>
-        <div class="card-overlay">
-          <p class="card-tag">Accessoires</p>
-          <h3 class="card-name">MAROQUINERIE</h3>
-          <p class="card-desc">Sacs, ceintures, portefeuilles en cuir pleine fleur. La finition Redskins.</p>
-          <a href="collections.html" class="card-link">Découvrir</a>
-        </div>
-      </div>
-    </div>
-
     <div class="card-3d">
       <div class="card-3d-inner">
         <img src="https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?w=700&q=80" alt="Femme">
@@ -106,6 +215,19 @@
           <p class="card-tag">Collection Femme</p>
           <h3 class="card-name">FEMME</h3>
           <p class="card-desc">Silhouettes affirmées, matières premium. La femme Redskins s'assume.</p>
+          <a href="collections.html" class="card-link">Découvrir</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-3d" id="maroquinerie">
+      <div class="card-3d-inner">
+        <img src="https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=700&q=80" alt="Maroquinerie">
+        <div class="card-shine"></div>
+        <div class="card-overlay">
+          <p class="card-tag">Accessoires</p>
+          <h3 class="card-name">MAROQUINERIE</h3>
+          <p class="card-desc">Sacs, ceintures, portefeuilles en cuir pleine fleur. La finition Redskins.</p>
           <a href="collections.html" class="card-link">Découvrir</a>
         </div>
       </div>
@@ -140,17 +262,17 @@
 <!-- À PROPOS -->
 <section class="about" id="about">
   <div class="about-text">
-    <p class="section-label">Notre Histoire</p>
-    <h2 class="section-title" style="margin-bottom:32px;">UN HÉRITAGE<br>EN CUIR.</h2>
-    <p>Fondée en 1984 par Serge Aboujedid et Michel Szynkier, Redskins est née d'une passion absolue pour le cuir. Chaque peau sélectionnée avec soin, chaque couture pensée pour durer.</p>
-    <p>De la boutique de quartier au réseau de plus de 1 200 distributeurs en Europe, Redskins a su rester fidèle à ses valeurs : qualité premium, style affirmé, prix juste. Fournisseur officiel de la Patrouille de France.</p>
-    <a href="#" class="btn-primary" style="display:inline-block; margin-top:16px;"><span>En savoir plus</span></a>
+    <p class="section-label">Notre Boutique</p>
+    <h2 class="section-title" style="margin-bottom:32px;">REDSKINS<br>FRANCONVILLE.</h2>
+    <p>Fondée en 1984, Redskins Franconville est votre boutique multimarques de référence. Nous sélectionnons pour vous les plus grandes marques : Guess, Boss, Hugo, Levi's, Timberland, Lacoste, Chabranc et Redskins.</p>
+    <p>Notre équipe passionnée vous accueille dans un espace moderne pour vous aider à trouver la pièce parfaite, au meilleur prix.</p>
+    <a href="#contact" class="btn-primary" style="display:inline-block; margin-top:16px;"><span>Nous contacter</span></a>
   </div>
   <div class="stats-grid">
     <div class="stat"><p class="stat-num">1984</p><p class="stat-label">Année fondation</p></div>
-    <div class="stat"><p class="stat-num">1200+</p><p class="stat-label">Points de vente</p></div>
-    <div class="stat"><p class="stat-num">40+</p><p class="stat-label">Ans d'expertise</p></div>
-    <div class="stat"><p class="stat-num">100%</p><p class="stat-label">Cuir sélectionné</p></div>
+    <div class="stat"><p class="stat-num">8</p><p class="stat-label">Grandes marques</p></div>
+    <div class="stat"><p class="stat-num">40+</p><p class="stat-label">Ans d'expérience</p></div>
+    <div class="stat"><p class="stat-num">100%</p><p class="stat-label">Qualité garantie</p></div>
   </div>
 </section>
 
@@ -158,7 +280,7 @@
 <section class="newsletter" id="contact">
   <div>
     <h2 class="newsletter-title">RESTEZ<br><em>INFORMÉ.</em></h2>
-    <p class="newsletter-sub">Nouveautés, offres exclusives et événements en boutique. Rejoignez la communauté Redskins.</p>
+    <p class="newsletter-sub">Nouveautés, offres exclusives et événements en boutique. Rejoignez la communauté Redskins Franconville.</p>
   </div>
   <div>
     <div class="newsletter-form">
@@ -173,16 +295,18 @@
   <div class="footer-grid">
     <div>
       <p class="footer-logo">REDSKINS <span>FRANCONVILLE</span></p>
-      <p class="footer-desc">La boutique Redskins de Franconville — Cuir premium depuis 1984.</p>
+      <p class="footer-desc">La boutique Redskins de Franconville — Cuir premium et grandes marques depuis 1984.</p>
     </div>
     <div class="footer-col">
-      <h4>Collections</h4>
+      <h4>Nos Marques</h4>
       <ul>
-        <li><a href="collections.html">Homme</a></li>
-        <li><a href="collections.html">Femme</a></li>
-        <li><a href="collections.html">Maroquinerie</a></li>
-        <li><a href="collections.html">Junior</a></li>
-        <li><a href="collections.html">Patrouille de France</a></li>
+        <li><a href="#">Guess</a></li>
+        <li><a href="#">Boss / Hugo</a></li>
+        <li><a href="#">Levi's</a></li>
+        <li><a href="#">Timberland</a></li>
+        <li><a href="#">Lacoste</a></li>
+        <li><a href="#">Chabranc</a></li>
+        <li><a href="#">Redskins</a></li>
       </ul>
     </div>
     <div class="footer-col">
@@ -196,12 +320,12 @@
       </ul>
     </div>
     <div class="footer-col">
-      <h4>La Marque</h4>
+      <h4>La Boutique</h4>
       <ul>
         <li><a href="#">Notre histoire</a></li>
-        <li><a href="#">Boutiques</a></li>
+        <li><a href="#">Nous trouver</a></li>
+        <li><a href="#">Horaires</a></li>
         <li><a href="#">Presse</a></li>
-        <li><a href="#">Franchise</a></li>
         <li><a href="#">Contact</a></li>
       </ul>
     </div>
