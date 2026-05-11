@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CHABRANC — Redskins Franconville</title>
+<title>CHABRAND — Redskins Franconville</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 <style>
@@ -171,7 +171,10 @@
   <div class="products-grid">
     <div class="product-card"><div class="product-img-wrap"><img class="product-img" src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=600&q=80" alt="Manteau Chabranc"></div><div class="product-info"><div class="product-brand">Chabranc</div><div class="product-name">MANTEAU LAINE</div><div class="product-price"><strong>299 €</strong></div></div></div>
     <div class="product-card"><div class="product-img-wrap"><img class="product-img" src="https://images.unsplash.com/photo-1520975954732-35dd22299614?w=600&q=80" alt="Veste Chabranc"></div><div class="product-info"><div class="product-brand">Chabranc</div><div class="product-name">VESTE CUIR SOUPLE</div><div class="product-price"><strong>349 €</strong></div></div></div>
-    <div class="product-card"><div class="product-img-wrap"><img class="product-img" src="https://images.unsplash.com/photo-1516826957135-700dedea698c?w=600&q=80" alt="Pull Chabranc"></div><div class="product-info"><div class="product-brand">Chabranc</div><div class="product-name">PULL CACHEMIRE</div><div class="product-price"><strong>189 €</strong></div></div></div>
+    <div class="product-card"><div class="product-img-wrap"><img class="product-img" src="https://images.unsplash.com/photo-1516826957135-700dedea698c?w=600&q=80" alt="Pull Chabranc"></div><div class="product-info"><div class="product-brand">Chabranc</div><div class="product-name">PULL CACHEMIRE</div><div class="product-price"><strong>189 €</strong></div>
+        <button onclick="addToCart(this.closest('.product-card').querySelector('.product-name').textContent, 189, 'Chabranc')" style="margin-top:12px;width:100%;background:var(--red);color:#F5F2EE;border:none;padding:10px;font-family:'Barlow Condensed',sans-serif;font-size:0.75rem;letter-spacing:2px;text-transform:uppercase;font-weight:600;transition:background 0.2s;" onmouseover="this.style.background='#8B0012'" onmouseout="this.style.background='var(--red)'">Ajouter au panier</button>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -180,7 +183,10 @@
   <div class="products-grid">
     <div class="product-card"><div class="product-img-wrap"><img class="product-img" src="https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=600&q=80" alt="Sac Chabranc"></div><div class="product-info"><div class="product-brand">Chabranc</div><div class="product-name">SAC CUIR PLEINE FLEUR</div><div class="product-price"><strong>259 €</strong></div></div></div>
     <div class="product-card"><div class="product-img-wrap"><img class="product-img" src="https://images.unsplash.com/photo-1523779105320-d1cd346ff52b?w=600&q=80" alt="Ceinture Chabranc"></div><div class="product-info"><div class="product-brand">Chabranc</div><div class="product-name">CEINTURE ARTISANALE</div><div class="product-price"><strong>89 €</strong></div></div></div>
-    <div class="product-card"><div class="product-img-wrap"><img class="product-img" src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=600&q=80" alt="Portefeuille Chabranc"></div><div class="product-info"><div class="product-brand">Chabranc</div><div class="product-name">PORTEFEUILLE CUIR</div><div class="product-price"><strong>79 €</strong></div></div></div>
+    <div class="product-card"><div class="product-img-wrap"><img class="product-img" src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=600&q=80" alt="Portefeuille Chabranc"></div><div class="product-info"><div class="product-brand">Chabranc</div><div class="product-name">PORTEFEUILLE CUIR</div><div class="product-price"><strong>79 €</strong></div>
+        <button onclick="addToCart(this.closest('.product-card').querySelector('.product-name').textContent, 79, 'Chabranc')" style="margin-top:12px;width:100%;background:var(--red);color:#F5F2EE;border:none;padding:10px;font-family:'Barlow Condensed',sans-serif;font-size:0.75rem;letter-spacing:2px;text-transform:uppercase;font-weight:600;transition:background 0.2s;" onmouseover="this.style.background='#8B0012'" onmouseout="this.style.background='var(--red)'">Ajouter au panier</button>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -217,5 +223,15 @@
     <p>Politique de confidentialité · Mentions légales · CGV</p>
   </div>
 </footer>
+
+<script>
+function addToCart(name, price, brand) {
+  const cart = JSON.parse(localStorage.getItem('redskins-cart') || '[]');
+  const existing = cart.find(i => i.name === name);
+  if (existing) { existing.qty++; } else { cart.push({ name, price, brand, qty: 1 }); }
+  localStorage.setItem('redskins-cart', JSON.stringify(cart));
+  alert('✓ "' + name + '" ajouté au panier !');
+}
+</script>
 </body>
 </html>
