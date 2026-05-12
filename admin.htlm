@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Administration — Redskins Franconville</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<style>
+  * { cursor: default !important; }
+  a, button { cursor: pointer !important; }
+
+  .admin-page {
+    padding: 120px 48px 80px;
+    max-width: 1100px; margin: 0 auto;
+    position: relative; z-index: 1;
+  }
+
+  .admin-header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 48px;
+    border-bottom: 1px solid rgba(192,0,26,0.3);
+    padding-bottom: 24px;
+  }
+  .admin-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3rem; letter-spacing: 4px;
+  }
+  .admin-title span { color: var(--red); }
+
+  .admin-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+    gap: 2px; margin-bottom: 48px;
+  }
+  .admin-stat {
+    background: #0e0e0e; padding: 28px 24px;
+    border: 1px solid rgba(255,255,255,0.04);
+    position: relative; overflow: hidden;
+  }
+  .admin-stat::before {
+    content: ''; position: absolute; top: 0; left: 0;
+    width: 100%; height: 2px; background: var(--red);
+  }
+  .admin-stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.5rem; color: var(--red); letter-spacing: 2px;
+  }
+  .admin-stat-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--warm-grey); margin-top: 4px;
+  }
+
+  .admin-section {
+    background: #0e0e0e; border: 1px solid rgba(255,255,255,0.06);
+    padding: 32px; margin-bottom: 24px;
+  }
+  .admin-section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.5rem; letter-spacing: 3px;
+    margin-bottom: 24px; color: var(--off-white);
+    display: flex; align-items: center; gap: 12px;
+  }
+
+  table { width: 100%; border-collapse: collapse; }
+  th {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.65rem; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--warm-grey); padding: 10px 12px; text-align: left;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  td {
+    padding: 14px 12px; font-size: 0.88rem;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    color: var(--off-white);
+  }
+  tr:hover td { background: rgba(255,255,255,0.02); }
+  .badge {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase;
+    padding: 4px 10px; border-radius: 2px;
+  }
+  .badge-admin { background: rgba(192,0,26,0.2); color: var(--red); border: 1px solid rgba(192,0,26,0.4); }
+  .badge-client { background: rgba(255,255,255,0.05); color: var(--warm-grey); border: 1px solid rgba(255,255,255,0.1); }
+
+  .btn-danger {
+    background: none; border: 1px solid rgba(192,0,26,0.4);
+    color: var(--red); padding: 6px 14px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase;
+    transition: background 0.2s;
+  }
+  .btn-danger:hover { background: rgba(192,0,26,0.2); }
+
+  .acces-refuse {
+    text-align: center; padding: 80px 24px;
+  }
+  .acces-refuse h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3rem; color: var(--red); margin-bottom: 16px;
+  }
+
+  @media (max-width: 768px) {
+    .admin-page { padding: 120px 24px 60px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">REDSKINS <span>FRANCONVILLE</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html#marques">Marques</a></li>
+    <li><a href="compte.html">Mon Compte</a></li>
+    <li><a href="panier.html" class="nav-cta">🛒 Panier</a></li>
+  </ul>
+</nav>
+
+<div class="admin-page" id="admin-content">
+  <!-- Rempli par JS -->
+</div>
+
+<script>
+const session = JSON.parse(localStorage.getItem('rf-session') || 'null');
+const el = document.getElementById('admin-content');
+
+if (!session || !session.admin) {
+  el.innerHTML = `
+    <div class="acces-refuse">
+      <h2>ACCÈS REFUSÉ</h2>
+      <p style="color:var(--warm-grey);margin-bottom:32px;">Vous devez être administrateur pour accéder à cette page.</p>
+      <a href="compte.html" class="btn-primary"><span>Se connecter</span></a>
+    </div>`;
+} else {
+  const users = JSON.parse(localStorage.getItem('rf-users') || '[]');
+  const cart = JSON.parse(localStorage.getItem('redskins-cart') || '[]');
+  const totalPanier = cart.reduce((acc, i) => acc + i.price * i.qty, 0);
+  const totalArticles = cart.reduce((acc, i) => acc + i.qty, 0);
+
+  // Stats
+  el.innerHTML = `
+    <div class="admin-header">
+      <div class="admin-title">ADMIN <span>PANEL</span></div>
+      <div style="display:flex;gap:12px;align-items:center;">
+        <span style="font-family:'Barlow Condensed',sans-serif;font-size:0.75rem;letter-spacing:2px;color:var(--warm-grey);">
+          Connecté : ${session.nom}
+        </span>
+        <button class="btn-danger" onclick="localStorage.removeItem('rf-session');window.location.href='compte.html'">
+          Déconnexion
+        </button>
+      </div>
+    </div>
+
+    <div class="admin-grid">
+      <div class="admin-stat">
+        <div class="admin-stat-num">${users.length}</div>
+        <div class="admin-stat-label">Comptes clients</div>
+      </div>
+      <div class="admin-stat">
+        <div class="admin-stat-num">${totalArticles}</div>
+        <div class="admin-stat-label">Articles en panier</div>
+      </div>
+      <div class="admin-stat">
+        <div class="admin-stat-num">${totalPanier.toFixed(0)} €</div>
+        <div class="admin-stat-label">Valeur panier</div>
+      </div>
+      <div class="admin-stat">
+        <div class="admin-stat-num">8</div>
+        <div class="admin-stat-label">Marques actives</div>
+      </div>
+    </div>
+
+    <!-- CLIENTS -->
+    <div class="admin-section">
+      <div class="admin-section-title">👥 Comptes clients</div>
+      ${users.length === 0
+        ? '<p style="color:var(--warm-grey);font-size:0.9rem;font-style:italic;">Aucun compte client pour le moment.</p>'
+        : `<table>
+          <thead>
+            <tr>
+              <th>Nom</th>
+              <th>Email</th>
+              <th>Inscription</th>
+              <th>Rôle</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${users.map((u, i) => `
+              <tr>
+                <td>${u.nom}</td>
+                <td>${u.email}</td>
+                <td>${u.date || '—'}</td>
+                <td><span class="badge ${u.admin ? 'badge-admin' : 'badge-client'}">${u.admin ? 'Admin' : 'Client'}</span></td>
+                <td><button class="btn-danger" onclick="supprimerClient(${i})">Supprimer</button></td>
+              </tr>`).join('')}
+          </tbody>
+        </table>`
+      }
+    </div>
+
+    <!-- PANIER EN COURS -->
+    <div class="admin-section">
+      <div class="admin-section-title">🛒 Panier en cours</div>
+      ${cart.length === 0
+        ? '<p style="color:var(--warm-grey);font-size:0.9rem;font-style:italic;">Panier vide.</p>'
+        : `<table>
+          <thead><tr><th>Produit</th><th>Marque</th><th>Qté</th><th>Prix unitaire</th><th>Total</th></tr></thead>
+          <tbody>
+            ${cart.map(item => `
+              <tr>
+                <td>${item.name}</td>
+                <td>${item.brand || '—'}</td>
+                <td>${item.qty}</td>
+                <td>${item.price} €</td>
+                <td>${(item.price * item.qty).toFixed(2)} €</td>
+              </tr>`).join('')}
+            <tr>
+              <td colspan="4" style="text-align:right;color:var(--warm-grey);font-family:'Barlow Condensed',sans-serif;letter-spacing:2px;text-transform:uppercase;font-size:0.8rem;">TOTAL</td>
+              <td style="color:var(--red);font-weight:600;">${totalPanier.toFixed(2)} €</td>
+            </tr>
+          </tbody>
+        </table>`
+      }
+    </div>
+
+    <!-- LIENS RAPIDES -->
+    <div class="admin-section">
+      <div class="admin-section-title">🔗 Liens rapides</div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;">
+        <a href="index.html" class="btn-outline" style="font-size:0.75rem;padding:10px 20px;">Accueil</a>
+        <a href="guess.html" class="btn-outline" style="font-size:0.75rem;padding:10px 20px;">Guess</a>
+        <a href="boss.html" class="btn-outline" style="font-size:0.75rem;padding:10px 20px;">Boss</a>
+        <a href="hugo.html" class="btn-outline" style="font-size:0.75rem;padding:10px 20px;">Hugo</a>
+        <a href="levis.html" class="btn-outline" style="font-size:0.75rem;padding:10px 20px;">Levi's</a>
+        <a href="timberland.html" class="btn-outline" style="font-size:0.75rem;padding:10px 20px;">Timberland</a>
+        <a href="lacoste.html" class="btn-outline" style="font-size:0.75rem;padding:10px 20px;">Lacoste</a>
+        <a href="chabranc.html" class="btn-outline" style="font-size:0.75rem;padding:10px 20px;">Chabranc</a>
+        <a href="redskins-brand.html" class="btn-outline" style="font-size:0.75rem;padding:10px 20px;">Redskins</a>
+      </div>
+    </div>
+  `;
+}
+
+function supprimerClient(index) {
+  if (!confirm('Supprimer ce compte ?')) return;
+  const users = JSON.parse(localStorage.getItem('rf-users') || '[]');
+  users.splice(index, 1);
+  localStorage.setItem('rf-users', JSON.stringify(users));
+  location.reload();
+}
+</script>
+
+</body>
+</html>
