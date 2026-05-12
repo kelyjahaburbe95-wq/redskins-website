@@ -138,7 +138,7 @@
   }
 </style>
 </head>
-<body>
+<body data-marque="Boss">
 
 <nav>
   <a href="index.html" class="nav-logo">REDSKINS <span>FRANCONVILLE</span></a>
@@ -147,6 +147,7 @@
     <li><a href="index.html#marques">Marques</a></li>
     <li><a href="index.html#about">La Boutique</a></li>
     <li><a href="index.html#contact">Contact</a></li>
+    <li><a href="compte.html" title="Mon Compte" style="font-size:1.3rem;padding:1.2rem 0.8rem;">👤</a></li>
     <li><a href="panier.html" class="nav-cta">🛒 Panier</a></li>
   </ul>
 </nav>
@@ -162,46 +163,25 @@
   </div>
 </div>
 
+
+<section class="collection-placeholder" style="padding:80px 48px;position:relative;z-index:1;text-align:center;">
+  <p style="font-family:'Barlow Condensed',sans-serif;font-size:0.8rem;letter-spacing:4px;text-transform:uppercase;color:var(--red);margin-bottom:16px;">Collection Boss</p>
+  <h2 style="font-family:'Bebas Neue',sans-serif;font-size:3rem;letter-spacing:3px;margin-bottom:24px;">PRODUITS À VENIR</h2>
+  <p style="color:var(--warm-grey);font-size:1rem;max-width:500px;margin:0 auto 40px;font-weight:300;line-height:1.8;">
+    Nos produits Boss arrivent bientôt. Revenez nous voir ou contactez-nous en boutique à Franconville.
+  </p>
+  <a href="index.html#contact" class="btn-outline" style="display:inline-block;">Nous contacter</a>
+</section>
 <div class="strip"><div class="strip-track">
   <span>BOSS</span><span>VÊTEMENTS</span><span>CHAUSSURES</span><span>ACCESSOIRES</span>
   <span>BOSS</span><span>VÊTEMENTS</span><span>CHAUSSURES</span><span>ACCESSOIRES</span>
 </div></div>
 
-<section class="collection-section">
-  <div class="cat-title">🕴️ VÊTEMENTS</div>
-  <div class="products-grid">
-    <div class="product-card"><div class="product-img-wrap"><img class="product-img" src="https://images.unsplash.com/photo-1593030761757-71fae45fa0e7?w=600&q=80" alt="Costume Boss"></div><div class="product-info"><div class="product-brand">Boss</div><div class="product-name">COSTUME SLIM FIT</div><div class="product-price"><strong>499 €</strong></div></div></div>
-    <div class="product-card"><div class="product-img-wrap"><img class="product-img" src="https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=600&q=80" alt="Polo Boss"></div><div class="product-info"><div class="product-brand">Boss</div><div class="product-name">POLO LOGO BRODÉ</div><div class="product-price"><strong>129 €</strong></div></div></div>
-    <div class="product-card"><div class="product-img-wrap"><img class="product-img" src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=600&q=80" alt="Chemise Boss"></div><div class="product-info"><div class="product-brand">Boss</div><div class="product-name">CHEMISE OXFORD</div><div class="product-price"><strong>149 €</strong></div></div></div>
-    <div class="product-card"><div class="product-img-wrap"><img class="product-img" src="https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=600&q=80" alt="Veste Boss"></div><div class="product-info"><div class="product-brand">Boss</div><div class="product-name">BLOUSON BOMBER</div><div class="product-price"><strong>329 €</strong></div>
-        <button onclick="addToCart(this.closest('.product-card').querySelector('.product-name').textContent, 329, 'Boss')" style="margin-top:12px;width:100%;background:var(--red);color:#F5F2EE;border:none;padding:10px;font-family:'Barlow Condensed',sans-serif;font-size:0.75rem;letter-spacing:2px;text-transform:uppercase;font-weight:600;transition:background 0.2s;" onmouseover="this.style.background='#8B0012'" onmouseout="this.style.background='var(--red)'">Ajouter au panier</button>
-      </div>
-    </div>
-  </div>
-</section>
 
-<section class="collection-section">
-  <div class="cat-title">👞 CHAUSSURES</div>
-  <div class="products-grid">
-    <div class="product-card"><div class="product-img-wrap"><img class="product-img" src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&q=80" alt="Derby Boss"></div><div class="product-info"><div class="product-brand">Boss</div><div class="product-name">DERBY CUIR NOIR</div><div class="product-price"><strong>279 €</strong></div></div></div>
-    <div class="product-card"><div class="product-img-wrap"><img class="product-img" src="https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=600&q=80" alt="Sneakers Boss"></div><div class="product-info"><div class="product-brand">Boss</div><div class="product-name">SNEAKERS PREMIUM</div><div class="product-price"><strong>219 €</strong></div>
-        <button onclick="addToCart(this.closest('.product-card').querySelector('.product-name').textContent, 219, 'Boss')" style="margin-top:12px;width:100%;background:var(--red);color:#F5F2EE;border:none;padding:10px;font-family:'Barlow Condensed',sans-serif;font-size:0.75rem;letter-spacing:2px;text-transform:uppercase;font-weight:600;transition:background 0.2s;" onmouseover="this.style.background='#8B0012'" onmouseout="this.style.background='var(--red)'">Ajouter au panier</button>
-      </div>
-    </div>
-  </div>
-</section>
 
-<section class="collection-section">
-  <div class="cat-title">💼 ACCESSOIRES</div>
-  <div class="products-grid">
-    <div class="product-card"><div class="product-img-wrap"><img class="product-img" src="https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=600&q=80" alt="Sac Boss"></div><div class="product-info"><div class="product-brand">Boss</div><div class="product-name">SAC PORTE-DOCUMENT</div><div class="product-price"><strong>349 €</strong></div></div></div>
-    <div class="product-card"><div class="product-img-wrap"><img class="product-img" src="https://images.unsplash.com/photo-1523779105320-d1cd346ff52b?w=600&q=80" alt="Ceinture Boss"></div><div class="product-info"><div class="product-brand">Boss</div><div class="product-name">CEINTURE CUIR</div><div class="product-price"><strong>99 €</strong></div></div></div>
-    <div class="product-card"><div class="product-img-wrap"><img class="product-img" src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=600&q=80" alt="Montre Boss"></div><div class="product-info"><div class="product-brand">Boss</div><div class="product-name">MONTRE CHRONOGRAPHE</div><div class="product-price"><strong>399 €</strong></div>
-        <button onclick="addToCart(this.closest('.product-card').querySelector('.product-name').textContent, 399, 'Boss')" style="margin-top:12px;width:100%;background:var(--red);color:#F5F2EE;border:none;padding:10px;font-family:'Barlow Condensed',sans-serif;font-size:0.75rem;letter-spacing:2px;text-transform:uppercase;font-weight:600;transition:background 0.2s;" onmouseover="this.style.background='#8B0012'" onmouseout="this.style.background='var(--red)'">Ajouter au panier</button>
-      </div>
-    </div>
-  </div>
-</section>
+
+
+
 
 <footer>
   <div class="footer-grid">
@@ -215,10 +195,10 @@
         <li><a href="guess.html">Guess</a></li>
         <li><a href="boss.html">Boss</a></li>
         <li><a href="hugo.html">Hugo</a></li>
-        <li><a href="levis.html">Levi's</a></li>
+        <li><a href="levis.html">Levis</a></li>
         <li><a href="timberland.html">Timberland</a></li>
         <li><a href="lacoste.html">Lacoste</a></li>
-        <li><a href="chabranc.html">Chabranc</a></li>
+        <li><a href="chabrand.html">Chabrand</a></li>
         <li><a href="redskins.html">Redskins</a></li>
       </ul>
     </div>
@@ -246,5 +226,82 @@ function addToCart(name, price, brand) {
   alert('✓ "' + name + '" ajouté au panier !');
 }
 </script>
+
+<script>
+// ── AFFICHER LES PRODUITS AJOUTÉS DEPUIS L'ADMIN ──
+(function() {
+  const marque = document.querySelector('[data-marque]')?.dataset.marque;
+  if (!marque) return;
+
+  const tous = JSON.parse(localStorage.getItem('rf-produits') || '[]');
+  const produits = tous.filter(p => p.marque === marque);
+  if (produits.length === 0) return;
+
+  // Grouper par catégorie
+  const categories = {};
+  produits.forEach(p => {
+    const cat = p.categorie || 'Produits';
+    if (!categories[cat]) categories[cat] = [];
+    categories[cat].push(p);
+  });
+
+  const icons = { 'Vêtements':'👗', 'Chaussures':'👟', 'Accessoires':'👜', 'Cuir':'🧥' };
+
+  let html = '';
+  Object.entries(categories).forEach(([cat, prods]) => {
+    html += `<section class="collection-section" style="padding:60px 48px;position:relative;z-index:1;">
+      <div class="cat-title">${icons[cat]||'🏷️'} ${cat.toUpperCase()}</div>
+      <div class="products-grid">`;
+
+    prods.forEach(p => {
+      const prixAffiche = p.promoActif && p.prixReduit
+        ? `<strong style="color:var(--red)">${p.prixReduit} €</strong> <span style="text-decoration:line-through;color:var(--warm-grey);font-size:0.85rem">${p.prix} €</span> <span style="background:var(--red);color:white;font-size:0.65rem;padding:2px 8px;letter-spacing:1px">${p.promoLabel||'PROMO'}</span>`
+        : `<strong>${p.prix} €</strong>`;
+
+      const photo = p.photos && p.photos[0] ? p.photos[0] : '';
+
+      html += `
+        <div class="product-card">
+          <div class="product-img-wrap" style="overflow:hidden;">
+            ${photo
+              ? `<img class="product-img" src="${photo}" alt="${p.nom}" style="width:100%;aspect-ratio:3/4;object-fit:cover;filter:saturate(0.7) brightness(0.85);">`
+              : `<div style="width:100%;aspect-ratio:3/4;background:#111;display:flex;align-items:center;justify-content:center;font-size:3rem;">${icons[p.categorie]||'🏷️'}</div>`}
+          </div>
+          <div class="product-info">
+            <div class="product-brand">${p.marque}</div>
+            <a href="produit.html?id=${p.id}" style="color:var(--off-white);text-decoration:none;display:block;font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:1px;margin-bottom:8px;">${p.nom}</a>
+            <div class="product-price">${prixAffiche}</div>
+            <button onclick="addToCart('${p.nom}', ${p.promoActif && p.prixReduit ? p.prixReduit : p.prix}, '${p.marque}')"
+              style="margin-top:12px;width:100%;background:var(--red);color:white;border:none;padding:10px;font-family:'Barlow Condensed',sans-serif;font-size:0.75rem;letter-spacing:2px;text-transform:uppercase;font-weight:600;transition:background 0.2s;"
+              onmouseover="this.style.background='#8B0012'"
+              onmouseout="this.style.background='var(--red)'">
+              Ajouter au panier
+            </button>
+          </div>
+        </div>`;
+    });
+
+    html += `</div></section>`;
+  });
+
+  // Insérer avant le message "produits à venir"
+  const placeholder = document.querySelector('.collection-placeholder');
+  if (placeholder) {
+    placeholder.insertAdjacentHTML('beforebegin', html);
+  } else {
+    // Insérer avant le footer
+    document.querySelector('footer').insertAdjacentHTML('beforebegin', html);
+  }
+})();
+
+function addToCart(name, price, brand) {
+  const cart = JSON.parse(localStorage.getItem('redskins-cart') || '[]');
+  const existing = cart.find(i => i.name === name);
+  if (existing) { existing.qty++; } else { cart.push({ name, price, brand, qty: 1 }); }
+  localStorage.setItem('redskins-cart', JSON.stringify(cart));
+  alert('✓ "' + name + '" ajouté au panier !');
+}
+</script>
+
 </body>
 </html>
