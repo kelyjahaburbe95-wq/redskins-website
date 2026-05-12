@@ -11,62 +11,239 @@
   a, button { cursor: pointer !important; }
 
   .admin-page {
-    padding: 120px 48px 80px;
-    max-width: 1100px; margin: 0 auto;
+    padding: 100px 48px 80px;
+    max-width: 1200px; margin: 0 auto;
     position: relative; z-index: 1;
   }
 
   .admin-header {
     display: flex; justify-content: space-between; align-items: center;
-    margin-bottom: 48px;
-    border-bottom: 1px solid rgba(192,0,26,0.3);
-    padding-bottom: 24px;
+    margin-bottom: 40px;
+    border-bottom: 2px solid var(--red);
+    padding-bottom: 20px;
   }
   .admin-title {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 3rem; letter-spacing: 4px;
+    font-size: 2.5rem; letter-spacing: 4px;
   }
   .admin-title span { color: var(--red); }
 
-  .admin-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
-    gap: 2px; margin-bottom: 48px;
+  /* TABS ADMIN */
+  .admin-tabs {
+    display: flex; gap: 0; margin-bottom: 40px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
   }
-  .admin-stat {
-    background: #0e0e0e; padding: 28px 24px;
-    border: 1px solid rgba(255,255,255,0.04);
-    position: relative; overflow: hidden;
-  }
-  .admin-stat::before {
-    content: ''; position: absolute; top: 0; left: 0;
-    width: 100%; height: 2px; background: var(--red);
-  }
-  .admin-stat-num {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 2.5rem; color: var(--red); letter-spacing: 2px;
-  }
-  .admin-stat-label {
+  .admin-tab {
+    padding: 14px 28px;
     font-family: 'Barlow Condensed', sans-serif;
-    font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase;
+    font-size: 0.8rem; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--warm-grey); background: none; border: none;
+    border-bottom: 2px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+    margin-bottom: -1px;
+  }
+  .admin-tab.active { color: var(--off-white); border-bottom-color: var(--red); }
+
+  .admin-panel { display: none; }
+  .admin-panel.active { display: block; }
+
+  /* STATS */
+  .stats-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(180px,1fr));
+    gap: 2px; margin-bottom: 40px;
+  }
+  .stat-card {
+    background: #0e0e0e; padding: 24px;
+    border: 1px solid rgba(255,255,255,0.04);
+    border-top: 2px solid var(--red);
+  }
+  .stat-card-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.2rem; color: var(--red);
+  }
+  .stat-card-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.65rem; letter-spacing: 3px; text-transform: uppercase;
     color: var(--warm-grey); margin-top: 4px;
   }
 
-  .admin-section {
-    background: #0e0e0e; border: 1px solid rgba(255,255,255,0.06);
-    padding: 32px; margin-bottom: 24px;
+  /* FORMULAIRE AJOUT PRODUIT */
+  .form-produit {
+    background: #0e0e0e;
+    border: 1px solid rgba(255,255,255,0.06);
+    padding: 40px; margin-bottom: 32px;
   }
-  .admin-section-title {
+  .form-title {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.5rem; letter-spacing: 3px;
-    margin-bottom: 24px; color: var(--off-white);
-    display: flex; align-items: center; gap: 12px;
+    font-size: 1.8rem; letter-spacing: 3px;
+    margin-bottom: 32px; color: var(--off-white);
+  }
+  .form-title span { color: var(--red); }
+
+  .form-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  .form-grid-3 {
+    display: grid; grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+  }
+  .form-full { grid-column: 1 / -1; }
+
+  .form-group { margin-bottom: 0; }
+  .form-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--warm-grey); display: block; margin-bottom: 8px;
+  }
+  .form-input, .form-select, .form-textarea {
+    width: 100%; padding: 12px 16px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: var(--off-white);
+    font-family: 'Barlow', sans-serif; font-size: 0.9rem;
+    outline: none; transition: border-color 0.3s;
+  }
+  .form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--red); }
+  .form-input::placeholder, .form-textarea::placeholder { color: rgba(168,160,154,0.4); }
+  .form-select option { background: #111; color: var(--off-white); }
+  .form-textarea { resize: vertical; min-height: 90px; }
+
+  /* UPLOAD PHOTO */
+  .photo-upload-zone {
+    border: 2px dashed rgba(255,255,255,0.15);
+    padding: 32px; text-align: center;
+    transition: border-color 0.3s; position: relative;
+    cursor: pointer !important;
+  }
+  .photo-upload-zone:hover { border-color: var(--red); }
+  .photo-upload-zone input[type="file"] {
+    position: absolute; inset: 0; opacity: 0;
+    width: 100%; height: 100%; cursor: pointer !important;
+  }
+  .upload-icon { font-size: 2.5rem; margin-bottom: 8px; }
+  .upload-text {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--warm-grey);
+  }
+  .photos-preview {
+    display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px;
+  }
+  .photo-preview-item {
+    position: relative; width: 80px; height: 80px;
+  }
+  .photo-preview-item img {
+    width: 100%; height: 100%; object-fit: cover;
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  .photo-preview-item button {
+    position: absolute; top: -6px; right: -6px;
+    background: var(--red); color: white; border: none;
+    width: 20px; height: 20px; font-size: 0.7rem;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 50%;
   }
 
+  /* REDUCTION */
+  .promo-toggle {
+    display: flex; align-items: center; gap: 12px; margin-bottom: 16px;
+  }
+  .toggle-switch {
+    width: 44px; height: 24px; background: #222;
+    border: 1px solid rgba(255,255,255,0.15);
+    position: relative; cursor: pointer !important;
+    transition: background 0.3s;
+  }
+  .toggle-switch.on { background: var(--red); }
+  .toggle-switch::after {
+    content: ''; position: absolute; top: 3px; left: 3px;
+    width: 16px; height: 16px; background: white;
+    transition: left 0.3s;
+  }
+  .toggle-switch.on::after { left: 23px; }
+  .toggle-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--warm-grey);
+  }
+  .promo-fields { display: none; }
+  .promo-fields.show { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
+  .btn-ajouter {
+    background: var(--red); color: white; border: none;
+    padding: 16px 40px; margin-top: 28px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.85rem; letter-spacing: 4px; text-transform: uppercase;
+    font-weight: 600; transition: background 0.2s, transform 0.2s;
+  }
+  .btn-ajouter:hover { background: #8B0012; transform: translateY(-2px); }
+
+  /* LISTE PRODUITS */
+  .produits-liste { margin-top: 32px; }
+  .produit-item {
+    background: #0e0e0e; border: 1px solid rgba(255,255,255,0.06);
+    padding: 20px 24px; margin-bottom: 8px;
+    display: grid; grid-template-columns: 70px 1fr auto auto auto;
+    gap: 16px; align-items: center;
+    transition: border-color 0.2s;
+  }
+  .produit-item:hover { border-color: rgba(192,0,26,0.3); }
+  .produit-thumb {
+    width: 70px; height: 70px; object-fit: cover;
+    background: #111; border: 1px solid rgba(255,255,255,0.06);
+  }
+  .produit-nom {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem; letter-spacing: 2px; color: var(--off-white);
+  }
+  .produit-marque {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.65rem; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--red); margin-bottom: 4px;
+  }
+  .produit-prix-affiche {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.3rem; color: var(--off-white);
+  }
+  .produit-prix-barre {
+    font-size: 0.85rem; color: var(--warm-grey);
+    text-decoration: line-through; margin-left: 8px;
+  }
+  .badge-promo {
+    background: var(--red); color: white;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.65rem; letter-spacing: 2px;
+    padding: 3px 8px; margin-left: 8px;
+  }
+  .btn-suppr {
+    background: none; border: 1px solid rgba(192,0,26,0.3);
+    color: var(--red); padding: 8px 16px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase;
+    transition: background 0.2s;
+  }
+  .btn-suppr:hover { background: rgba(192,0,26,0.15); }
+  .btn-edit {
+    background: none; border: 1px solid rgba(255,255,255,0.15);
+    color: var(--warm-grey); padding: 8px 16px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .btn-edit:hover { border-color: var(--red); color: var(--off-white); }
+
+  .empty-msg {
+    text-align: center; padding: 60px;
+    color: var(--warm-grey); font-style: italic;
+  }
+
+  /* CLIENTS */
   table { width: 100%; border-collapse: collapse; }
   th {
     font-family: 'Barlow Condensed', sans-serif;
     font-size: 0.65rem; letter-spacing: 3px; text-transform: uppercase;
-    color: var(--warm-grey); padding: 10px 12px; text-align: left;
+    color: var(--warm-grey); padding: 12px; text-align: left;
     border-bottom: 1px solid rgba(255,255,255,0.06);
   }
   td {
@@ -74,34 +251,31 @@
     border-bottom: 1px solid rgba(255,255,255,0.04);
     color: var(--off-white);
   }
-  tr:hover td { background: rgba(255,255,255,0.02); }
-  .badge {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase;
-    padding: 4px 10px; border-radius: 2px;
-  }
-  .badge-admin { background: rgba(192,0,26,0.2); color: var(--red); border: 1px solid rgba(192,0,26,0.4); }
-  .badge-client { background: rgba(255,255,255,0.05); color: var(--warm-grey); border: 1px solid rgba(255,255,255,0.1); }
 
-  .btn-danger {
-    background: none; border: 1px solid rgba(192,0,26,0.4);
-    color: var(--red); padding: 6px 14px;
+  /* NOTIF */
+  .notif {
+    position: fixed; bottom: 32px; right: 32px;
+    background: #111; border: 1px solid var(--red);
+    color: white; padding: 16px 24px;
     font-family: 'Barlow Condensed', sans-serif;
-    font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase;
-    transition: background 0.2s;
+    font-size: 0.85rem; letter-spacing: 2px;
+    transform: translateY(100px); opacity: 0;
+    transition: transform 0.4s, opacity 0.4s; z-index: 999;
   }
-  .btn-danger:hover { background: rgba(192,0,26,0.2); }
+  .notif.show { transform: translateY(0); opacity: 1; }
 
   .acces-refuse {
-    text-align: center; padding: 80px 24px;
+    text-align: center; padding: 120px 24px;
   }
   .acces-refuse h2 {
     font-family: 'Bebas Neue', sans-serif;
     font-size: 3rem; color: var(--red); margin-bottom: 16px;
   }
 
-  @media (max-width: 768px) {
-    .admin-page { padding: 120px 24px 60px; }
+  @media (max-width: 900px) {
+    .admin-page { padding: 100px 24px 60px; }
+    .form-grid, .form-grid-3 { grid-template-columns: 1fr; }
+    .produit-item { grid-template-columns: 60px 1fr; }
   }
 </style>
 </head>
@@ -111,18 +285,25 @@
   <a href="index.html" class="nav-logo">REDSKINS <span>FRANCONVILLE</span></a>
   <ul class="nav-links">
     <li><a href="index.html#marques">Marques</a></li>
-    <li><a href="compte.html">Mon Compte</a></li>
+    <li><a href="compte.html" title="Mon Compte" style="font-size:1.3rem;padding:1.2rem 0.8rem;">👤</a></li>
     <li><a href="panier.html" class="nav-cta">🛒 Panier</a></li>
   </ul>
 </nav>
 
 <div class="admin-page" id="admin-content">
-  <!-- Rempli par JS -->
+  <div class="acces-refuse">
+    <h2>CHARGEMENT...</h2>
+  </div>
 </div>
+
+<div class="notif" id="notif"></div>
 
 <script>
 const session = JSON.parse(localStorage.getItem('rf-session') || 'null');
 const el = document.getElementById('admin-content');
+
+// ── PHOTOS SÉLECTIONNÉES ──
+let photosBase64 = [];
 
 if (!session || !session.admin) {
   el.innerHTML = `
@@ -132,122 +313,359 @@ if (!session || !session.admin) {
       <a href="compte.html" class="btn-primary"><span>Se connecter</span></a>
     </div>`;
 } else {
+  renderAdmin();
+}
+
+function renderAdmin() {
+  const produits = getProduits();
   const users = JSON.parse(localStorage.getItem('rf-users') || '[]');
   const cart = JSON.parse(localStorage.getItem('redskins-cart') || '[]');
-  const totalPanier = cart.reduce((acc, i) => acc + i.price * i.qty, 0);
-  const totalArticles = cart.reduce((acc, i) => acc + i.qty, 0);
+  const totalPanier = cart.reduce((a,i) => a + i.price * i.qty, 0);
 
-  // Stats
   el.innerHTML = `
     <div class="admin-header">
       <div class="admin-title">ADMIN <span>PANEL</span></div>
-      <div style="display:flex;gap:12px;align-items:center;">
-        <span style="font-family:'Barlow Condensed',sans-serif;font-size:0.75rem;letter-spacing:2px;color:var(--warm-grey);">
-          Connecté : ${session.nom}
-        </span>
-        <button class="btn-danger" onclick="localStorage.removeItem('rf-session');window.location.href='compte.html'">
-          Déconnexion
-        </button>
+      <button class="btn-suppr" onclick="localStorage.removeItem('rf-session');window.location.href='compte.html'">
+        Déconnexion
+      </button>
+    </div>
+
+    <!-- TABS -->
+    <div class="admin-tabs">
+      <button class="admin-tab active" onclick="switchPanel('produits')">🛍️ Produits</button>
+      <button class="admin-tab" onclick="switchPanel('clients')">👥 Clients</button>
+      <button class="admin-tab" onclick="switchPanel('stats')">📊 Statistiques</button>
+    </div>
+
+    <!-- PANEL PRODUITS -->
+    <div class="admin-panel active" id="panel-produits">
+
+      <div class="form-produit">
+        <div class="form-title">AJOUTER UN <span>PRODUIT</span></div>
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Marque</label>
+            <select class="form-select" id="p-marque">
+              <option value="">— Choisir une marque —</option>
+              <option value="Guess">Guess</option>
+              <option value="Boss">Boss</option>
+              <option value="Hugo">Hugo</option>
+              <option value="Levis">Levis</option>
+              <option value="Timberland">Timberland</option>
+              <option value="Lacoste">Lacoste</option>
+              <option value="Chabrand">Chabrand</option>
+              <option value="Redskins">Redskins</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Nom du produit</label>
+            <input type="text" class="form-input" id="p-nom" placeholder="Ex: BLOUSON CUIR NOIR">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Référence</label>
+            <input type="text" class="form-input" id="p-ref" placeholder="Ex: RS2024-001">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Catégorie</label>
+            <select class="form-select" id="p-categorie">
+              <option value="Vêtements">Vêtements</option>
+              <option value="Chaussures">Chaussures</option>
+              <option value="Accessoires">Accessoires</option>
+              <option value="Cuir">Cuir</option>
+            </select>
+          </div>
+          <div class="form-group form-full">
+            <label class="form-label">Description</label>
+            <textarea class="form-textarea" id="p-desc" placeholder="Description du produit..."></textarea>
+          </div>
+        </div>
+
+        <!-- PRIX -->
+        <div class="form-grid-3" style="margin-top:20px;">
+          <div class="form-group">
+            <label class="form-label">Prix (€)</label>
+            <input type="number" class="form-input" id="p-prix" placeholder="99">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Tailles (séparées par virgule)</label>
+            <input type="text" class="form-input" id="p-tailles" placeholder="S,M,L,XL ou 39,40,41">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Couleurs (séparées par virgule)</label>
+            <input type="text" class="form-input" id="p-couleurs" placeholder="Noir,Blanc,Rouge">
+          </div>
+        </div>
+
+        <!-- RÉDUCTION -->
+        <div style="margin-top:24px;">
+          <div class="promo-toggle">
+            <div class="toggle-switch" id="promo-toggle" onclick="togglePromo()"></div>
+            <span class="toggle-label">Activer une réduction</span>
+          </div>
+          <div class="promo-fields" id="promo-fields">
+            <div class="form-group">
+              <label class="form-label">Prix réduit (€)</label>
+              <input type="number" class="form-input" id="p-prix-reduit" placeholder="79">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Libellé promo</label>
+              <input type="text" class="form-input" id="p-promo-label" placeholder="Ex: -20% · Soldes d'été">
+            </div>
+          </div>
+        </div>
+
+        <!-- PHOTOS -->
+        <div style="margin-top:24px;">
+          <label class="form-label">Photos du produit</label>
+          <div class="photo-upload-zone" onclick="document.getElementById('p-photos').click()">
+            <input type="file" id="p-photos" accept="image/*,.avif,.webp" multiple onchange="handlePhotos(event)">
+            <div class="upload-icon">📸</div>
+            <div class="upload-text">Cliquer pour ajouter des photos<br><span style="font-size:0.75rem;opacity:0.6;">JPG, PNG, AVIF, WEBP acceptés</span></div>
+          </div>
+          <div class="photos-preview" id="photos-preview"></div>
+        </div>
+
+        <button class="btn-ajouter" onclick="ajouterProduit()">✚ Ajouter le produit</button>
+      </div>
+
+      <!-- LISTE PRODUITS -->
+      <div id="liste-produits"></div>
+    </div>
+
+    <!-- PANEL CLIENTS -->
+    <div class="admin-panel" id="panel-clients">
+      <div class="form-produit">
+        <div class="form-title">COMPTES <span>CLIENTS</span></div>
+        ${users.length === 0
+          ? '<p class="empty-msg">Aucun compte client.</p>'
+          : `<table>
+              <thead><tr><th>Nom</th><th>Email</th><th>Inscription</th><th>Action</th></tr></thead>
+              <tbody>
+                ${users.map((u,i) => `
+                  <tr>
+                    <td>${u.nom}</td>
+                    <td>${u.email}</td>
+                    <td>${u.date||'—'}</td>
+                    <td><button class="btn-suppr" onclick="supprimerClient(${i})">Supprimer</button></td>
+                  </tr>`).join('')}
+              </tbody>
+            </table>`}
       </div>
     </div>
 
-    <div class="admin-grid">
-      <div class="admin-stat">
-        <div class="admin-stat-num">${users.length}</div>
-        <div class="admin-stat-label">Comptes clients</div>
+    <!-- PANEL STATS -->
+    <div class="admin-panel" id="panel-stats">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-card-num">${produits.length}</div>
+          <div class="stat-card-label">Produits en ligne</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-num">${users.length}</div>
+          <div class="stat-card-label">Comptes clients</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-num">${cart.reduce((a,i)=>a+i.qty,0)}</div>
+          <div class="stat-card-label">Articles en panier</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-num">${totalPanier.toFixed(0)} €</div>
+          <div class="stat-card-label">Valeur panier</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-num">${produits.filter(p=>p.promoActif).length}</div>
+          <div class="stat-card-label">Produits en promo</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-num">8</div>
+          <div class="stat-card-label">Marques actives</div>
+        </div>
       </div>
-      <div class="admin-stat">
-        <div class="admin-stat-num">${totalArticles}</div>
-        <div class="admin-stat-label">Articles en panier</div>
-      </div>
-      <div class="admin-stat">
-        <div class="admin-stat-num">${totalPanier.toFixed(0)} €</div>
-        <div class="admin-stat-label">Valeur panier</div>
-      </div>
-      <div class="admin-stat">
-        <div class="admin-stat-num">8</div>
-        <div class="admin-stat-label">Marques actives</div>
-      </div>
-    </div>
 
-    <!-- CLIENTS -->
-    <div class="admin-section">
-      <div class="admin-section-title">👥 Comptes clients</div>
-      ${users.length === 0
-        ? '<p style="color:var(--warm-grey);font-size:0.9rem;font-style:italic;">Aucun compte client pour le moment.</p>'
-        : `<table>
-          <thead>
-            <tr>
-              <th>Nom</th>
-              <th>Email</th>
-              <th>Inscription</th>
-              <th>Rôle</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${users.map((u, i) => `
-              <tr>
-                <td>${u.nom}</td>
-                <td>${u.email}</td>
-                <td>${u.date || '—'}</td>
-                <td><span class="badge ${u.admin ? 'badge-admin' : 'badge-client'}">${u.admin ? 'Admin' : 'Client'}</span></td>
-                <td><button class="btn-danger" onclick="supprimerClient(${i})">Supprimer</button></td>
-              </tr>`).join('')}
-          </tbody>
-        </table>`
-      }
-    </div>
-
-    <!-- PANIER EN COURS -->
-    <div class="admin-section">
-      <div class="admin-section-title">🛒 Panier en cours</div>
-      ${cart.length === 0
-        ? '<p style="color:var(--warm-grey);font-size:0.9rem;font-style:italic;">Panier vide.</p>'
-        : `<table>
-          <thead><tr><th>Produit</th><th>Marque</th><th>Qté</th><th>Prix unitaire</th><th>Total</th></tr></thead>
-          <tbody>
-            ${cart.map(item => `
-              <tr>
-                <td>${item.name}</td>
-                <td>${item.brand || '—'}</td>
-                <td>${item.qty}</td>
-                <td>${item.price} €</td>
-                <td>${(item.price * item.qty).toFixed(2)} €</td>
-              </tr>`).join('')}
-            <tr>
-              <td colspan="4" style="text-align:right;color:var(--warm-grey);font-family:'Barlow Condensed',sans-serif;letter-spacing:2px;text-transform:uppercase;font-size:0.8rem;">TOTAL</td>
-              <td style="color:var(--red);font-weight:600;">${totalPanier.toFixed(2)} €</td>
-            </tr>
-          </tbody>
-        </table>`
-      }
-    </div>
-
-    <!-- LIENS RAPIDES -->
-    <div class="admin-section">
-      <div class="admin-section-title">🔗 Liens rapides</div>
-      <div style="display:flex;gap:12px;flex-wrap:wrap;">
-        <a href="index.html" class="btn-outline" style="font-size:0.75rem;padding:10px 20px;">Accueil</a>
-        <a href="guess.html" class="btn-outline" style="font-size:0.75rem;padding:10px 20px;">Guess</a>
-        <a href="boss.html" class="btn-outline" style="font-size:0.75rem;padding:10px 20px;">Boss</a>
-        <a href="hugo.html" class="btn-outline" style="font-size:0.75rem;padding:10px 20px;">Hugo</a>
-        <a href="levis.html" class="btn-outline" style="font-size:0.75rem;padding:10px 20px;">Levi's</a>
-        <a href="timberland.html" class="btn-outline" style="font-size:0.75rem;padding:10px 20px;">Timberland</a>
-        <a href="lacoste.html" class="btn-outline" style="font-size:0.75rem;padding:10px 20px;">Lacoste</a>
-        <a href="chabranc.html" class="btn-outline" style="font-size:0.75rem;padding:10px 20px;">Chabranc</a>
-        <a href="redskins-brand.html" class="btn-outline" style="font-size:0.75rem;padding:10px 20px;">Redskins</a>
+      <!-- Panier détail -->
+      <div class="form-produit">
+        <div class="form-title">PANIER <span>EN COURS</span></div>
+        ${cart.length === 0
+          ? '<p class="empty-msg">Panier vide.</p>'
+          : `<table>
+              <thead><tr><th>Produit</th><th>Marque</th><th>Qté</th><th>Prix</th><th>Total</th></tr></thead>
+              <tbody>
+                ${cart.map(i=>`
+                  <tr>
+                    <td>${i.name}</td><td>${i.brand||'—'}</td>
+                    <td>${i.qty}</td><td>${i.price} €</td>
+                    <td>${(i.price*i.qty).toFixed(2)} €</td>
+                  </tr>`).join('')}
+                <tr><td colspan="4" style="text-align:right;color:var(--warm-grey);font-family:'Barlow Condensed',sans-serif;letter-spacing:2px;font-size:0.8rem;text-transform:uppercase;">TOTAL</td>
+                <td style="color:var(--red);font-weight:600;">${totalPanier.toFixed(2)} €</td></tr>
+              </tbody>
+            </table>`}
       </div>
     </div>
   `;
+
+  renderProduits();
 }
 
+// ── TABS ──
+function switchPanel(name) {
+  document.querySelectorAll('.admin-tab').forEach((t,i) => {
+    const names = ['produits','clients','stats'];
+    t.classList.toggle('active', names[i] === name);
+  });
+  document.querySelectorAll('.admin-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('panel-' + name).classList.add('active');
+}
+
+// ── PROMO TOGGLE ──
+let promoActif = false;
+function togglePromo() {
+  promoActif = !promoActif;
+  document.getElementById('promo-toggle').classList.toggle('on', promoActif);
+  document.getElementById('promo-fields').classList.toggle('show', promoActif);
+}
+
+// ── PHOTOS ──
+function handlePhotos(e) {
+  const files = Array.from(e.target.files);
+  files.forEach(file => {
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      photosBase64.push(ev.target.result);
+      renderPreviews();
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+function renderPreviews() {
+  const preview = document.getElementById('photos-preview');
+  preview.innerHTML = photosBase64.map((src, i) => `
+    <div class="photo-preview-item">
+      <img src="${src}" alt="photo ${i+1}">
+      <button onclick="supprimerPhoto(${i})">✕</button>
+    </div>`).join('');
+}
+
+function supprimerPhoto(i) {
+  photosBase64.splice(i, 1);
+  renderPreviews();
+}
+
+// ── PRODUITS LOCALSTORAGE ──
+function getProduits() { return JSON.parse(localStorage.getItem('rf-produits') || '[]'); }
+function saveProduits(p) { localStorage.setItem('rf-produits', JSON.stringify(p)); }
+
+// ── AJOUTER PRODUIT ──
+function ajouterProduit() {
+  const marque = document.getElementById('p-marque').value;
+  const nom = document.getElementById('p-nom').value.trim().toUpperCase();
+  const ref = document.getElementById('p-ref').value.trim();
+  const categorie = document.getElementById('p-categorie').value;
+  const desc = document.getElementById('p-desc').value.trim();
+  const prix = parseFloat(document.getElementById('p-prix').value);
+  const tailles = document.getElementById('p-tailles').value.split(',').map(t=>t.trim()).filter(Boolean);
+  const couleurs = document.getElementById('p-couleurs').value.split(',').map(c=>c.trim()).filter(Boolean);
+  const prixReduit = promoActif ? parseFloat(document.getElementById('p-prix-reduit').value) : null;
+  const promoLabel = promoActif ? document.getElementById('p-promo-label').value.trim() : null;
+
+  if (!marque || !nom || !prix) { showNotif('⚠️ Marque, nom et prix sont obligatoires !'); return; }
+
+  const marquePages = {
+    'Guess':'guess.html','Boss':'boss.html','Hugo':'hugo.html',
+    'Levis':'levis.html','Timberland':'timberland.html','Lacoste':'lacoste.html',
+    'Chabrand':'chabrand.html','Redskins':'redskins-brand.html'
+  };
+
+  const id = marque.toLowerCase() + '-' + Date.now();
+  const produit = {
+    id, nom, marque, ref, categorie, desc,
+    prix, tailles, couleurs,
+    promoActif, prixReduit, promoLabel,
+    photos: photosBase64.length > 0 ? photosBase64 : [],
+    page: marquePages[marque] || 'index.html'
+  };
+
+  const produits = getProduits();
+  produits.push(produit);
+  saveProduits(produits);
+
+  // Reset formulaire
+  ['p-nom','p-ref','p-desc','p-prix','p-tailles','p-couleurs','p-prix-reduit','p-promo-label'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+  document.getElementById('p-marque').value = '';
+  photosBase64 = [];
+  document.getElementById('photos-preview').innerHTML = '';
+  if (promoActif) togglePromo();
+
+  showNotif('✓ Produit "' + nom + '" ajouté !');
+  renderProduits();
+}
+
+// ── AFFICHER PRODUITS ──
+function renderProduits() {
+  const produits = getProduits();
+  const liste = document.getElementById('liste-produits');
+  if (!liste) return;
+
+  if (produits.length === 0) {
+    liste.innerHTML = '<p class="empty-msg">Aucun produit ajouté pour le moment.</p>';
+    return;
+  }
+
+  liste.innerHTML = produits.map((p, i) => `
+    <div class="produit-item">
+      <img class="produit-thumb" src="${p.photos[0] || ''}" alt="${p.nom}"
+        onerror="this.style.background='#222';this.src=''">
+      <div>
+        <div class="produit-marque">${p.marque} ${p.categorie ? '· ' + p.categorie : ''}</div>
+        <div class="produit-nom">${p.nom}</div>
+        <div style="margin-top:4px;">
+          ${p.promoActif && p.prixReduit
+            ? `<span class="produit-prix-affiche">${p.prixReduit} €</span>
+               <span class="produit-prix-barre">${p.prix} €</span>
+               <span class="badge-promo">${p.promoLabel || 'PROMO'}</span>`
+            : `<span class="produit-prix-affiche">${p.prix} €</span>`}
+        </div>
+        ${p.ref ? `<div style="font-size:0.75rem;color:var(--warm-grey);margin-top:4px;font-family:'Barlow Condensed',sans-serif;letter-spacing:1px;">Réf: ${p.ref}</div>` : ''}
+      </div>
+      <div style="font-size:0.8rem;color:var(--warm-grey);font-family:'Barlow Condensed',sans-serif;letter-spacing:1px;">
+        ${p.tailles ? p.tailles.join(' · ') : ''}
+      </div>
+      <div style="font-size:0.8rem;color:var(--warm-grey);font-family:'Barlow Condensed',sans-serif;letter-spacing:1px;">
+        ${p.couleurs ? p.couleurs.join(' · ') : ''}
+      </div>
+      <button class="btn-suppr" onclick="supprimerProduit('${p.id}')">Supprimer</button>
+    </div>`).join('');
+}
+
+// ── SUPPRIMER PRODUIT ──
+function supprimerProduit(id) {
+  if (!confirm('Supprimer ce produit ?')) return;
+  const produits = getProduits().filter(p => p.id !== id);
+  saveProduits(produits);
+  showNotif('✓ Produit supprimé');
+  renderProduits();
+}
+
+// ── SUPPRIMER CLIENT ──
 function supprimerClient(index) {
   if (!confirm('Supprimer ce compte ?')) return;
   const users = JSON.parse(localStorage.getItem('rf-users') || '[]');
   users.splice(index, 1);
   localStorage.setItem('rf-users', JSON.stringify(users));
-  location.reload();
+  showNotif('✓ Compte supprimé');
+  renderAdmin();
+}
+
+// ── NOTIF ──
+function showNotif(msg) {
+  const n = document.getElementById('notif');
+  n.textContent = msg; n.classList.add('show');
+  setTimeout(() => n.classList.remove('show'), 3000);
 }
 </script>
 
