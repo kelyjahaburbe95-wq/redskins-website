@@ -239,10 +239,7 @@
           <div class="dash-card-icon">🛍️</div>
           <div class="dash-card-label">Boutique</div>
         </a>
-        <a href="admin.html" class="dash-card" id="admin-link" style="display:none;">
-          <div class="dash-card-icon">⚙️</div>
-          <div class="dash-card-label">Administration</div>
-        </a>
+
       </div>
 
       <div class="dash-section-title">Mes informations</div>
@@ -271,10 +268,10 @@
         <li><a href="guess.html">Guess</a></li>
         <li><a href="boss.html">Boss</a></li>
         <li><a href="hugo.html">Hugo</a></li>
-        <li><a href="levis.html">Levi's</a></li>
+        <li><a href="levis.html">Levis</a></li>
         <li><a href="timberland.html">Timberland</a></li>
         <li><a href="lacoste.html">Lacoste</a></li>
-        <li><a href="chabranc.html">Chabranc</a></li>
+        <li><a href="chabrand.html">Chabrand</a></li>
         <li><a href="redskins-brand.html">Redskins</a></li>
       </ul>
     </div>
@@ -334,11 +331,11 @@ function connexion() {
   const mdp = document.getElementById('login-mdp').value;
   const errEl = document.getElementById('login-error');
 
-  // Compte admin
+  // Compte admin — redirige vers admin.html directement
   if (email === 'admin@redskins-franconville.fr' && mdp === 'Admin1984!') {
     const adminUser = { nom: 'Administrateur', email, admin: true, date: new Date().toLocaleDateString('fr-FR'), commandes: [] };
     saveSession(adminUser);
-    showDashboard(adminUser);
+    window.location.href = 'admin.html';
     return;
   }
 
@@ -360,7 +357,7 @@ function showDashboard(user) {
   document.getElementById('info-email').textContent = user.email;
   document.getElementById('info-date').textContent = user.date || '—';
 
-  if (user.admin) document.getElementById('admin-link').style.display = 'block';
+
 
   // Commandes
   const cart = JSON.parse(localStorage.getItem('redskins-cart') || '[]');
