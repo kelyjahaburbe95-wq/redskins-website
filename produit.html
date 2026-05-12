@@ -225,10 +225,10 @@
         <li><a href="guess.html">Guess</a></li>
         <li><a href="boss.html">Boss</a></li>
         <li><a href="hugo.html">Hugo</a></li>
-        <li><a href="levis.html">Levi's</a></li>
+        <li><a href="levis.html">Levis</a></li>
         <li><a href="timberland.html">Timberland</a></li>
         <li><a href="lacoste.html">Lacoste</a></li>
-        <li><a href="chabranc.html">Chabranc</a></li>
+        <li><a href="chabrand.html">Chabrand</a></li>
         <li><a href="redskins-brand.html">Redskins</a></li>
       </ul>
     </div>
@@ -285,10 +285,24 @@ function init() {
   const id = params.get('id');
   produit = PRODUITS[id];
 
+  // Chercher aussi dans les produits ajoutés depuis l'admin
+  if (!produit) {
+    const adminProduits = JSON.parse(localStorage.getItem('rf-produits') || '[]');
+    produit = adminProduits.find(p => p.id === id);
+  }
+
   if (!produit) {
     document.querySelector('.product-page').innerHTML =
       '<p style="color:var(--warm-grey);padding:80px;grid-column:1/-1;text-align:center;font-size:1.2rem;">Produit introuvable.</p>';
     return;
+  }
+
+  // Gérer la réduction
+  if (produit.promoActif && produit.prixReduit) {
+    document.getElementById('prod-price').innerHTML =
+      '<span style="color:var(--red)">' + produit.prixReduit + ' €</span> ' +
+      '<span style="font-size:1.2rem;text-decoration:line-through;color:var(--warm-grey)">' + produit.prix + ' €</span> ' +
+      '<span style="background:var(--red);color:white;font-size:0.9rem;padding:4px 10px;margin-left:8px;">' + (produit.promoLabel || 'PROMO') + '</span>';
   }
 
   document.title = produit.nom + ' — ' + produit.marque + ' — Redskins Franconville';
