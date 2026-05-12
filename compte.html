@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mon Compte — Redskins Franconville</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<style>
+  * { cursor: default !important; }
+  a, button { cursor: pointer !important; }
+
+  .compte-page {
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    padding: 120px 24px 60px;
+    position: relative; z-index: 1;
+  }
+
+  .compte-box {
+    background: #0e0e0e;
+    border: 1px solid rgba(255,255,255,0.06);
+    width: 100%; max-width: 460px;
+    padding: 48px;
+    position: relative;
+  }
+
+  .compte-box::before {
+    content: ''; position: absolute; top: 0; left: 0;
+    width: 0; height: 2px; background: var(--red);
+    animation: loadLine 0.8s ease forwards 0.3s;
+  }
+  @keyframes loadLine { to { width: 100%; } }
+
+  .compte-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem; letter-spacing: 4px;
+    color: var(--off-white); margin-bottom: 8px;
+    text-align: center;
+  }
+  .compte-logo span { color: var(--red); }
+
+  .tabs {
+    display: flex; margin: 32px 0 28px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .tab {
+    flex: 1; padding: 12px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.8rem; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--warm-grey); background: none; border: none;
+    border-bottom: 2px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+    margin-bottom: -1px;
+  }
+  .tab.active { color: var(--off-white); border-bottom-color: var(--red); }
+
+  .form-group { margin-bottom: 20px; }
+  .form-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--warm-grey); display: block; margin-bottom: 8px;
+  }
+  .form-input {
+    width: 100%; padding: 14px 16px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: var(--off-white);
+    font-family: 'Barlow', sans-serif; font-size: 0.95rem;
+    outline: none; transition: border-color 0.3s;
+  }
+  .form-input:focus { border-color: var(--red); }
+  .form-input::placeholder { color: rgba(168,160,154,0.4); }
+
+  .btn-submit {
+    width: 100%; padding: 16px;
+    background: var(--red); color: white; border: none;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.85rem; letter-spacing: 4px; text-transform: uppercase;
+    font-weight: 600; margin-top: 8px; transition: background 0.2s;
+  }
+  .btn-submit:hover { background: #8B0012; }
+
+  .form-error {
+    color: #ff4444; font-size: 0.82rem;
+    font-family: 'Barlow Condensed', sans-serif;
+    letter-spacing: 1px; margin-top: 12px;
+    display: none; text-align: center;
+  }
+  .form-error.show { display: block; }
+
+  /* TABLEAU DE BORD */
+  .dashboard { display: none; }
+  .dashboard.show { display: block; }
+
+  .dash-header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 32px;
+  }
+  .dash-welcome {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem; letter-spacing: 3px;
+  }
+  .dash-welcome span { color: var(--red); }
+  .btn-logout {
+    background: none; border: 1px solid rgba(255,255,255,0.15);
+    color: var(--warm-grey); padding: 8px 16px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .btn-logout:hover { border-color: var(--red); color: var(--red); }
+
+  .dash-cards {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+    margin-bottom: 28px;
+  }
+  .dash-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    padding: 20px; text-align: center;
+    text-decoration: none; transition: border-color 0.2s;
+  }
+  .dash-card:hover { border-color: var(--red); }
+  .dash-card-icon { font-size: 1.8rem; margin-bottom: 8px; }
+  .dash-card-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--warm-grey);
+  }
+
+  .dash-section-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--red); margin-bottom: 12px; margin-top: 24px;
+  }
+
+  .commande-item {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.05);
+    padding: 16px; margin-bottom: 8px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .commande-nom {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.9rem; letter-spacing: 1px; color: var(--off-white);
+  }
+  .commande-prix { color: var(--red); font-weight: 600; font-size: 0.9rem; }
+  .commande-vide {
+    color: var(--warm-grey); font-size: 0.85rem;
+    font-style: italic; text-align: center; padding: 20px 0;
+  }
+
+  .infos-compte { margin-top: 8px; }
+  .info-ligne {
+    display: flex; justify-content: space-between;
+    padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
+    font-size: 0.88rem;
+  }
+  .info-ligne span:first-child { color: var(--warm-grey); }
+  .info-ligne span:last-child { color: var(--off-white); }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">REDSKINS <span>FRANCONVILLE</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html#collections">Collections</a></li>
+    <li><a href="index.html#marques">Marques</a></li>
+    <li><a href="index.html#about">La Boutique</a></li>
+    <li><a href="index.html#contact">Contact</a></li>
+    <li><a href="panier.html" class="nav-cta">🛒 Panier</a></li>
+  </ul>
+</nav>
+
+<div class="compte-page">
+  <div class="compte-box">
+
+    <div class="compte-logo">REDSKINS <span>FRANCONVILLE</span></div>
+
+    <!-- FORMULAIRES CONNEXION / INSCRIPTION -->
+    <div id="auth-section">
+      <div class="tabs">
+        <button class="tab active" onclick="switchTab('connexion')">Connexion</button>
+        <button class="tab" onclick="switchTab('inscription')">Créer un compte</button>
+      </div>
+
+      <!-- CONNEXION -->
+      <div id="form-connexion">
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input type="email" class="form-input" id="login-email" placeholder="votre@email.com">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Mot de passe</label>
+          <input type="password" class="form-input" id="login-mdp" placeholder="••••••••">
+        </div>
+        <div class="form-error" id="login-error">Email ou mot de passe incorrect.</div>
+        <button class="btn-submit" onclick="connexion()">Se connecter</button>
+      </div>
+
+      <!-- INSCRIPTION -->
+      <div id="form-inscription" style="display:none;">
+        <div class="form-group">
+          <label class="form-label">Nom complet</label>
+          <input type="text" class="form-input" id="reg-nom" placeholder="Jean Dupont">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input type="email" class="form-input" id="reg-email" placeholder="votre@email.com">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Mot de passe</label>
+          <input type="password" class="form-input" id="reg-mdp" placeholder="Minimum 6 caractères">
+        </div>
+        <div class="form-error" id="reg-error"></div>
+        <button class="btn-submit" onclick="inscription()">Créer mon compte</button>
+      </div>
+    </div>
+
+    <!-- TABLEAU DE BORD -->
+    <div class="dashboard" id="dashboard">
+      <div class="dash-header">
+        <div class="dash-welcome">Bonjour, <span id="dash-nom"></span></div>
+        <button class="btn-logout" onclick="deconnexion()">Déconnexion</button>
+      </div>
+
+      <div class="dash-cards">
+        <a href="panier.html" class="dash-card">
+          <div class="dash-card-icon">🛒</div>
+          <div class="dash-card-label">Mon Panier</div>
+        </a>
+        <a href="index.html#marques" class="dash-card">
+          <div class="dash-card-icon">🏪</div>
+          <div class="dash-card-label">Nos Marques</div>
+        </a>
+        <a href="index.html" class="dash-card">
+          <div class="dash-card-icon">🛍️</div>
+          <div class="dash-card-label">Boutique</div>
+        </a>
+        <a href="admin.html" class="dash-card" id="admin-link" style="display:none;">
+          <div class="dash-card-icon">⚙️</div>
+          <div class="dash-card-label">Administration</div>
+        </a>
+      </div>
+
+      <div class="dash-section-title">Mes informations</div>
+      <div class="infos-compte">
+        <div class="info-ligne"><span>Nom</span><span id="info-nom"></span></div>
+        <div class="info-ligne"><span>Email</span><span id="info-email"></span></div>
+        <div class="info-ligne"><span>Membre depuis</span><span id="info-date"></span></div>
+      </div>
+
+      <div class="dash-section-title">Mes dernières commandes</div>
+      <div id="commandes-liste"></div>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <div class="footer-grid">
+    <div>
+      <p class="footer-logo">REDSKINS <span>FRANCONVILLE</span></p>
+      <p class="footer-desc">La boutique Redskins de Franconville — Cuir premium et grandes marques depuis 1984.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Nos Marques</h4>
+      <ul>
+        <li><a href="guess.html">Guess</a></li>
+        <li><a href="boss.html">Boss</a></li>
+        <li><a href="hugo.html">Hugo</a></li>
+        <li><a href="levis.html">Levi's</a></li>
+        <li><a href="timberland.html">Timberland</a></li>
+        <li><a href="lacoste.html">Lacoste</a></li>
+        <li><a href="chabranc.html">Chabranc</a></li>
+        <li><a href="redskins-brand.html">Redskins</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>La Boutique</h4>
+      <ul>
+        <li><a href="index.html">Accueil</a></li>
+        <li><a href="index.html#about">Notre histoire</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 <span>Redskins Franconville</span>. Tous droits réservés.</p>
+    <p>Politique de confidentialité · Mentions légales · CGV</p>
+  </div>
+</footer>
+
+<script>
+// ── UTILITAIRES ──
+function getUsers() { return JSON.parse(localStorage.getItem('rf-users') || '[]'); }
+function saveUsers(u) { localStorage.setItem('rf-users', JSON.stringify(u)); }
+function getSession() { return JSON.parse(localStorage.getItem('rf-session') || 'null'); }
+function saveSession(u) { localStorage.setItem('rf-session', JSON.stringify(u)); }
+
+// ── TABS ──
+function switchTab(tab) {
+  document.querySelectorAll('.tab').forEach((t,i) => t.classList.toggle('active', (i===0&&tab==='connexion')||(i===1&&tab==='inscription')));
+  document.getElementById('form-connexion').style.display = tab === 'connexion' ? 'block' : 'none';
+  document.getElementById('form-inscription').style.display = tab === 'inscription' ? 'block' : 'none';
+}
+
+// ── INSCRIPTION ──
+function inscription() {
+  const nom = document.getElementById('reg-nom').value.trim();
+  const email = document.getElementById('reg-email').value.trim();
+  const mdp = document.getElementById('reg-mdp').value;
+  const errEl = document.getElementById('reg-error');
+
+  if (!nom || !email || !mdp) { errEl.textContent = 'Veuillez remplir tous les champs.'; errEl.classList.add('show'); return; }
+  if (mdp.length < 6) { errEl.textContent = 'Le mot de passe doit faire au moins 6 caractères.'; errEl.classList.add('show'); return; }
+
+  const users = getUsers();
+  if (users.find(u => u.email === email)) { errEl.textContent = 'Cet email est déjà utilisé.'; errEl.classList.add('show'); return; }
+
+  const newUser = { nom, email, mdp, date: new Date().toLocaleDateString('fr-FR'), admin: false, commandes: [] };
+  users.push(newUser);
+  saveUsers(users);
+  saveSession(newUser);
+  errEl.classList.remove('show');
+  showDashboard(newUser);
+}
+
+// ── CONNEXION ──
+function connexion() {
+  const email = document.getElementById('login-email').value.trim();
+  const mdp = document.getElementById('login-mdp').value;
+  const errEl = document.getElementById('login-error');
+
+  // Compte admin
+  if (email === 'admin@redskins-franconville.fr' && mdp === 'Admin1984!') {
+    const adminUser = { nom: 'Administrateur', email, admin: true, date: new Date().toLocaleDateString('fr-FR'), commandes: [] };
+    saveSession(adminUser);
+    showDashboard(adminUser);
+    return;
+  }
+
+  const users = getUsers();
+  const user = users.find(u => u.email === email && u.mdp === mdp);
+  if (!user) { errEl.classList.add('show'); return; }
+  errEl.classList.remove('show');
+  saveSession(user);
+  showDashboard(user);
+}
+
+// ── TABLEAU DE BORD ──
+function showDashboard(user) {
+  document.getElementById('auth-section').style.display = 'none';
+  document.getElementById('dashboard').classList.add('show');
+
+  document.getElementById('dash-nom').textContent = user.nom.split(' ')[0];
+  document.getElementById('info-nom').textContent = user.nom;
+  document.getElementById('info-email').textContent = user.email;
+  document.getElementById('info-date').textContent = user.date || '—';
+
+  if (user.admin) document.getElementById('admin-link').style.display = 'block';
+
+  // Commandes
+  const cart = JSON.parse(localStorage.getItem('redskins-cart') || '[]');
+  const listeEl = document.getElementById('commandes-liste');
+  if (cart.length === 0) {
+    listeEl.innerHTML = '<p class="commande-vide">Aucune commande pour le moment.</p>';
+  } else {
+    listeEl.innerHTML = cart.map(item => `
+      <div class="commande-item">
+        <div class="commande-nom">${item.name} × ${item.qty}</div>
+        <div class="commande-prix">${(item.price * item.qty).toFixed(2)} €</div>
+      </div>`).join('');
+  }
+}
+
+// ── DÉCONNEXION ──
+function deconnexion() {
+  localStorage.removeItem('rf-session');
+  document.getElementById('dashboard').classList.remove('show');
+  document.getElementById('auth-section').style.display = 'block';
+}
+
+// ── AUTO LOGIN ──
+const session = getSession();
+if (session) showDashboard(session);
+</script>
+</body>
+</html>
