@@ -316,8 +316,8 @@ if (!session || !session.admin) {
   renderAdmin();
 }
 
-function renderAdmin() {
-  const produits = getProduits();
+async function renderAdmin() {
+  const produits = await getProduits();
   const users = JSON.parse(localStorage.getItem('rf-users') || '[]');
   const cart = JSON.parse(localStorage.getItem('redskins-cart') || '[]');
   const totalPanier = cart.reduce((a,i) => a + i.price * i.qty, 0);
@@ -553,12 +553,21 @@ function supprimerPhoto(i) {
   renderPreviews();
 }
 
-// ── PRODUITS LOCALSTORAGE ──
-function getProduits() { return JSON.parse(localStorage.getItem('rf-produits') || '[]'); }
-function saveProduits(p) { localStorage.setItem('rf-produits', JSON.stringify(p)); }
+// ── API URL ──
+const API = window.location.origin;
+
+// ── CHARGER LES PRODUITS DEPUIS L'API ──
+async function getProduits() {
+  try {
+    const res = await fetch(API + '/api/produits');
+    return await res.json();
+  } catch(e) { console.error('Erreur API:', e); return []; }
+}
+
+function saveProduits(p) {} // Non utilisé, remplacé par l'API
 
 // ── AJOUTER PRODUIT ──
-function ajouterProduit() {
+async function ajouterProduit() {
   const marque = document.getElementById('p-marque').value;
   const nom = document.getElementById('p-nom').value.trim().toUpperCase();
   const ref = document.getElementById('p-ref').value.trim();
@@ -587,9 +596,16 @@ function ajouterProduit() {
     page: marquePages[marque] || 'index.html'
   };
 
-  const produits = getProduits();
-  produits.push(produit);
-  saveProduits(produits);
+  // Envoyer à l'API
+  try {
+    const res = await fetch(API + '/api/produits', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(produit)
+    });
+    const data = await res.json();
+    if (!data.success) { showNotif('❌ Erreur lors de l\'ajout'); return; }
+  } catch(e) { showNotif('❌ Erreur serveur'); return; }
 
   // Reset formulaire
   ['p-nom','p-ref','p-desc','p-prix','p-tailles','p-couleurs','p-prix-reduit','p-promo-label'].forEach(id => {
@@ -606,8 +622,8 @@ function ajouterProduit() {
 }
 
 // ── AFFICHER PRODUITS ──
-function renderProduits() {
-  const produits = getProduits();
+async function renderProduits() {
+  const produits = await getProduits();
   const liste = document.getElementById('liste-produits');
   if (!liste) return;
 
@@ -644,12 +660,13 @@ function renderProduits() {
 }
 
 // ── SUPPRIMER PRODUIT ──
-function supprimerProduit(id) {
+async function supprimerProduit(id) {
   if (!confirm('Supprimer ce produit ?')) return;
-  const produits = getProduits().filter(p => p.id !== id);
-  saveProduits(produits);
-  showNotif('✓ Produit supprimé');
-  renderProduits();
+  try {
+    await fetch(API + '/api/produits/' + id, { method: 'DELETE' });
+    showNotif('✓ Produit supprimé');
+    renderProduits();
+  } catch(e) { showNotif('❌ Erreur serveur'); }
 }
 
 // ── SUPPRIMER CLIENT ──
@@ -732,7 +749,7 @@ function supprimerPhotoModal(i) {
   renderPhotosModal();
 }
 
-function sauvegarderModif() {
+async function sauvegarderModif() {
   const produits = getProduits();
   const index = produits.findIndex(p => p.id === currentEditId);
   if (index === -1) return;
@@ -761,10 +778,16 @@ function sauvegarderModif() {
     page: marquePages[marque] || 'index.html'
   };
 
-  saveProduits(produits);
-  fermerModal();
-  showNotif('✓ Produit modifié avec succès !');
-  renderProduits();
+  try {
+    await fetch(API + '/api/produits/' + currentEditId, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(produits[index])
+    });
+    fermerModal();
+    showNotif('✓ Produit modifié avec succès !');
+    renderProduits();
+  } catch(e) { showNotif('❌ Erreur serveur'); }
 }
 
 // ── NOTIF ──
