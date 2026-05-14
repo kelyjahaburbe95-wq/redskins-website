@@ -616,6 +616,7 @@ footer {
 
 <!-- TOP BAR -->
 
+
 <div class="topbar">
   🚚 <strong>Livraison offerte</strong> dès 60€ d'achat &nbsp;|&nbsp; Retours gratuits sous 30 jours &nbsp;|&nbsp; Boutique à Franconville
 </div>
@@ -639,25 +640,25 @@ footer {
   </div>
   <div class="nav-bottom">
     <div class="nav-bottom-inner">
-      <a href="index.html#nouveautes" class="nav-brand nav-brand-red">Nouveautés</a>
-      <a href="index.html#top-ventes" class="nav-brand">Top ventes</a>
+      <a href="index.html#nouveautes" class="nav-item nav-item-red">Nouveautés</a>
+      <a href="index.html#top-ventes" class="nav-item">Top ventes</a>
 
       <div class="nav-dropdown">
-        <span class="nav-brand nav-brand-arrow">Vêtements ▾</span>
+        <span class="nav-item">Vêtements</span>
         <div class="dropdown-menu">
           <div class="dropdown-col">
             <div class="dropdown-title">Homme</div>
-            <a href="index.html#vetements-homme">Vestes & Blousons</a>
-            <a href="index.html#vetements-homme">T-shirts & Polos</a>
-            <a href="index.html#vetements-homme">Jeans & Pantalons</a>
-            <a href="index.html#vetements-homme">Pulls & Sweats</a>
+            <a href="index.html">Vestes &amp; Blousons</a>
+            <a href="index.html">T-shirts &amp; Polos</a>
+            <a href="index.html">Jeans &amp; Pantalons</a>
+            <a href="index.html">Pulls &amp; Sweats</a>
           </div>
           <div class="dropdown-col">
             <div class="dropdown-title">Femme</div>
-            <a href="index.html#vetements-femme">Robes & Jupes</a>
-            <a href="index.html#vetements-femme">Tops & T-shirts</a>
-            <a href="index.html#vetements-femme">Jeans & Pantalons</a>
-            <a href="index.html#vetements-femme">Vestes & Manteaux</a>
+            <a href="index.html">Robes &amp; Jupes</a>
+            <a href="index.html">Tops &amp; T-shirts</a>
+            <a href="index.html">Jeans &amp; Pantalons</a>
+            <a href="index.html">Vestes &amp; Manteaux</a>
           </div>
           <div class="dropdown-col">
             <div class="dropdown-title">Marques</div>
@@ -671,19 +672,19 @@ footer {
       </div>
 
       <div class="nav-dropdown">
-        <span class="nav-brand nav-brand-arrow">Chaussures ▾</span>
+        <span class="nav-item">Chaussures</span>
         <div class="dropdown-menu">
           <div class="dropdown-col">
             <div class="dropdown-title">Homme</div>
-            <a href="index.html#chaussures-homme">Sneakers</a>
-            <a href="index.html#chaussures-homme">Boots & Bottines</a>
-            <a href="index.html#chaussures-homme">Derbies & Mocassins</a>
+            <a href="index.html">Sneakers</a>
+            <a href="index.html">Boots &amp; Bottines</a>
+            <a href="index.html">Derbies &amp; Mocassins</a>
           </div>
           <div class="dropdown-col">
             <div class="dropdown-title">Femme</div>
-            <a href="index.html#chaussures-femme">Sneakers</a>
-            <a href="index.html#chaussures-femme">Boots & Bottines</a>
-            <a href="index.html#chaussures-femme">Escarpins</a>
+            <a href="index.html">Sneakers</a>
+            <a href="index.html">Boots &amp; Bottines</a>
+            <a href="index.html">Escarpins</a>
           </div>
           <div class="dropdown-col">
             <div class="dropdown-title">Marques</div>
@@ -696,14 +697,14 @@ footer {
       </div>
 
       <div class="nav-dropdown">
-        <span class="nav-brand nav-brand-arrow">Accessoires ▾</span>
+        <span class="nav-item">Accessoires</span>
         <div class="dropdown-menu">
           <div class="dropdown-col">
-            <div class="dropdown-title">Accessoires</div>
-            <a href="index.html#accessoires">Sacs & Maroquinerie</a>
-            <a href="index.html#accessoires">Ceintures</a>
-            <a href="index.html#accessoires">Lunettes</a>
-            <a href="index.html#accessoires">Montres</a>
+            <div class="dropdown-title">Catégories</div>
+            <a href="index.html">Sacs &amp; Maroquinerie</a>
+            <a href="index.html">Ceintures</a>
+            <a href="index.html">Lunettes</a>
+            <a href="index.html">Montres</a>
           </div>
           <div class="dropdown-col">
             <div class="dropdown-title">Marques</div>
@@ -716,8 +717,8 @@ footer {
       </div>
 
       <div class="nav-dropdown">
-        <span class="nav-brand nav-brand-arrow">Marques ▾</span>
-        <div class="dropdown-menu dropdown-menu-marques">
+        <span class="nav-item">Marques</span>
+        <div class="dropdown-menu dropdown-menu-sm">
           <div class="dropdown-col">
             <a href="guess.html">Guess</a>
             <a href="boss.html">Boss</a>
@@ -733,43 +734,69 @@ footer {
         </div>
       </div>
 
-      <a href="index.html#promos" class="nav-brand nav-brand-red">Promos</a>
-      <a href="index.html#ventes-flash" class="nav-brand nav-brand-orange">Ventes flash</a>
+      <a href="index.html#promos" class="nav-item nav-item-red">Promos</a>
+      <a href="index.html#ventes-flash" class="nav-item nav-item-orange">Ventes flash</a>
     </div>
   </div>
 </nav>
 <style>
-.nav-brand-red { color: #e00 !important; font-weight: 700 !important; }
-.nav-brand-orange { color: #f60 !important; font-weight: 700 !important; }
-.nav-brand-arrow { cursor: pointer; }
+/* NAV ITEMS — sans ligne rouge */
+.nav-item {
+  padding: 12px 14px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #333;
+  white-space: nowrap;
+  cursor: pointer;
+  display: block;
+  transition: color 0.2s;
+  border-bottom: none;
+  background: none;
+  border: none;
+  font-family: inherit;
+}
+.nav-item:hover { color: #1c1c1c; }
+.nav-item-red { color: #e00 !important; font-weight: 600 !important; }
+.nav-item-orange { color: #f60 !important; font-weight: 600 !important; }
 
+/* DROPDOWN */
 .nav-dropdown { position: relative; }
-.nav-dropdown:hover > .dropdown-menu { display: flex; }
 
 .dropdown-menu {
   display: none;
-  position: absolute;
-  top: 100%;
+  position: fixed;
+  top: auto;
   left: 0;
+  right: 0;
   background: #fff;
-  border: 1px solid #e8e8e8;
   border-top: 3px solid #e00;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
-  z-index: 300;
-  padding: 24px;
-  gap: 40px;
-  min-width: 400px;
+  border-bottom: 1px solid #e8e8e8;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+  z-index: 9999;
+  padding: 28px 48px;
+  gap: 48px;
   animation: fadeDown 0.15s ease;
+  justify-content: flex-start;
 }
 
-.dropdown-menu-marques { min-width: 260px; }
+.dropdown-menu-sm {
+  left: auto !important;
+  right: auto !important;
+  width: 280px;
+  position: absolute !important;
+}
+
+.nav-dropdown:hover > .dropdown-menu { display: flex; }
 
 @keyframes fadeDown {
-  from { opacity: 0; transform: translateY(-8px); }
+  from { opacity: 0; transform: translateY(-6px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-.dropdown-col { display: flex; flex-direction: column; gap: 10px; min-width: 140px; }
+.dropdown-col {
+  display: flex; flex-direction: column;
+  gap: 10px; min-width: 150px;
+}
 
 .dropdown-title {
   font-size: 11px; font-weight: 700;
@@ -780,12 +807,13 @@ footer {
 }
 
 .dropdown-col a {
-  font-size: 13px; color: #555; font-weight: 400;
-  transition: color 0.2s;
-  white-space: nowrap;
+  font-size: 13px; color: #444; font-weight: 400;
+  transition: color 0.2s; white-space: nowrap;
+  text-decoration: none;
 }
 .dropdown-col a:hover { color: #e00; }
 </style>
+
 
 
 <!-- HERO -->
