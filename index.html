@@ -201,6 +201,10 @@ footer{background:#111;padding:56px 32px 32px;}
 
 @media(max-width:1024px){.hero{grid-template-columns:1fr;}.hero-right{display:none;}.marques-grid{grid-template-columns:repeat(4,1fr);}.products-grid{grid-template-columns:repeat(3,1fr);}.categories-grid{grid-template-columns:repeat(2,1fr);}.avis-grid{grid-template-columns:1fr;}.fidelite-inner{grid-template-columns:1fr;gap:40px;}.about-inner{grid-template-columns:1fr;gap:40px;}.footer-grid{grid-template-columns:1fr 1fr;}}
 @media(max-width:768px){.nav-top{padding:0 16px;}.nav-search{display:none;}.hero-left{padding:40px 24px;}.section{padding:40px 16px;}.promo-banners{grid-template-columns:1fr;padding:0 16px 40px;}.marques-grid{grid-template-columns:repeat(4,1fr);}.products-grid{grid-template-columns:repeat(2,1fr);}.flash-inner{flex-direction:column;align-items:flex-start;}.avis-section{padding:40px 16px;}.fidelite-section{padding:40px 16px;}.newsletter{padding:40px 16px;}.footer-grid{grid-template-columns:1fr;}.footer-bottom{flex-direction:column;gap:8px;}}
+
+.star { transition: color 0.1s; }
+.star:hover, .star.active { color: #f59e0b; }
+
 </style>
 </head>
 <body>
@@ -370,22 +374,31 @@ footer{background:#111;padding:56px 32px 32px;}
       <h2 class="section-title">Avis clients ⭐⭐⭐⭐⭐</h2>
       <span style="font-size:13px;color:#999;">Note moyenne : <strong style="color:#1c1c1c;">4.8/5</strong> basée sur 127 avis</span>
     </div>
+    <!-- FORMULAIRE AVIS -->
+    <div id="avis-form-wrap" style="max-width:1400px;margin:0 auto 28px;display:none;">
+      <div class="avis-card" style="border:2px solid #e8e8e8;">
+        <div style="font-size:15px;font-weight:600;margin-bottom:16px;">Laisser un avis</div>
+        <div style="margin-bottom:12px;">
+          <div style="font-size:12px;font-weight:600;margin-bottom:8px;">Note</div>
+          <div id="star-select" style="font-size:28px;cursor:pointer;letter-spacing:4px;">
+            <span onclick="setNote(1)" class="star" data-v="1">☆</span>
+            <span onclick="setNote(2)" class="star" data-v="2">☆</span>
+            <span onclick="setNote(3)" class="star" data-v="3">☆</span>
+            <span onclick="setNote(4)" class="star" data-v="4">☆</span>
+            <span onclick="setNote(5)" class="star" data-v="5">☆</span>
+          </div>
+        </div>
+        <textarea id="avis-texte" placeholder="Partagez votre expérience avec Redskins Franconville..." style="width:100%;padding:12px;border:1px solid #e8e8e8;border-radius:4px;font-family:inherit;font-size:13px;resize:vertical;min-height:80px;outline:none;margin-bottom:12px;"></textarea>
+        <button onclick="publierAvis()" style="background:#111;color:#fff;border:none;padding:10px 24px;border-radius:2px;font-size:12px;font-weight:600;letter-spacing:0.5px;cursor:pointer;">Publier mon avis</button>
+        <div id="avis-error" style="color:#e00;font-size:12px;margin-top:8px;display:none;"></div>
+      </div>
+    </div>
+    <div id="avis-login-msg" style="max-width:1400px;margin:0 auto 28px;text-align:center;font-size:13px;color:#999;display:none;">
+      <a href="compte.html" style="color:#e00;font-weight:600;">Connectez-vous</a> pour laisser un avis
+    </div>
+
     <div class="avis-grid" id="avis-grid">
-      <div class="avis-card">
-        <div class="avis-stars">★★★★★</div>
-        <p class="avis-text">"Boutique au top ! J'ai trouvé exactement ce que je cherchais chez Guess. Le service est impeccable et la livraison très rapide."</p>
-        <div class="avis-author"><div class="avis-avatar">👤</div><div><div class="avis-name">Sarah M.</div><div class="avis-date">Il y a 2 jours</div></div><span class="avis-source">VÉRIFIÉ</span></div>
-      </div>
-      <div class="avis-card">
-        <div class="avis-stars">★★★★★</div>
-        <p class="avis-text">"Très bonne sélection de marques. J'ai acheté un blouson Redskins, qualité exceptionnelle. Je recommande vivement !"</p>
-        <div class="avis-author"><div class="avis-avatar">👤</div><div><div class="avis-name">Thomas L.</div><div class="avis-date">Il y a 5 jours</div></div><span class="avis-source">VÉRIFIÉ</span></div>
-      </div>
-      <div class="avis-card">
-        <div class="avis-stars">★★★★☆</div>
-        <p class="avis-text">"Belle boutique avec un grand choix. Les conseils de l'équipe sont précieux pour trouver la bonne taille. Très satisfaite de mon achat Boss."</p>
-        <div class="avis-author"><div class="avis-avatar">👤</div><div><div class="avis-name">Marie D.</div><div class="avis-date">Il y a 1 semaine</div></div><span class="avis-source">VÉRIFIÉ</span></div>
-      </div>
+      <div style="grid-column:1/-1;text-align:center;padding:40px;color:#999;font-size:13px;">Aucun avis pour le moment. Soyez le premier !</div>
     </div>
   </div>
 </div>
@@ -408,7 +421,7 @@ footer{background:#111;padding:56px 32px 32px;}
       <div class="fidelite-card-logo">Redskins Franconville</div>
       <div class="fidelite-card-points">350</div>
       <div class="fidelite-card-label">Points fidélité</div>
-      <div class="fidelite-card-name">Votre Prénom</div>
+      <div class="fidelite-card-name" id="fidelite-nom">Connectez-vous</div>
       <div style="margin-top:20px;height:1px;background:rgba(255,255,255,0.1);"></div>
       <div style="margin-top:16px;font-size:12px;color:rgba(255,255,255,0.3);">Carte Gold Member</div>
     </div>
@@ -562,8 +575,108 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
   });
 });
 
+
+// ── CARTE FIDÉLITÉ ──
+function loadFideliteNom() {
+  const session = JSON.parse(localStorage.getItem('rf-session') || 'null');
+  const el = document.getElementById('fidelite-nom');
+  if (el) {
+    el.textContent = session ? session.nom.split(' ')[0] : 'Connectez-vous';
+  }
+}
+
+// ── AVIS ──
+let noteAvis = 0;
+
+function getAvis() { return JSON.parse(localStorage.getItem('rf-avis') || '[]'); }
+function saveAvis(a) { localStorage.setItem('rf-avis', JSON.stringify(a)); }
+
+function setNote(n) {
+  noteAvis = n;
+  document.querySelectorAll('.star').forEach((s, i) => {
+    s.textContent = i < n ? '★' : '☆';
+    s.style.color = i < n ? '#f59e0b' : '';
+  });
+}
+
+function loadAvisSection() {
+  const session = JSON.parse(localStorage.getItem('rf-session') || 'null');
+  const formWrap = document.getElementById('avis-form-wrap');
+  const loginMsg = document.getElementById('avis-login-msg');
+  if (session) {
+    if (formWrap) formWrap.style.display = 'block';
+    if (loginMsg) loginMsg.style.display = 'none';
+  } else {
+    if (formWrap) formWrap.style.display = 'none';
+    if (loginMsg) loginMsg.style.display = 'block';
+  }
+  renderAvis();
+}
+
+function renderAvis() {
+  const avis = getAvis();
+  const grid = document.getElementById('avis-grid');
+  if (!grid) return;
+
+  // Calculer moyenne
+  const header = document.querySelector('.avis-section .section-header span');
+  if (avis.length > 0) {
+    const moy = (avis.reduce((a,v) => a + v.note, 0) / avis.length).toFixed(1);
+    if (header) header.innerHTML = `Note moyenne : <strong style="color:#1c1c1c;">${moy}/5</strong> basée sur ${avis.length} avis`;
+  } else {
+    if (header) header.innerHTML = 'Aucun avis pour le moment';
+  }
+
+  if (!avis.length) {
+    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:#999;font-size:13px;">Aucun avis pour le moment. Soyez le premier !</div>';
+    return;
+  }
+
+  grid.innerHTML = [...avis].reverse().map(a => `
+    <div class="avis-card">
+      <div class="avis-stars">${'★'.repeat(a.note)}${'☆'.repeat(5-a.note)}</div>
+      <p class="avis-text">"${a.texte}"</p>
+      <div class="avis-author">
+        <div class="avis-avatar">👤</div>
+        <div>
+          <div class="avis-name">${a.nom}</div>
+          <div class="avis-date">${a.date}</div>
+        </div>
+        <span class="avis-source">VÉRIFIÉ</span>
+      </div>
+    </div>`).join('');
+}
+
+function publierAvis() {
+  const session = JSON.parse(localStorage.getItem('rf-session') || 'null');
+  const texte = document.getElementById('avis-texte').value.trim();
+  const errEl = document.getElementById('avis-error');
+
+  if (!session) { window.location.href = 'compte.html'; return; }
+  if (!noteAvis) { errEl.textContent = 'Veuillez choisir une note.'; errEl.style.display = 'block'; return; }
+  if (texte.length < 10) { errEl.textContent = 'Votre avis doit faire au moins 10 caractères.'; errEl.style.display = 'block'; return; }
+
+  errEl.style.display = 'none';
+  const avis = getAvis();
+  avis.push({
+    nom: session.nom,
+    note: noteAvis,
+    texte: texte,
+    date: new Date().toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })
+  });
+  saveAvis(avis);
+
+  // Reset
+  document.getElementById('avis-texte').value = '';
+  setNote(0);
+  renderAvis();
+  alert('✓ Merci pour votre avis !');
+}
+
 loadFlash();
 loadProduits();
+loadFideliteNom();
+loadAvisSection();
 </script>
 </body>
 </html>
