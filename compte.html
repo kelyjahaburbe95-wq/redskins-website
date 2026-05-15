@@ -4,385 +4,666 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mon Compte — Redskins Franconville</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  * { cursor: default !important; }
-  a, button { cursor: pointer !important; }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{--white:#fff;--bg:#f5f5f5;--border:#e8e8e8;--text:#1c1c1c;--text-mid:#555;--text-light:#999;--red:#e00;--black:#111;}
+body{font-family:'Inter',sans-serif;background:var(--white);color:var(--text);font-size:14px;}
+a{text-decoration:none;color:inherit;}
+button{font-family:inherit;cursor:pointer;}
+.topbar{background:var(--black);color:rgba(255,255,255,0.8);text-align:center;padding:8px;font-size:12px;}
+.topbar strong{color:#fff;}
+nav{background:var(--white);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:200;}
+.nav-top{display:flex;align-items:center;justify-content:space-between;padding:0 32px;height:64px;max-width:1400px;margin:0 auto;}
+.nav-logo{font-size:18px;font-weight:700;letter-spacing:-0.5px;color:var(--text);}
+.nav-logo span{color:var(--red);}
+.nav-search{flex:1;max-width:480px;margin:0 32px;position:relative;}
+.nav-search input{width:100%;padding:10px 44px 10px 16px;background:var(--bg);border:1px solid var(--border);border-radius:4px;font-family:inherit;font-size:13px;outline:none;}
+.nav-search-icon{position:absolute;right:14px;top:50%;transform:translateY(-50%);color:var(--text-light);}
+.nav-actions{display:flex;align-items:center;gap:4px;}
+.nav-action{display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 12px;color:var(--text-mid);font-size:10px;font-weight:500;border-radius:4px;transition:color 0.2s;}
+.nav-action:hover{color:var(--text);background:var(--bg);}
+.nav-action-icon{font-size:18px;}
+.nav-action-cart{background:var(--red);color:#fff;border-radius:4px;}
+.nav-action-cart:hover{background:#cc0000;color:#fff;}
+.nav-bottom{border-top:1px solid var(--border);}
+.nav-bottom-inner{display:flex;align-items:center;justify-content:center;max-width:1400px;margin:0 auto;padding:0 32px;overflow-x:auto;}
+.nav-brand{padding:10px 18px;font-size:12px;font-weight:600;letter-spacing:0.5px;text-transform:uppercase;color:var(--text-mid);border-bottom:2px solid transparent;transition:color 0.2s,border-color 0.2s;}
+.nav-brand:hover{color:var(--text);border-bottom-color:var(--red);}
+footer{background:var(--black);padding:56px 32px 32px;}
+.footer-inner{max-width:1400px;margin:0 auto;}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;padding-bottom:40px;border-bottom:1px solid rgba(255,255,255,0.1);margin-bottom:28px;}
+.footer-logo{font-size:18px;font-weight:700;color:#fff;display:block;margin-bottom:14px;}
+.footer-logo span{color:var(--red);}
+.footer-desc{font-size:13px;color:rgba(255,255,255,0.4);line-height:1.8;font-weight:300;}
+.footer-col h4{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#fff;margin-bottom:18px;}
+.footer-col ul{list-style:none;}
+.footer-col li{margin-bottom:10px;}
+.footer-col a{font-size:13px;color:rgba(255,255,255,0.45);font-weight:300;transition:color 0.2s;}
+.footer-col a:hover{color:#fff;}
+.footer-bottom{display:flex;justify-content:space-between;font-size:11px;color:rgba(255,255,255,0.3);}
+.footer-bottom span{color:var(--red);}
+@media(max-width:768px){.nav-top{padding:0 16px;}.nav-search{display:none;}.footer-grid{grid-template-columns:1fr 1fr;gap:24px;}}
 
-  .compte-page {
-    min-height: 100vh;
-    display: flex; align-items: center; justify-content: center;
-    padding: 120px 24px 60px;
-    position: relative; z-index: 1;
-  }
+.divider { display: flex; align-items: center; gap: 12px; margin: 20px 0; }
+.divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+.divider span { font-size: 12px; color: var(--text-light); white-space: nowrap; }
+.btn-google {
+  width: 100%; padding: 12px;
+  border: 1px solid var(--border); border-radius: 2px;
+  background: #fff; color: var(--text);
+  font-family: inherit; font-size: 13px; font-weight: 500;
+  cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.btn-google:hover { border-color: #1c1c1c; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+.btn-google img { width: 18px; height: 18px; }
 
-  .compte-box {
-    background: #0e0e0e;
-    border: 1px solid rgba(255,255,255,0.06);
-    width: 100%; max-width: 460px;
-    padding: 48px;
-    position: relative;
-  }
-
-  .compte-box::before {
-    content: ''; position: absolute; top: 0; left: 0;
-    width: 0; height: 2px; background: var(--red);
-    animation: loadLine 0.8s ease forwards 0.3s;
-  }
-  @keyframes loadLine { to { width: 100%; } }
-
-  .compte-logo {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.4rem; letter-spacing: 4px;
-    color: var(--off-white); margin-bottom: 8px;
-    text-align: center;
-  }
-  .compte-logo span { color: var(--red); }
-
-  .tabs {
-    display: flex; margin: 32px 0 28px;
-    border-bottom: 1px solid rgba(255,255,255,0.08);
-  }
-  .tab {
-    flex: 1; padding: 12px;
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 0.8rem; letter-spacing: 3px; text-transform: uppercase;
-    color: var(--warm-grey); background: none; border: none;
-    border-bottom: 2px solid transparent;
-    transition: color 0.2s, border-color 0.2s;
-    margin-bottom: -1px;
-  }
-  .tab.active { color: var(--off-white); border-bottom-color: var(--red); }
-
-  .form-group { margin-bottom: 20px; }
-  .form-label {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase;
-    color: var(--warm-grey); display: block; margin-bottom: 8px;
-  }
-  .form-input {
-    width: 100%; padding: 14px 16px;
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.1);
-    color: var(--off-white);
-    font-family: 'Barlow', sans-serif; font-size: 0.95rem;
-    outline: none; transition: border-color 0.3s;
-  }
-  .form-input:focus { border-color: var(--red); }
-  .form-input::placeholder { color: rgba(168,160,154,0.4); }
-
-  .btn-submit {
-    width: 100%; padding: 16px;
-    background: var(--red); color: white; border: none;
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 0.85rem; letter-spacing: 4px; text-transform: uppercase;
-    font-weight: 600; margin-top: 8px; transition: background 0.2s;
-  }
-  .btn-submit:hover { background: #8B0012; }
-
-  .form-error {
-    color: #ff4444; font-size: 0.82rem;
-    font-family: 'Barlow Condensed', sans-serif;
-    letter-spacing: 1px; margin-top: 12px;
-    display: none; text-align: center;
-  }
-  .form-error.show { display: block; }
-
-  /* TABLEAU DE BORD */
-  .dashboard { display: none; }
-  .dashboard.show { display: block; }
-
-  .dash-header {
-    display: flex; justify-content: space-between; align-items: center;
-    margin-bottom: 32px;
-  }
-  .dash-welcome {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.8rem; letter-spacing: 3px;
-  }
-  .dash-welcome span { color: var(--red); }
-  .btn-logout {
-    background: none; border: 1px solid rgba(255,255,255,0.15);
-    color: var(--warm-grey); padding: 8px 16px;
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase;
-    transition: border-color 0.2s, color 0.2s;
-  }
-  .btn-logout:hover { border-color: var(--red); color: var(--red); }
-
-  .dash-cards {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
-    margin-bottom: 28px;
-  }
-  .dash-card {
-    background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(255,255,255,0.06);
-    padding: 20px; text-align: center;
-    text-decoration: none; transition: border-color 0.2s;
-  }
-  .dash-card:hover { border-color: var(--red); }
-  .dash-card-icon { font-size: 1.8rem; margin-bottom: 8px; }
-  .dash-card-label {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase;
-    color: var(--warm-grey);
-  }
-
-  .dash-section-title {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase;
-    color: var(--red); margin-bottom: 12px; margin-top: 24px;
-  }
-
-  .commande-item {
-    background: rgba(255,255,255,0.02);
-    border: 1px solid rgba(255,255,255,0.05);
-    padding: 16px; margin-bottom: 8px;
-    display: flex; justify-content: space-between; align-items: center;
-  }
-  .commande-nom {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 0.9rem; letter-spacing: 1px; color: var(--off-white);
-  }
-  .commande-prix { color: var(--red); font-weight: 600; font-size: 0.9rem; }
-  .commande-vide {
-    color: var(--warm-grey); font-size: 0.85rem;
-    font-style: italic; text-align: center; padding: 20px 0;
-  }
-
-  .infos-compte { margin-top: 8px; }
-  .info-ligne {
-    display: flex; justify-content: space-between;
-    padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
-    font-size: 0.88rem;
-  }
-  .info-ligne span:first-child { color: var(--warm-grey); }
-  .info-ligne span:last-child { color: var(--off-white); }
 </style>
+<style>
+.compte-page{min-height:calc(100vh - 120px);display:flex;align-items:center;justify-content:center;padding:48px 24px;}
+.compte-box{width:100%;max-width:440px;}
+.compte-title{font-size:24px;font-weight:700;letter-spacing:-0.3px;margin-bottom:8px;}
+.compte-sub{font-size:13px;color:var(--text-mid);margin-bottom:32px;}
+.tabs{display:flex;border-bottom:1px solid var(--border);margin-bottom:28px;}
+.tab{flex:1;padding:12px;font-size:13px;font-weight:600;color:var(--text-light);background:none;border:none;border-bottom:2px solid transparent;cursor:pointer;transition:color 0.2s,border-color 0.2s;margin-bottom:-1px;}
+.tab.active{color:var(--text);border-bottom-color:var(--text);}
+.form-group{margin-bottom:16px;}
+.form-label{display:block;font-size:12px;font-weight:600;letter-spacing:0.3px;color:var(--text);margin-bottom:6px;}
+.form-input{width:100%;padding:12px 14px;border:1px solid var(--border);border-radius:2px;font-family:inherit;font-size:14px;color:var(--text);outline:none;transition:border-color 0.2s;}
+.form-input:focus{border-color:var(--text);}
+.form-input::placeholder{color:var(--text-light);}
+.btn-submit{width:100%;padding:14px;background:var(--black);color:#fff;border:none;border-radius:2px;font-size:13px;font-weight:600;letter-spacing:0.5px;cursor:pointer;margin-top:8px;transition:background 0.2s;}
+.btn-submit:hover{background:var(--red);}
+.form-error{font-size:12px;color:var(--red);margin-top:10px;text-align:center;display:none;}
+.form-error.show{display:block;}
+
+/* Dashboard */
+.dashboard{display:none;}
+.dashboard.show{display:block;}
+.dash-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;}
+.dash-title{font-size:20px;font-weight:700;}
+.btn-logout{background:none;border:1px solid var(--border);color:var(--text-mid);padding:8px 16px;border-radius:2px;font-size:12px;font-weight:500;cursor:pointer;transition:border-color 0.2s,color 0.2s;}
+.btn-logout:hover{border-color:var(--red);color:var(--red);}
+.dash-cards{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:28px;}
+.dash-card{background:var(--bg);border-radius:4px;padding:20px;text-align:center;text-decoration:none;transition:background 0.2s;}
+.dash-card:hover{background:var(--border);}
+.dash-card-icon{font-size:24px;margin-bottom:8px;}
+.dash-card-label{font-size:12px;font-weight:500;color:var(--text-mid);}
+.dash-info{border:1px solid var(--border);border-radius:4px;overflow:hidden;}
+.dash-info-row{display:flex;justify-content:space-between;padding:14px 16px;border-bottom:1px solid var(--border);font-size:13px;}
+.dash-info-row:last-child{border-bottom:none;}
+.dash-info-label{color:var(--text-light);}
+.dash-info-value{font-weight:500;}
+</style>
+<script src="https://accounts.google.com/gsi/client" async defer>
+// ── GOOGLE SIGN IN ──
+const GOOGLE_CLIENT_ID = '527420211811-tmcrvfo8fr5nffo43rc5dgp491ol6ddi.apps.googleusercontent.com';
+
+function connexionGoogle() {
+  google.accounts.id.initialize({
+    client_id: GOOGLE_CLIENT_ID,
+    callback: handleGoogleResponse,
+    auto_select: false,
+  });
+  google.accounts.id.prompt();
+}
+
+function handleGoogleResponse(response) {
+  // Décoder le JWT token Google
+  const payload = JSON.parse(atob(response.credential.split('.')[1]));
+  const user = {
+    nom: payload.name,
+    email: payload.email,
+    photo: payload.picture,
+    google: true,
+    date: new Date().toLocaleDateString('fr-FR'),
+    admin: false
+  };
+
+  // Sauvegarder dans les users si nouveau
+  const users = getUsers();
+  const existing = users.find(u => u.email === user.email);
+  if (!existing) {
+    users.push(user);
+    saveUsers(users);
+  }
+
+  // Créer la session
+  localStorage.setItem('rf-session', JSON.stringify(user));
+  showDashboard(user);
+}
+
+</script>
 </head>
 <body>
 
+
+
+
+<div class="topbar">
+  🚚 <strong>Livraison offerte</strong> dès 60€ d'achat &nbsp;|&nbsp; Retours gratuits sous 30 jours &nbsp;|&nbsp; Boutique à Franconville
+</div>
 <nav>
-  <a href="index.html" class="nav-logo">REDSKINS <span>FRANCONVILLE</span></a>
-  <ul class="nav-links">
-    <li><a href="index.html#collections">Collections</a></li>
-    <li><a href="index.html#marques">Marques</a></li>
-    <li><a href="index.html#about">La Boutique</a></li>
-    <li><a href="index.html#contact">Contact</a></li>
-    <li><a href="panier.html" class="nav-cta">🛒 Panier</a></li>
-  </ul>
+  <div class="nav-top">
+    <a href="index.html" class="nav-logo">Redskins <span>Franconville</span></a>
+    <div class="nav-search">
+      <input type="text" placeholder="Rechercher une marque, un produit...">
+      <span class="nav-search-icon">🔍</span>
+    </div>
+    <div class="nav-actions">
+      <a href="compte.html" class="nav-action">
+        <span class="nav-action-icon">👤</span>
+        <span>Compte</span>
+      </a>
+      <a href="panier.html" class="nav-action nav-action-cart">
+        <span class="nav-action-icon">🛒</span>
+        <span>Panier</span>
+      </a>
+    </div>
+  </div>
+  <div class="nav-bottom">
+    <div class="nav-bottom-inner">
+      <a href="index.html#nouveautes" class="nav-item nav-item-red">Nouveautés</a>
+      <a href="index.html#top-ventes" class="nav-item">Top ventes</a>
+
+      <!-- VÊTEMENTS -->
+      <div class="nav-dropdown">
+        <span class="nav-item">Vêtements</span>
+        <div class="dropdown-menu">
+          <div class="dropdown-col">
+            <div class="dropdown-title">Homme</div>
+            <a href="index.html">Vestes et Blousons</a>
+            <a href="index.html">T-shirts et Polos</a>
+            <a href="index.html">Jeans et Pantalons</a>
+            <a href="index.html">Pulls et Sweats</a>
+          </div>
+          <div class="dropdown-col">
+            <div class="dropdown-title">Femme</div>
+            <a href="index.html">Robes et Jupes</a>
+            <a href="index.html">Tops et T-shirts</a>
+            <a href="index.html">Jeans et Pantalons</a>
+            <a href="index.html">Vestes et Manteaux</a>
+          </div>
+          <div class="dropdown-col">
+            <div class="dropdown-title">Enfants</div>
+            <a href="index.html">Garçon</a>
+            <a href="index.html">Fille</a>
+            <a href="index.html">Bébé</a>
+          </div>
+          <div class="dropdown-col">
+            <div class="dropdown-title">Marques</div>
+            <a href="guess.html">Guess</a>
+            <a href="boss.html">Boss</a>
+            <a href="hugo.html">Hugo</a>
+            <a href="levis.html">Levis</a>
+            <a href="lacoste.html">Lacoste</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- CHAUSSURES -->
+      <div class="nav-dropdown">
+        <span class="nav-item">Chaussures</span>
+        <div class="dropdown-menu">
+          <div class="dropdown-col">
+            <div class="dropdown-title">Homme</div>
+            <a href="index.html">Sneakers</a>
+            <a href="index.html">Boots et Bottines</a>
+            <a href="index.html">Derbies et Mocassins</a>
+          </div>
+          <div class="dropdown-col">
+            <div class="dropdown-title">Femme</div>
+            <a href="index.html">Sneakers</a>
+            <a href="index.html">Boots et Bottines</a>
+            <a href="index.html">Escarpins</a>
+          </div>
+          <div class="dropdown-col">
+            <div class="dropdown-title">Enfants</div>
+            <a href="index.html">Garçon</a>
+            <a href="index.html">Fille</a>
+            <a href="index.html">Bébé</a>
+          </div>
+          <div class="dropdown-col">
+            <div class="dropdown-title">Marques</div>
+            <a href="guess.html">Guess</a>
+            <a href="boss.html">Boss</a>
+            <a href="redskins-brand.html">Redskins</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ACCESSOIRES -->
+      <div class="nav-dropdown">
+        <span class="nav-item">Accessoires</span>
+        <div class="dropdown-menu">
+          <div class="dropdown-col">
+            <div class="dropdown-title">Catégories</div>
+            <a href="index.html">Sacs et Maroquinerie</a>
+            <a href="index.html">Ceintures</a>
+            <a href="index.html">Lunettes</a>
+            <a href="index.html">Montres</a>
+          </div>
+          <div class="dropdown-col">
+            <div class="dropdown-title">Marques</div>
+            <a href="guess.html">Guess</a>
+            <a href="chabrand.html">Chabrand</a>
+            <a href="redskins-brand.html">Redskins</a>
+            <a href="boss.html">Boss</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ENFANTS -->
+      <div class="nav-dropdown">
+        <span class="nav-item">Enfants</span>
+        <div class="dropdown-menu">
+          <div class="dropdown-col">
+            <div class="dropdown-title">Garçon</div>
+            <a href="index.html">Vêtements</a>
+            <a href="index.html">Chaussures</a>
+            <a href="index.html">Accessoires</a>
+          </div>
+          <div class="dropdown-col">
+            <div class="dropdown-title">Fille</div>
+            <a href="index.html">Vêtements</a>
+            <a href="index.html">Chaussures</a>
+            <a href="index.html">Accessoires</a>
+          </div>
+          <div class="dropdown-col">
+            <div class="dropdown-title">Bébé</div>
+            <a href="index.html">Vêtements</a>
+            <a href="index.html">Chaussures</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- MARQUES -->
+      <div class="nav-dropdown">
+        <span class="nav-item">Marques</span>
+        <div class="dropdown-menu dropdown-menu-sm">
+          <div class="dropdown-col">
+            <a href="guess.html">Guess</a>
+            <a href="boss.html">Boss</a>
+            <a href="hugo.html">Hugo</a>
+            <a href="levis.html">Levis</a>
+          </div>
+          <div class="dropdown-col">
+            <a href="timberland.html">Timberland</a>
+            <a href="lacoste.html">Lacoste</a>
+            <a href="chabrand.html">Chabrand</a>
+            <a href="redskins-brand.html">Redskins</a>
+          </div>
+        </div>
+      </div>
+
+      <a href="index.html#promos" class="nav-item nav-item-red">Promos</a>
+      <a href="index.html#ventes-flash" class="nav-item nav-item-orange">Ventes flash</a>
+    </div>
+  </div>
 </nav>
+<style>
+.nav-item {
+  padding: 12px 14px;
+  font-size: 13px; font-weight: 500;
+  color: #333; white-space: nowrap;
+  cursor: pointer; display: block;
+  transition: color 0.2s;
+  border: none; background: none;
+  font-family: inherit; text-decoration: none;
+}
+.nav-item:hover { color: #1c1c1c; }
+.nav-item-red { color: #e00 !important; font-weight: 600 !important; }
+.nav-item-orange { color: #f60 !important; font-weight: 600 !important; }
+
+.nav-dropdown { position: relative; }
+.nav-dropdown:hover > .dropdown-menu { display: flex; }
+
+.dropdown-menu {
+  display: none;
+  position: fixed;
+  left: 0; right: 0;
+  background: #fff;
+  border-top: 3px solid #e00;
+  border-bottom: 1px solid #e8e8e8;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+  z-index: 9999;
+  padding: 28px 48px;
+  gap: 48px;
+  animation: fadeDown 0.15s ease;
+}
+
+.dropdown-menu-sm {
+  position: absolute !important;
+  left: auto !important; right: auto !important;
+  width: 280px;
+}
+
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.dropdown-col {
+  display: flex; flex-direction: column;
+  gap: 10px; min-width: 150px;
+}
+
+.dropdown-title {
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: #999; margin-bottom: 4px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.dropdown-col a {
+  font-size: 13px; color: #444; font-weight: 400;
+  transition: color 0.2s; white-space: nowrap;
+  text-decoration: none;
+}
+.dropdown-col a:hover { color: #e00; }
+
+/* Hover sur le nav-item du dropdown - fond gris discret */
+.nav-dropdown:hover > .nav-item {
+  color: #1c1c1c;
+  background: #f5f5f5;
+}
+</style>
+
+
+<style>
+/* NAV ITEMS — sans ligne rouge */
+.nav-item {
+  padding: 12px 14px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #333;
+  white-space: nowrap;
+  cursor: pointer;
+  display: block;
+  transition: color 0.2s;
+  border-bottom: none;
+  background: none;
+  border: none;
+  font-family: inherit;
+}
+.nav-item:hover { color: #1c1c1c; }
+.nav-item-red { color: #e00 !important; font-weight: 600 !important; }
+.nav-item-orange { color: #f60 !important; font-weight: 600 !important; }
+
+/* DROPDOWN */
+.nav-dropdown { position: relative; }
+
+.dropdown-menu {
+  display: none;
+  position: fixed;
+  top: auto;
+  left: 0;
+  right: 0;
+  background: #fff;
+  border-top: 3px solid #e00;
+  border-bottom: 1px solid #e8e8e8;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+  z-index: 9999;
+  padding: 28px 48px;
+  gap: 48px;
+  animation: fadeDown 0.15s ease;
+  justify-content: flex-start;
+}
+
+.dropdown-menu-sm {
+  left: auto !important;
+  right: auto !important;
+  width: 280px;
+  position: absolute !important;
+}
+
+.nav-dropdown:hover > .dropdown-menu { display: flex; }
+
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.dropdown-col {
+  display: flex; flex-direction: column;
+  gap: 10px; min-width: 150px;
+}
+
+.dropdown-title {
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: #999; margin-bottom: 4px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.dropdown-col a {
+  font-size: 13px; color: #444; font-weight: 400;
+  transition: color 0.2s; white-space: nowrap;
+  text-decoration: none;
+}
+.dropdown-col a:hover { color: #e00; }
+</style>
+
+
 
 <div class="compte-page">
   <div class="compte-box">
 
-    <div class="compte-logo">REDSKINS <span>FRANCONVILLE</span></div>
-
-    <!-- FORMULAIRES CONNEXION / INSCRIPTION -->
     <div id="auth-section">
+      <h1 class="compte-title">Mon Compte</h1>
+      <p class="compte-sub">Connectez-vous ou créez votre compte</p>
+
       <div class="tabs">
         <button class="tab active" onclick="switchTab('connexion')">Connexion</button>
         <button class="tab" onclick="switchTab('inscription')">Créer un compte</button>
       </div>
 
-      <!-- CONNEXION -->
       <div id="form-connexion">
-        <div class="form-group">
-          <label class="form-label">Email</label>
-          <input type="email" class="form-input" id="login-email" placeholder="votre@email.com">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Mot de passe</label>
-          <input type="password" class="form-input" id="login-mdp" placeholder="••••••••">
-        </div>
+        <div class="form-group"><label class="form-label">Email</label><input type="email" class="form-input" id="login-email" placeholder="votre@email.com"></div>
+        <div class="form-group"><label class="form-label">Mot de passe</label><input type="password" class="form-input" id="login-mdp" placeholder="••••••••"></div>
         <div class="form-error" id="login-error">Email ou mot de passe incorrect.</div>
         <button class="btn-submit" onclick="connexion()">Se connecter</button>
+      <div class="divider"><span>ou</span></div>
+      <button class="btn-google" onclick="connexionGoogle()">
+        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google">
+        Continuer avec Google
+      </button>
       </div>
 
-      <!-- INSCRIPTION -->
       <div id="form-inscription" style="display:none;">
-        <div class="form-group">
-          <label class="form-label">Nom complet</label>
-          <input type="text" class="form-input" id="reg-nom" placeholder="Jean Dupont">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Email</label>
-          <input type="email" class="form-input" id="reg-email" placeholder="votre@email.com">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Mot de passe</label>
-          <input type="password" class="form-input" id="reg-mdp" placeholder="Minimum 6 caractères">
-        </div>
+        <div class="form-group"><label class="form-label">Nom complet</label><input type="text" class="form-input" id="reg-nom" placeholder="Jean Dupont"></div>
+        <div class="form-group"><label class="form-label">Email</label><input type="email" class="form-input" id="reg-email" placeholder="votre@email.com"></div>
+        <div class="form-group"><label class="form-label">Mot de passe</label><input type="password" class="form-input" id="reg-mdp" placeholder="Minimum 6 caractères"></div>
         <div class="form-error" id="reg-error"></div>
         <button class="btn-submit" onclick="inscription()">Créer mon compte</button>
+      <div class="divider"><span>ou</span></div>
+      <button class="btn-google" onclick="connexionGoogle()">
+        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google">
+        Continuer avec Google
+      </button>
       </div>
     </div>
 
-    <!-- TABLEAU DE BORD -->
     <div class="dashboard" id="dashboard">
       <div class="dash-header">
-        <div class="dash-welcome">Bonjour, <span id="dash-nom"></span></div>
+        <div class="dash-title">Bonjour, <span id="dash-nom"></span> 👋</div>
         <button class="btn-logout" onclick="deconnexion()">Déconnexion</button>
       </div>
-
       <div class="dash-cards">
-        <a href="panier.html" class="dash-card">
-          <div class="dash-card-icon">🛒</div>
-          <div class="dash-card-label">Mon Panier</div>
-        </a>
-        <a href="index.html#marques" class="dash-card">
-          <div class="dash-card-icon">🏪</div>
-          <div class="dash-card-label">Nos Marques</div>
-        </a>
-        <a href="index.html" class="dash-card">
-          <div class="dash-card-icon">🛍️</div>
-          <div class="dash-card-label">Boutique</div>
-        </a>
-
+        <a href="panier.html" class="dash-card"><div class="dash-card-icon">🛒</div><div class="dash-card-label">Mon Panier</div></a>
+        <a href="index.html#marques" class="dash-card"><div class="dash-card-icon">🏪</div><div class="dash-card-label">Nos Marques</div></a>
       </div>
-
-      <div class="dash-section-title">Mes informations</div>
-      <div class="infos-compte">
-        <div class="info-ligne"><span>Nom</span><span id="info-nom"></span></div>
-        <div class="info-ligne"><span>Email</span><span id="info-email"></span></div>
-        <div class="info-ligne"><span>Membre depuis</span><span id="info-date"></span></div>
+      <div class="dash-info">
+        <div class="dash-info-row"><span class="dash-info-label">Nom</span><span class="dash-info-value" id="info-nom"></span></div>
+        <div class="dash-info-row"><span class="dash-info-label">Email</span><span class="dash-info-value" id="info-email"></span></div>
+        <div class="dash-info-row"><span class="dash-info-label">Membre depuis</span><span class="dash-info-value" id="info-date"></span></div>
       </div>
-
-      <div class="dash-section-title">Mes dernières commandes</div>
-      <div id="commandes-liste"></div>
     </div>
-
   </div>
 </div>
 
 <footer>
-  <div class="footer-grid">
-    <div>
-      <p class="footer-logo">REDSKINS <span>FRANCONVILLE</span></p>
-      <p class="footer-desc">La boutique Redskins de Franconville — Cuir premium et grandes marques depuis 1984.</p>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div><span class="footer-logo">Redskins <span>Franconville</span></span><p class="footer-desc">Votre boutique multimarques à Franconville depuis 1984.</p></div>
+      <div class="footer-col"><h4>Nos Marques</h4><ul>
+        <li><a href="guess.html">Guess</a></li><li><a href="boss.html">Boss</a></li>
+        <li><a href="hugo.html">Hugo</a></li><li><a href="levis.html">Levis</a></li>
+        <li><a href="timberland.html">Timberland</a></li><li><a href="lacoste.html">Lacoste</a></li>
+        <li><a href="chabrand.html">Chabrand</a></li><li><a href="redskins-brand.html">Redskins</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Service Client</h4><ul>
+        <li><a href="#">Livraison & Retours</a></li><li><a href="#">Guide des tailles</a></li><li><a href="#">FAQ</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>La Boutique</h4><ul>
+        <li><a href="index.html">Accueil</a></li><li><a href="compte.html">Mon compte</a></li><li><a href="admin.html">Administration</a></li>
+      </ul></div>
     </div>
-    <div class="footer-col">
-      <h4>Nos Marques</h4>
-      <ul>
-        <li><a href="guess.html">Guess</a></li>
-        <li><a href="boss.html">Boss</a></li>
-        <li><a href="hugo.html">Hugo</a></li>
-        <li><a href="levis.html">Levis</a></li>
-        <li><a href="timberland.html">Timberland</a></li>
-        <li><a href="lacoste.html">Lacoste</a></li>
-        <li><a href="chabrand.html">Chabrand</a></li>
-        <li><a href="redskins-brand.html">Redskins</a></li>
-      </ul>
+    <div class="footer-bottom">
+      <p>© 2026 <span>Redskins Franconville</span>. Tous droits réservés.</p>
+      <p>Politique de confidentialité · Mentions légales</p>
     </div>
-    <div class="footer-col">
-      <h4>La Boutique</h4>
-      <ul>
-        <li><a href="index.html">Accueil</a></li>
-        <li><a href="index.html#about">Notre histoire</a></li>
-        <li><a href="index.html#contact">Contact</a></li>
-      </ul>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <p>© 2025 <span>Redskins Franconville</span>. Tous droits réservés.</p>
-    <p>Politique de confidentialité · Mentions légales · CGV</p>
   </div>
 </footer>
 
 <script>
-// ── UTILITAIRES ──
 function getUsers() { return JSON.parse(localStorage.getItem('rf-users') || '[]'); }
 function saveUsers(u) { localStorage.setItem('rf-users', JSON.stringify(u)); }
 function getSession() { return JSON.parse(localStorage.getItem('rf-session') || 'null'); }
-function saveSession(u) { localStorage.setItem('rf-session', JSON.stringify(u)); }
 
-// ── TABS ──
 function switchTab(tab) {
   document.querySelectorAll('.tab').forEach((t,i) => t.classList.toggle('active', (i===0&&tab==='connexion')||(i===1&&tab==='inscription')));
-  document.getElementById('form-connexion').style.display = tab === 'connexion' ? 'block' : 'none';
-  document.getElementById('form-inscription').style.display = tab === 'inscription' ? 'block' : 'none';
+  document.getElementById('form-connexion').style.display = tab==='connexion' ? 'block' : 'none';
+  document.getElementById('form-inscription').style.display = tab==='inscription' ? 'block' : 'none';
 }
 
-// ── INSCRIPTION ──
+function showDashboard(user) {
+  document.getElementById('auth-section').style.display = 'none';
+  document.getElementById('dashboard').classList.add('show');
+  document.getElementById('dash-nom').textContent = user.nom.split(' ')[0];
+  document.getElementById('info-nom').textContent = user.nom;
+  document.getElementById('info-email').textContent = user.email;
+  document.getElementById('info-date').textContent = user.date || '—';
+}
+
+function connexion() {
+  const email = document.getElementById('login-email').value.trim();
+  const mdp = document.getElementById('login-mdp').value;
+  if (email === 'admin@redskins-franconville.fr' && mdp === 'Admin1984!') {
+    const u = { nom:'Administrateur', email, admin:true, date: new Date().toLocaleDateString('fr-FR') };
+    localStorage.setItem('rf-session', JSON.stringify(u));
+    window.location.href = 'admin.html'; return;
+  }
+  const user = getUsers().find(u => u.email===email && u.mdp===mdp);
+  if (!user) { document.getElementById('login-error').classList.add('show'); return; }
+  document.getElementById('login-error').classList.remove('show');
+  localStorage.setItem('rf-session', JSON.stringify(user));
+  showDashboard(user);
+}
+
 function inscription() {
   const nom = document.getElementById('reg-nom').value.trim();
   const email = document.getElementById('reg-email').value.trim();
   const mdp = document.getElementById('reg-mdp').value;
   const errEl = document.getElementById('reg-error');
-
-  if (!nom || !email || !mdp) { errEl.textContent = 'Veuillez remplir tous les champs.'; errEl.classList.add('show'); return; }
-  if (mdp.length < 6) { errEl.textContent = 'Le mot de passe doit faire au moins 6 caractères.'; errEl.classList.add('show'); return; }
-
+  if (!nom||!email||!mdp) { errEl.textContent='Veuillez remplir tous les champs.'; errEl.classList.add('show'); return; }
+  if (mdp.length < 6) { errEl.textContent='Minimum 6 caractères.'; errEl.classList.add('show'); return; }
   const users = getUsers();
-  if (users.find(u => u.email === email)) { errEl.textContent = 'Cet email est déjà utilisé.'; errEl.classList.add('show'); return; }
-
-  const newUser = { nom, email, mdp, date: new Date().toLocaleDateString('fr-FR'), admin: false, commandes: [] };
-  users.push(newUser);
-  saveUsers(users);
-  saveSession(newUser);
+  if (users.find(u => u.email===email)) { errEl.textContent='Cet email est déjà utilisé.'; errEl.classList.add('show'); return; }
+  const user = { nom, email, mdp, date: new Date().toLocaleDateString('fr-FR'), admin: false };
+  users.push(user); saveUsers(users);
+  localStorage.setItem('rf-session', JSON.stringify(user));
   errEl.classList.remove('show');
-  showDashboard(newUser);
-}
-
-// ── CONNEXION ──
-function connexion() {
-  const email = document.getElementById('login-email').value.trim();
-  const mdp = document.getElementById('login-mdp').value;
-  const errEl = document.getElementById('login-error');
-
-  // Compte admin — redirige vers admin.html directement
-  if (email === 'admin@redskins-franconville.fr' && mdp === 'Admin1984!') {
-    const adminUser = { nom: 'Administrateur', email, admin: true, date: new Date().toLocaleDateString('fr-FR'), commandes: [] };
-    saveSession(adminUser);
-    window.location.href = 'admin.html';
-    return;
-  }
-
-  const users = getUsers();
-  const user = users.find(u => u.email === email && u.mdp === mdp);
-  if (!user) { errEl.classList.add('show'); return; }
-  errEl.classList.remove('show');
-  saveSession(user);
   showDashboard(user);
 }
 
-// ── TABLEAU DE BORD ──
-function showDashboard(user) {
-  document.getElementById('auth-section').style.display = 'none';
-  document.getElementById('dashboard').classList.add('show');
-
-  document.getElementById('dash-nom').textContent = user.nom.split(' ')[0];
-  document.getElementById('info-nom').textContent = user.nom;
-  document.getElementById('info-email').textContent = user.email;
-  document.getElementById('info-date').textContent = user.date || '—';
-
-
-
-  // Commandes
-  const cart = JSON.parse(localStorage.getItem('redskins-cart') || '[]');
-  const listeEl = document.getElementById('commandes-liste');
-  if (cart.length === 0) {
-    listeEl.innerHTML = '<p class="commande-vide">Aucune commande pour le moment.</p>';
-  } else {
-    listeEl.innerHTML = cart.map(item => `
-      <div class="commande-item">
-        <div class="commande-nom">${item.name} × ${item.qty}</div>
-        <div class="commande-prix">${(item.price * item.qty).toFixed(2)} €</div>
-      </div>`).join('');
-  }
-}
-
-// ── DÉCONNEXION ──
 function deconnexion() {
   localStorage.removeItem('rf-session');
   document.getElementById('dashboard').classList.remove('show');
   document.getElementById('auth-section').style.display = 'block';
 }
 
-// ── AUTO LOGIN ──
 const session = getSession();
 if (session) showDashboard(session);
+
+// ── GOOGLE SIGN IN ──
+const GOOGLE_CLIENT_ID = '527420211811-tmcrvfo8fr5nffo43rc5dgp491ol6ddi.apps.googleusercontent.com';
+
+function connexionGoogle() {
+  google.accounts.id.initialize({
+    client_id: GOOGLE_CLIENT_ID,
+    callback: handleGoogleResponse,
+    auto_select: false,
+  });
+  google.accounts.id.prompt();
+}
+
+function handleGoogleResponse(response) {
+  // Décoder le JWT token Google
+  const payload = JSON.parse(atob(response.credential.split('.')[1]));
+  const user = {
+    nom: payload.name,
+    email: payload.email,
+    photo: payload.picture,
+    google: true,
+    date: new Date().toLocaleDateString('fr-FR'),
+    admin: false
+  };
+
+  // Sauvegarder dans les users si nouveau
+  const users = getUsers();
+  const existing = users.find(u => u.email === user.email);
+  if (!existing) {
+    users.push(user);
+    saveUsers(users);
+  }
+
+  // Créer la session
+  localStorage.setItem('rf-session', JSON.stringify(user));
+  showDashboard(user);
+}
+
+
+// ── GOOGLE SIGN IN ──
+const GOOGLE_CLIENT_ID = '527420211811-tmcrvfo8fr5nffo43rc5dgp491ol6ddi.apps.googleusercontent.com';
+
+function connexionGoogle() {
+  google.accounts.id.initialize({
+    client_id: GOOGLE_CLIENT_ID,
+    callback: handleGoogleResponse,
+    auto_select: false,
+  });
+  google.accounts.id.prompt();
+}
+
+function handleGoogleResponse(response) {
+  // Décoder le JWT token Google
+  const payload = JSON.parse(atob(response.credential.split('.')[1]));
+  const user = {
+    nom: payload.name,
+    email: payload.email,
+    photo: payload.picture,
+    google: true,
+    date: new Date().toLocaleDateString('fr-FR'),
+    admin: false
+  };
+
+  // Sauvegarder dans les users si nouveau
+  const users = getUsers();
+  const existing = users.find(u => u.email === user.email);
+  if (!existing) {
+    users.push(user);
+    saveUsers(users);
+  }
+
+  // Créer la session
+  localStorage.setItem('rf-session', JSON.stringify(user));
+  showDashboard(user);
+}
+
 </script>
 </body>
 </html>
