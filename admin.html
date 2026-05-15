@@ -4,314 +4,170 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Administration — Redskins Franconville</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  * { cursor: default !important; }
-  a, button { cursor: pointer !important; }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{--white:#fff;--bg:#f5f5f5;--border:#e8e8e8;--text:#1c1c1c;--text-mid:#555;--text-light:#999;--red:#e00;--black:#111;}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-size:14px;}
+a{text-decoration:none;color:inherit;}
+button{font-family:inherit;cursor:pointer;}
 
-  .admin-page {
-    padding: 100px 48px 80px;
-    max-width: 1200px; margin: 0 auto;
-    position: relative; z-index: 1;
-  }
+/* LAYOUT */
+.admin-layout{display:grid;grid-template-columns:240px 1fr;min-height:100vh;}
 
-  .admin-header {
-    display: flex; justify-content: space-between; align-items: center;
-    margin-bottom: 40px;
-    border-bottom: 2px solid var(--red);
-    padding-bottom: 20px;
-  }
-  .admin-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 2.5rem; letter-spacing: 4px;
-  }
-  .admin-title span { color: var(--red); }
+/* SIDEBAR */
+.sidebar{background:var(--black);padding:0;position:sticky;top:0;height:100vh;overflow-y:auto;}
+.sidebar-logo{padding:24px 20px;border-bottom:1px solid rgba(255,255,255,0.08);}
+.sidebar-logo span{font-size:16px;font-weight:700;color:#fff;}
+.sidebar-logo small{display:block;font-size:11px;color:rgba(255,255,255,0.4);margin-top:2px;}
+.sidebar-logo em{color:var(--red);font-style:normal;}
+.sidebar-nav{padding:16px 0;}
+.sidebar-item{display:flex;align-items:center;gap:10px;padding:10px 20px;font-size:13px;font-weight:500;color:rgba(255,255,255,0.5);cursor:pointer;transition:color 0.2s,background 0.2s;border-left:3px solid transparent;}
+.sidebar-item:hover{color:#fff;background:rgba(255,255,255,0.05);}
+.sidebar-item.active{color:#fff;background:rgba(255,255,255,0.08);border-left-color:var(--red);}
+.sidebar-item-icon{font-size:16px;}
+.sidebar-section{padding:12px 20px 4px;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.25);}
 
-  /* TABS ADMIN */
-  .admin-tabs {
-    display: flex; gap: 0; margin-bottom: 40px;
-    border-bottom: 1px solid rgba(255,255,255,0.08);
-  }
-  .admin-tab {
-    padding: 14px 28px;
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 0.8rem; letter-spacing: 3px; text-transform: uppercase;
-    color: var(--warm-grey); background: none; border: none;
-    border-bottom: 2px solid transparent;
-    transition: color 0.2s, border-color 0.2s;
-    margin-bottom: -1px;
-  }
-  .admin-tab.active { color: var(--off-white); border-bottom-color: var(--red); }
+/* MAIN */
+.admin-main{padding:32px;overflow-y:auto;}
+.admin-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:32px;}
+.admin-header h1{font-size:22px;font-weight:700;letter-spacing:-0.3px;}
+.btn-logout{background:#fff;border:1px solid var(--border);color:var(--text-mid);padding:8px 16px;border-radius:4px;font-size:12px;font-weight:500;cursor:pointer;transition:border-color 0.2s;}
+.btn-logout:hover{border-color:var(--red);color:var(--red);}
 
-  .admin-panel { display: none; }
-  .admin-panel.active { display: block; }
+/* PANELS */
+.panel{display:none;}
+.panel.active{display:block;}
 
-  /* STATS */
-  .stats-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(180px,1fr));
-    gap: 2px; margin-bottom: 40px;
-  }
-  .stat-card {
-    background: #0e0e0e; padding: 24px;
-    border: 1px solid rgba(255,255,255,0.04);
-    border-top: 2px solid var(--red);
-  }
-  .stat-card-num {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 2.2rem; color: var(--red);
-  }
-  .stat-card-label {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 0.65rem; letter-spacing: 3px; text-transform: uppercase;
-    color: var(--warm-grey); margin-top: 4px;
-  }
+/* STATS */
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:32px;}
+.stat-card{background:var(--white);border:1px solid var(--border);border-radius:8px;padding:20px;}
+.stat-card-num{font-size:28px;font-weight:700;color:var(--text);margin-bottom:4px;}
+.stat-card-num.red{color:var(--red);}
+.stat-card-label{font-size:12px;color:var(--text-light);}
 
-  /* FORMULAIRE AJOUT PRODUIT */
-  .form-produit {
-    background: #0e0e0e;
-    border: 1px solid rgba(255,255,255,0.06);
-    padding: 40px; margin-bottom: 32px;
-  }
-  .form-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.8rem; letter-spacing: 3px;
-    margin-bottom: 32px; color: var(--off-white);
-  }
-  .form-title span { color: var(--red); }
+/* FORM */
+.form-card{background:var(--white);border:1px solid var(--border);border-radius:8px;padding:28px;margin-bottom:24px;}
+.form-card-title{font-size:16px;font-weight:700;margin-bottom:20px;}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.form-full{grid-column:1/-1;}
+.form-group{display:flex;flex-direction:column;gap:6px;}
+.form-label{font-size:12px;font-weight:600;color:var(--text);}
+.form-input,.form-select,.form-textarea{padding:10px 12px;border:1px solid var(--border);border-radius:4px;font-family:inherit;font-size:13px;color:var(--text);outline:none;transition:border-color 0.2s;background:#fff;}
+.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--text);}
+.form-textarea{resize:vertical;min-height:80px;}
 
-  .form-grid {
-    display: grid; grid-template-columns: 1fr 1fr;
-    gap: 20px;
-  }
-  .form-grid-3 {
-    display: grid; grid-template-columns: 1fr 1fr 1fr;
-    gap: 20px;
-  }
-  .form-full { grid-column: 1 / -1; }
+/* UPLOAD */
+.upload-zone{border:2px dashed var(--border);border-radius:8px;padding:32px;text-align:center;cursor:pointer;transition:border-color 0.2s;position:relative;}
+.upload-zone:hover{border-color:var(--text-mid);}
+.upload-zone input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+.upload-zone-icon{font-size:32px;margin-bottom:8px;}
+.upload-zone-text{font-size:13px;color:var(--text-mid);}
+.photos-preview{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;}
+.photo-item{position:relative;width:72px;height:90px;}
+.photo-item img{width:100%;height:100%;object-fit:cover;border-radius:4px;border:1px solid var(--border);}
+.photo-item-del{position:absolute;top:-6px;right:-6px;background:var(--red);color:#fff;border:none;border-radius:50%;width:18px;height:18px;font-size:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
 
-  .form-group { margin-bottom: 0; }
-  .form-label {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase;
-    color: var(--warm-grey); display: block; margin-bottom: 8px;
-  }
-  .form-input, .form-select, .form-textarea {
-    width: 100%; padding: 12px 16px;
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.1);
-    color: var(--off-white);
-    font-family: 'Barlow', sans-serif; font-size: 0.9rem;
-    outline: none; transition: border-color 0.3s;
-  }
-  .form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--red); }
-  .form-input::placeholder, .form-textarea::placeholder { color: rgba(168,160,154,0.4); }
-  .form-select option { background: #111; color: var(--off-white); }
-  .form-textarea { resize: vertical; min-height: 90px; }
+/* TOGGLE */
+.toggle-row{display:flex;align-items:center;gap:12px;margin:16px 0;}
+.toggle{width:44px;height:24px;background:var(--border);border-radius:12px;position:relative;cursor:pointer;transition:background 0.3s;flex-shrink:0;}
+.toggle.on{background:var(--red);}
+.toggle::after{content:'';position:absolute;top:3px;left:3px;width:18px;height:18px;background:#fff;border-radius:50%;transition:left 0.3s;}
+.toggle.on::after{left:23px;}
+.toggle-label{font-size:13px;font-weight:500;}
+.promo-fields{display:none;}
+.promo-fields.show{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
 
-  /* UPLOAD PHOTO */
-  .photo-upload-zone {
-    border: 2px dashed rgba(255,255,255,0.15);
-    padding: 32px; text-align: center;
-    transition: border-color 0.3s; position: relative;
-    cursor: pointer !important;
-  }
-  .photo-upload-zone:hover { border-color: var(--red); }
-  .photo-upload-zone input[type="file"] {
-    position: absolute; inset: 0; opacity: 0;
-    width: 100%; height: 100%; cursor: pointer !important;
-  }
-  .upload-icon { font-size: 2.5rem; margin-bottom: 8px; }
-  .upload-text {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase;
-    color: var(--warm-grey);
-  }
-  .photos-preview {
-    display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px;
-  }
-  .photo-preview-item {
-    position: relative; width: 80px; height: 80px;
-  }
-  .photo-preview-item img {
-    width: 100%; height: 100%; object-fit: cover;
-    border: 1px solid rgba(255,255,255,0.1);
-  }
-  .photo-preview-item button {
-    position: absolute; top: -6px; right: -6px;
-    background: var(--red); color: white; border: none;
-    width: 20px; height: 20px; font-size: 0.7rem;
-    display: flex; align-items: center; justify-content: center;
-    border-radius: 50%;
-  }
+/* BTN */
+.btn-primary{background:var(--black);color:#fff;padding:12px 24px;border:none;border-radius:4px;font-size:13px;font-weight:600;cursor:pointer;transition:background 0.2s;}
+.btn-primary:hover{background:var(--red);}
+.btn-danger{background:none;border:1px solid var(--border);color:var(--text-mid);padding:6px 12px;border-radius:4px;font-size:11px;font-weight:500;cursor:pointer;transition:border-color 0.2s,color 0.2s;}
+.btn-danger:hover{border-color:var(--red);color:var(--red);}
+.btn-edit{background:none;border:1px solid var(--border);color:var(--text-mid);padding:6px 12px;border-radius:4px;font-size:11px;font-weight:500;cursor:pointer;transition:border-color 0.2s,color 0.2s;}
+.btn-edit:hover{border-color:var(--text);color:var(--text);}
 
-  /* REDUCTION */
-  .promo-toggle {
-    display: flex; align-items: center; gap: 12px; margin-bottom: 16px;
-  }
-  .toggle-switch {
-    width: 44px; height: 24px; background: #222;
-    border: 1px solid rgba(255,255,255,0.15);
-    position: relative; cursor: pointer !important;
-    transition: background 0.3s;
-  }
-  .toggle-switch.on { background: var(--red); }
-  .toggle-switch::after {
-    content: ''; position: absolute; top: 3px; left: 3px;
-    width: 16px; height: 16px; background: white;
-    transition: left 0.3s;
-  }
-  .toggle-switch.on::after { left: 23px; }
-  .toggle-label {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase;
-    color: var(--warm-grey);
-  }
-  .promo-fields { display: none; }
-  .promo-fields.show { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+/* TABLE */
+.table-wrap{background:var(--white);border:1px solid var(--border);border-radius:8px;overflow:hidden;}
+table{width:100%;border-collapse:collapse;}
+th{font-size:11px;font-weight:600;letter-spacing:0.5px;text-transform:uppercase;color:var(--text-light);padding:12px 16px;text-align:left;background:var(--bg);border-bottom:1px solid var(--border);}
+td{padding:14px 16px;font-size:13px;border-bottom:1px solid var(--bg);}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:var(--bg);}
+.prod-thumb{width:48px;height:60px;object-fit:cover;border-radius:4px;background:var(--bg);}
+.badge{display:inline-block;font-size:10px;font-weight:700;letter-spacing:1px;padding:2px 8px;border-radius:2px;}
+.badge-promo{background:rgba(238,0,0,0.1);color:var(--red);}
 
-  .btn-ajouter {
-    background: var(--red); color: white; border: none;
-    padding: 16px 40px; margin-top: 28px;
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 0.85rem; letter-spacing: 4px; text-transform: uppercase;
-    font-weight: 600; transition: background 0.2s, transform 0.2s;
-  }
-  .btn-ajouter:hover { background: #8B0012; transform: translateY(-2px); }
+/* NOTIF */
+.notif{position:fixed;bottom:24px;right:24px;background:var(--black);color:#fff;padding:12px 20px;border-radius:4px;font-size:13px;font-weight:500;transform:translateY(60px);opacity:0;transition:transform 0.3s,opacity 0.3s;z-index:999;}
+.notif.show{transform:translateY(0);opacity:1;}
 
-  /* LISTE PRODUITS */
-  .produits-liste { margin-top: 32px; }
-  .produit-item {
-    background: #0e0e0e; border: 1px solid rgba(255,255,255,0.06);
-    padding: 20px 24px; margin-bottom: 8px;
-    display: grid; grid-template-columns: 70px 1fr auto auto auto;
-    gap: 16px; align-items: center;
-    transition: border-color 0.2s;
-  }
-  .produit-item:hover { border-color: rgba(192,0,26,0.3); }
-  .produit-thumb {
-    width: 70px; height: 70px; object-fit: cover;
-    background: #111; border: 1px solid rgba(255,255,255,0.06);
-  }
-  .produit-nom {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.1rem; letter-spacing: 2px; color: var(--off-white);
-  }
-  .produit-marque {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 0.65rem; letter-spacing: 3px; text-transform: uppercase;
-    color: var(--red); margin-bottom: 4px;
-  }
-  .produit-prix-affiche {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.3rem; color: var(--off-white);
-  }
-  .produit-prix-barre {
-    font-size: 0.85rem; color: var(--warm-grey);
-    text-decoration: line-through; margin-left: 8px;
-  }
-  .badge-promo {
-    background: var(--red); color: white;
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 0.65rem; letter-spacing: 2px;
-    padding: 3px 8px; margin-left: 8px;
-  }
-  .btn-suppr {
-    background: none; border: 1px solid rgba(192,0,26,0.3);
-    color: var(--red); padding: 8px 16px;
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase;
-    transition: background 0.2s;
-  }
-  .btn-suppr:hover { background: rgba(192,0,26,0.15); }
-  .btn-edit {
-    background: none; border: 1px solid rgba(255,255,255,0.15);
-    color: var(--warm-grey); padding: 8px 16px;
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase;
-    transition: border-color 0.2s, color 0.2s;
-  }
-  .btn-edit:hover { border-color: var(--red); color: var(--off-white); }
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:500;overflow-y:auto;padding:40px 24px;}
+.modal{max-width:640px;margin:0 auto;background:#fff;border-radius:8px;padding:32px;position:relative;}
+.modal-close{position:absolute;top:16px;right:16px;background:none;border:none;font-size:20px;color:var(--text-light);cursor:pointer;}
+.modal-title{font-size:18px;font-weight:700;margin-bottom:24px;}
 
-  .empty-msg {
-    text-align: center; padding: 60px;
-    color: var(--warm-grey); font-style: italic;
-  }
+/* ACCES REFUSE */
+.acces-refuse{display:flex;align-items:center;justify-content:center;min-height:100vh;text-align:center;}
+.acces-refuse-box{padding:60px 40px;}
+.acces-refuse-icon{font-size:48px;margin-bottom:16px;}
+.acces-refuse h2{font-size:22px;font-weight:700;margin-bottom:8px;}
+.acces-refuse p{font-size:14px;color:var(--text-mid);margin-bottom:24px;}
+.btn-link{display:inline-block;background:var(--black);color:#fff;padding:12px 28px;border-radius:4px;font-size:13px;font-weight:600;}
 
-  /* CLIENTS */
-  table { width: 100%; border-collapse: collapse; }
-  th {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 0.65rem; letter-spacing: 3px; text-transform: uppercase;
-    color: var(--warm-grey); padding: 12px; text-align: left;
-    border-bottom: 1px solid rgba(255,255,255,0.06);
-  }
-  td {
-    padding: 14px 12px; font-size: 0.88rem;
-    border-bottom: 1px solid rgba(255,255,255,0.04);
-    color: var(--off-white);
-  }
+@media(max-width:900px){.admin-layout{grid-template-columns:1fr;}.sidebar{display:none;}.stats-grid{grid-template-columns:1fr 1fr;}.form-grid{grid-template-columns:1fr;}}
 
-  /* NOTIF */
-  .notif {
-    position: fixed; bottom: 32px; right: 32px;
-    background: #111; border: 1px solid var(--red);
-    color: white; padding: 16px 24px;
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 0.85rem; letter-spacing: 2px;
-    transform: translateY(100px); opacity: 0;
-    transition: transform 0.4s, opacity 0.4s; z-index: 999;
-  }
-  .notif.show { transform: translateY(0); opacity: 1; }
+.topbar{background:#111;color:rgba(255,255,255,0.8);text-align:center;padding:8px;font-size:12px;}
+.topbar strong{color:#fff;}
+nav{background:#fff;border-bottom:1px solid #e8e8e8;position:sticky;top:0;z-index:200;}
+.nav-top{display:flex;align-items:center;justify-content:space-between;padding:0 32px;height:64px;max-width:1400px;margin:0 auto;}
+.nav-logo{font-size:18px;font-weight:700;letter-spacing:-0.5px;color:#1c1c1c;text-decoration:none;}
+.nav-logo span{color:#e00;}
+.nav-search{flex:1;max-width:480px;margin:0 32px;position:relative;}
+.nav-search input{width:100%;padding:10px 44px 10px 16px;background:#f5f5f5;border:1px solid #e8e8e8;border-radius:4px;font-family:inherit;font-size:13px;color:#1c1c1c;outline:none;transition:border-color 0.2s;}
+.nav-search input:focus{border-color:#1c1c1c;background:#fff;}
+.nav-search input::placeholder{color:#999;}
+.nav-search-icon{position:absolute;right:14px;top:50%;transform:translateY(-50%);color:#999;}
+.nav-actions{display:flex;align-items:center;gap:4px;}
+.nav-action{display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 12px;color:#555;font-size:10px;font-weight:500;border-radius:4px;transition:color 0.2s;text-decoration:none;}
+.nav-action:hover{color:#1c1c1c;background:#f5f5f5;}
+.nav-action-icon{font-size:18px;}
+.nav-action-cart{background:#e00;color:#fff;border-radius:4px;}
+.nav-action-cart:hover{background:#cc0000;color:#fff;}
+.nav-bottom{border-top:1px solid #e8e8e8;}
+.nav-bottom-inner{display:flex;align-items:center;max-width:1400px;margin:0 auto;padding:0 32px;overflow-x:auto;}
+.nav-brand{padding:10px 14px;font-size:12px;font-weight:600;letter-spacing:0.3px;color:#555;white-space:nowrap;border-bottom:2px solid transparent;transition:color 0.2s,border-color 0.2s;text-decoration:none;display:block;}
+.nav-brand:hover{color:#1c1c1c;border-bottom-color:#e00;}
+@media(max-width:768px){.nav-top{padding:0 16px;}.nav-search{display:none;}.nav-bottom-inner{padding:0 16px;}}
 
-  .acces-refuse {
-    text-align: center; padding: 120px 24px;
-  }
-  .acces-refuse h2 {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 3rem; color: var(--red); margin-bottom: 16px;
-  }
-
-  @media (max-width: 900px) {
-    .admin-page { padding: 100px 24px 60px; }
-    .form-grid, .form-grid-3 { grid-template-columns: 1fr; }
-    .produit-item { grid-template-columns: 60px 1fr; }
-  }
 </style>
 </head>
 <body>
 
-<nav>
-  <a href="index.html" class="nav-logo">REDSKINS <span>FRANCONVILLE</span></a>
-  <ul class="nav-links">
-    <li><a href="index.html#marques">Marques</a></li>
-    <li><a href="compte.html" title="Mon Compte" style="font-size:1.3rem;padding:1.2rem 0.8rem;">👤</a></li>
-    <li><a href="panier.html" class="nav-cta">🛒 Panier</a></li>
-  </ul>
-</nav>
+<div id="app"></div>
+<div class="notif" id="notif"></div>
 
-<div class="admin-page" id="admin-content">
-  <div class="acces-refuse">
-    <h2>CHARGEMENT...</h2>
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal">
+    <button class="modal-close" onclick="fermerModal()">✕</button>
+    <div class="modal-title">Modifier le produit</div>
+    <div class="form-grid" id="modal-form"></div>
+    <div style="margin-top:20px;"><button class="btn-primary" onclick="sauvegarderModif()">Sauvegarder</button></div>
   </div>
 </div>
 
-<div class="notif" id="notif"></div>
-
 <script>
 const session = JSON.parse(localStorage.getItem('rf-session') || 'null');
-const el = document.getElementById('admin-content');
-
-// ── PHOTOS SÉLECTIONNÉES ──
-let photosBase64 = [];
+const app = document.getElementById('app');
+let photosBase64 = [], promoActif = false, currentEditId = null, photosModalB64 = [], promoModalActif = false;
 
 if (!session || !session.admin) {
-  el.innerHTML = `
-    <div class="acces-refuse">
-      <h2>ACCÈS REFUSÉ</h2>
-      <p style="color:var(--warm-grey);margin-bottom:32px;">Vous devez être administrateur pour accéder à cette page.</p>
-      <a href="compte.html" class="btn-primary"><span>Se connecter</span></a>
-    </div>`;
+  app.innerHTML = `<div class="acces-refuse"><div class="acces-refuse-box">
+    <div class="acces-refuse-icon">🔒</div>
+    <h2>Accès refusé</h2>
+    <p>Vous devez être administrateur pour accéder à cette page.</p>
+    <a href="compte.html" class="btn-link">Se connecter</a>
+  </div></div>`;
 } else {
   renderAdmin();
 }
@@ -320,451 +176,309 @@ async function renderAdmin() {
   const produits = await getProduits();
   const users = JSON.parse(localStorage.getItem('rf-users') || '[]');
   const cart = JSON.parse(localStorage.getItem('redskins-cart') || '[]');
-  const totalPanier = cart.reduce((a,i) => a + i.price * i.qty, 0);
+  const totalPanier = cart.reduce((a,i) => a+i.price*i.qty, 0);
 
-  el.innerHTML = `
-    <div class="admin-header">
-      <div class="admin-title">ADMIN <span>PANEL</span></div>
-      <button class="btn-suppr" onclick="localStorage.removeItem('rf-session');window.location.href='compte.html'">
-        Déconnexion
-      </button>
+  app.innerHTML = `
+  <div class="admin-layout">
+    <div class="sidebar">
+      <div class="sidebar-logo">
+        <span>Redskins <em>Franconville</em></span>
+        <small>Administration</small>
+      </div>
+      <div class="sidebar-nav">
+        <div class="sidebar-section">Menu</div>
+        <div class="sidebar-item active" onclick="showPanel('produits',this)"><span class="sidebar-item-icon">🛍️</span> Produits</div>
+        <div class="sidebar-item" onclick="showPanel('clients',this)"><span class="sidebar-item-icon">👥</span> Clients</div>
+        <div class="sidebar-item" onclick="showPanel('stats',this)"><span class="sidebar-item-icon">📊</span> Statistiques</div>
+        <div class="sidebar-item" onclick="showPanel('flash',this)"><span class="sidebar-item-icon">⚡</span> Vente Flash</div>
+        <div class="sidebar-section">Accès rapide</div>
+        <div class="sidebar-item" onclick="window.open('index.html')"><span class="sidebar-item-icon">🌐</span> Voir le site</div>
+        <div class="sidebar-item" onclick="logout()"><span class="sidebar-item-icon">🚪</span> Déconnexion</div>
+      </div>
     </div>
+    <div class="admin-main">
+      <div class="admin-header">
+        <h1 id="panel-title">Produits</h1>
+        <button class="btn-logout" onclick="logout()">Déconnexion</button>
+      </div>
 
-    <!-- TABS -->
-    <div class="admin-tabs">
-      <button class="admin-tab active" onclick="switchPanel('produits')">🛍️ Produits</button>
-      <button class="admin-tab" onclick="switchPanel('clients')">👥 Clients</button>
-      <button class="admin-tab" onclick="switchPanel('stats')">📊 Statistiques</button>
-    </div>
+      <!-- PRODUITS -->
+      <div class="panel active" id="panel-produits">
+        <div class="form-card">
+          <div class="form-card-title">Ajouter un produit</div>
+          <div class="form-grid">
+            <div class="form-group"><label class="form-label">Marque</label>
+              <select class="form-select" id="p-marque">
+                <option value="">— Choisir —</option>
+                <option>Guess</option><option>Boss</option><option>Hugo</option>
+                <option>Levis</option><option>Timberland</option><option>Lacoste</option>
+                <option>Chabrand</option><option>Redskins</option>
+              </select>
+            </div>
+            <div class="form-group"><label class="form-label">Nom du produit</label><input type="text" class="form-input" id="p-nom" placeholder="Ex: BLOUSON CUIR NOIR"></div>
+            <div class="form-group"><label class="form-label">Référence</label><input type="text" class="form-input" id="p-ref" placeholder="Ex: RS2024-001"></div>
+            <div class="form-group"><label class="form-label">Catégorie</label>
+              <select class="form-select" id="p-categorie">
+                <option>Vêtements</option><option>Chaussures</option><option>Accessoires</option><option>Cuir</option>
+              </select>
+            </div>
+            <div class="form-group form-full"><label class="form-label">Description</label><textarea class="form-textarea" id="p-desc" placeholder="Description du produit..."></textarea></div>
+            <div class="form-group"><label class="form-label">Prix (€)</label><input type="number" class="form-input" id="p-prix" placeholder="99"></div>
+            <div class="form-group"><label class="form-label">Tailles (séparées par virgule)</label><input type="text" class="form-input" id="p-tailles" placeholder="S,M,L,XL ou 39,40,41"></div>
+            <div class="form-group form-full"><label class="form-label">Couleurs (séparées par virgule)</label><input type="text" class="form-input" id="p-couleurs" placeholder="Noir,Blanc,Rouge"></div>
+          </div>
 
-    <!-- PANEL PRODUITS -->
-    <div class="admin-panel active" id="panel-produits">
-
-      <div class="form-produit">
-        <div class="form-title">AJOUTER UN <span>PRODUIT</span></div>
-
-        <div class="form-grid">
-          <div class="form-group">
-            <label class="form-label">Marque</label>
-            <select class="form-select" id="p-marque">
-              <option value="">— Choisir une marque —</option>
-              <option value="Guess">Guess</option>
-              <option value="Boss">Boss</option>
-              <option value="Hugo">Hugo</option>
-              <option value="Levis">Levis</option>
-              <option value="Timberland">Timberland</option>
-              <option value="Lacoste">Lacoste</option>
-              <option value="Chabrand">Chabrand</option>
-              <option value="Redskins">Redskins</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Nom du produit</label>
-            <input type="text" class="form-input" id="p-nom" placeholder="Ex: BLOUSON CUIR NOIR">
-          </div>
-          <div class="form-group">
-            <label class="form-label">Référence</label>
-            <input type="text" class="form-input" id="p-ref" placeholder="Ex: RS2024-001">
-          </div>
-          <div class="form-group">
-            <label class="form-label">Catégorie</label>
-            <select class="form-select" id="p-categorie">
-              <option value="Vêtements">Vêtements</option>
-              <option value="Chaussures">Chaussures</option>
-              <option value="Accessoires">Accessoires</option>
-              <option value="Cuir">Cuir</option>
-            </select>
-          </div>
-          <div class="form-group form-full">
-            <label class="form-label">Description</label>
-            <textarea class="form-textarea" id="p-desc" placeholder="Description du produit..."></textarea>
-          </div>
-        </div>
-
-        <!-- PRIX -->
-        <div class="form-grid-3" style="margin-top:20px;">
-          <div class="form-group">
-            <label class="form-label">Prix (€)</label>
-            <input type="number" class="form-input" id="p-prix" placeholder="99">
-          </div>
-          <div class="form-group">
-            <label class="form-label">Tailles (séparées par virgule)</label>
-            <input type="text" class="form-input" id="p-tailles" placeholder="S,M,L,XL ou 39,40,41">
-          </div>
-          <div class="form-group">
-            <label class="form-label">Couleurs (séparées par virgule)</label>
-            <input type="text" class="form-input" id="p-couleurs" placeholder="Noir,Blanc,Rouge">
-          </div>
-        </div>
-
-        <!-- RÉDUCTION -->
-        <div style="margin-top:24px;">
-          <div class="promo-toggle">
-            <div class="toggle-switch" id="promo-toggle" onclick="togglePromo()"></div>
+          <div class="toggle-row" style="margin-top:16px;">
+            <div class="toggle" id="promo-toggle" onclick="togglePromo()"></div>
             <span class="toggle-label">Activer une réduction</span>
           </div>
           <div class="promo-fields" id="promo-fields">
-            <div class="form-group">
-              <label class="form-label">Prix réduit (€)</label>
-              <input type="number" class="form-input" id="p-prix-reduit" placeholder="79">
-            </div>
-            <div class="form-group">
-              <label class="form-label">Libellé promo</label>
-              <input type="text" class="form-input" id="p-promo-label" placeholder="Ex: -20% · Soldes d'été">
-            </div>
+            <div class="form-group"><label class="form-label">Prix réduit (€)</label><input type="number" class="form-input" id="p-prix-reduit"></div>
+            <div class="form-group"><label class="form-label">Libellé</label><input type="text" class="form-input" id="p-promo-label" placeholder="-20% Soldes"></div>
           </div>
-        </div>
 
-        <!-- PHOTOS -->
-        <div style="margin-top:24px;">
-          <label class="form-label">Photos du produit</label>
-          <div class="photo-upload-zone" onclick="document.getElementById('p-photos').click()">
-            <input type="file" id="p-photos" accept="image/*,.avif,.webp" multiple onchange="handlePhotos(event)">
-            <div class="upload-icon">📸</div>
-            <div class="upload-text">Cliquer pour ajouter des photos<br><span style="font-size:0.75rem;opacity:0.6;">JPG, PNG, AVIF, WEBP acceptés</span></div>
+          <div style="margin-top:20px;">
+            <label class="form-label" style="margin-bottom:8px;">Photos</label>
+            <div class="upload-zone" onclick="document.getElementById('p-photos').click()">
+              <input type="file" id="p-photos" accept="image/*,.avif,.webp" multiple onchange="handlePhotos(event)">
+              <div class="upload-zone-icon">📸</div>
+              <div class="upload-zone-text">Cliquer pour ajouter des photos</div>
+            </div>
+            <div class="photos-preview" id="photos-preview"></div>
           </div>
-          <div class="photos-preview" id="photos-preview"></div>
+
+          <button class="btn-primary" style="margin-top:24px;" onclick="ajouterProduit()">+ Ajouter le produit</button>
         </div>
 
-        <button class="btn-ajouter" onclick="ajouterProduit()">✚ Ajouter le produit</button>
+        <div class="table-wrap" id="liste-produits"></div>
       </div>
 
-      <!-- LISTE PRODUITS -->
-      <div id="liste-produits"></div>
-    </div>
-
-    <!-- PANEL CLIENTS -->
-    <div class="admin-panel" id="panel-clients">
-      <div class="form-produit">
-        <div class="form-title">COMPTES <span>CLIENTS</span></div>
-        ${users.length === 0
-          ? '<p class="empty-msg">Aucun compte client.</p>'
-          : `<table>
-              <thead><tr><th>Nom</th><th>Email</th><th>Inscription</th><th>Action</th></tr></thead>
-              <tbody>
-                ${users.map((u,i) => `
-                  <tr>
-                    <td>${u.nom}</td>
-                    <td>${u.email}</td>
-                    <td>${u.date||'—'}</td>
-                    <td><button class="btn-suppr" onclick="supprimerClient(${i})">Supprimer</button></td>
-                  </tr>`).join('')}
-              </tbody>
-            </table>`}
-      </div>
-    </div>
-
-    <!-- PANEL STATS -->
-    <div class="admin-panel" id="panel-stats">
-      <div class="stats-grid">
-        <div class="stat-card">
-          <div class="stat-card-num">${produits.length}</div>
-          <div class="stat-card-label">Produits en ligne</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-card-num">${users.length}</div>
-          <div class="stat-card-label">Comptes clients</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-card-num">${cart.reduce((a,i)=>a+i.qty,0)}</div>
-          <div class="stat-card-label">Articles en panier</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-card-num">${totalPanier.toFixed(0)} €</div>
-          <div class="stat-card-label">Valeur panier</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-card-num">${produits.filter(p=>p.promoActif).length}</div>
-          <div class="stat-card-label">Produits en promo</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-card-num">8</div>
-          <div class="stat-card-label">Marques actives</div>
+      <!-- CLIENTS -->
+      <div class="panel" id="panel-clients">
+        <div class="table-wrap">
+          ${users.length === 0
+            ? '<p style="padding:40px;text-align:center;color:var(--text-light);">Aucun compte client.</p>'
+            : `<table><thead><tr><th>Nom</th><th>Email</th><th>Inscription</th><th>Action</th></tr></thead>
+               <tbody>${users.map((u,i) => `<tr><td>${u.nom}</td><td>${u.email}</td><td>${u.date||'—'}</td>
+               <td><button class="btn-danger" onclick="supprimerClient(${i})">Supprimer</button></td></tr>`).join('')}</tbody></table>`}
         </div>
       </div>
 
-      <!-- Panier détail -->
-      <div class="form-produit">
-        <div class="form-title">PANIER <span>EN COURS</span></div>
-        ${cart.length === 0
-          ? '<p class="empty-msg">Panier vide.</p>'
-          : `<table>
-              <thead><tr><th>Produit</th><th>Marque</th><th>Qté</th><th>Prix</th><th>Total</th></tr></thead>
-              <tbody>
-                ${cart.map(i=>`
-                  <tr>
-                    <td>${i.name}</td><td>${i.brand||'—'}</td>
-                    <td>${i.qty}</td><td>${i.price} €</td>
-                    <td>${(i.price*i.qty).toFixed(2)} €</td>
-                  </tr>`).join('')}
-                <tr><td colspan="4" style="text-align:right;color:var(--warm-grey);font-family:'Barlow Condensed',sans-serif;letter-spacing:2px;font-size:0.8rem;text-transform:uppercase;">TOTAL</td>
-                <td style="color:var(--red);font-weight:600;">${totalPanier.toFixed(2)} €</td></tr>
-              </tbody>
-            </table>`}
+      <!-- STATS -->
+      <div class="panel" id="panel-stats">
+        <div class="stats-grid">
+          <div class="stat-card"><div class="stat-card-num red">${produits.length}</div><div class="stat-card-label">Produits en ligne</div></div>
+          <div class="stat-card"><div class="stat-card-num">${users.length}</div><div class="stat-card-label">Clients inscrits</div></div>
+          <div class="stat-card"><div class="stat-card-num">${cart.reduce((a,i)=>a+i.qty,0)}</div><div class="stat-card-label">Articles en panier</div></div>
+          <div class="stat-card"><div class="stat-card-num">${totalPanier.toFixed(0)} €</div><div class="stat-card-label">Valeur panier</div></div>
+        </div>
+        ${cart.length > 0 ? `
+        <div class="table-wrap">
+          <table><thead><tr><th>Produit</th><th>Marque</th><th>Qté</th><th>Prix</th><th>Total</th></tr></thead>
+          <tbody>${cart.map(i=>`<tr><td>${i.name}</td><td>${i.brand||'—'}</td><td>${i.qty}</td><td>${i.price} €</td><td>${(i.price*i.qty).toFixed(2)} €</td></tr>`).join('')}</tbody>
+          </table></div>` : '<p style="color:var(--text-light);padding:20px;">Panier vide.</p>'}
       </div>
     </div>
-  `;
+  </div>`;
 
   renderProduits();
 }
 
-// ── TABS ──
-function switchPanel(name) {
-  document.querySelectorAll('.admin-tab').forEach((t,i) => {
-    const names = ['produits','clients','stats'];
-    t.classList.toggle('active', names[i] === name);
-  });
-  document.querySelectorAll('.admin-panel').forEach(p => p.classList.remove('active'));
+function showPanel(name, el) {
+  document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
+  el.classList.add('active');
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
   document.getElementById('panel-' + name).classList.add('active');
+  const titles = {produits:'Produits', clients:'Clients', stats:'Statistiques'};
+  document.getElementById('panel-title').textContent = titles[name] || '';
 }
 
-// ── PROMO TOGGLE ──
-let promoActif = false;
 function togglePromo() {
   promoActif = !promoActif;
   document.getElementById('promo-toggle').classList.toggle('on', promoActif);
   document.getElementById('promo-fields').classList.toggle('show', promoActif);
 }
 
-// ── PHOTOS ──
 function handlePhotos(e) {
-  const files = Array.from(e.target.files);
-  files.forEach(file => {
+  Array.from(e.target.files).forEach(file => {
     const reader = new FileReader();
-    reader.onload = (ev) => {
-      photosBase64.push(ev.target.result);
-      renderPreviews();
-    };
+    reader.onload = ev => { photosBase64.push(ev.target.result); renderPreviews(); };
     reader.readAsDataURL(file);
   });
 }
 
 function renderPreviews() {
-  const preview = document.getElementById('photos-preview');
-  preview.innerHTML = photosBase64.map((src, i) => `
-    <div class="photo-preview-item">
+  const el = document.getElementById('photos-preview');
+  if (!el) return;
+  el.innerHTML = photosBase64.map((src,i) => `
+    <div class="photo-item">
       <img src="${src}" alt="photo ${i+1}">
-      <button onclick="supprimerPhoto(${i})">✕</button>
+      <button class="photo-item-del" onclick="supprimerPhoto(${i})">✕</button>
     </div>`).join('');
 }
 
-function supprimerPhoto(i) {
-  photosBase64.splice(i, 1);
-  renderPreviews();
-}
+function supprimerPhoto(i) { photosBase64.splice(i,1); renderPreviews(); }
 
-// ── API URL ──
-const API = window.location.origin;
-
-// ── CHARGER LES PRODUITS DEPUIS L'API ──
 async function getProduits() {
   try {
-    const res = await fetch(API + '/api/produits');
+    const res = await fetch('/api/produits');
     return await res.json();
-  } catch(e) { console.error('Erreur API:', e); return []; }
+  } catch(e) {
+    return JSON.parse(localStorage.getItem('rf-produits') || '[]');
+  }
 }
 
-function saveProduits(p) {} // Non utilisé, remplacé par l'API
-
-// ── AJOUTER PRODUIT ──
 async function ajouterProduit() {
   const marque = document.getElementById('p-marque').value;
   const nom = document.getElementById('p-nom').value.trim().toUpperCase();
-  const ref = document.getElementById('p-ref').value.trim();
-  const categorie = document.getElementById('p-categorie').value;
-  const desc = document.getElementById('p-desc').value.trim();
   const prix = parseFloat(document.getElementById('p-prix').value);
-  const tailles = document.getElementById('p-tailles').value.split(',').map(t=>t.trim()).filter(Boolean);
-  const couleurs = document.getElementById('p-couleurs').value.split(',').map(c=>c.trim()).filter(Boolean);
-  const prixReduit = promoActif ? parseFloat(document.getElementById('p-prix-reduit').value) : null;
-  const promoLabel = promoActif ? document.getElementById('p-promo-label').value.trim() : null;
+  if (!marque || !nom || !prix) { showNotif('⚠️ Marque, nom et prix obligatoires'); return; }
 
-  if (!marque || !nom || !prix) { showNotif('⚠️ Marque, nom et prix sont obligatoires !'); return; }
-
-  const marquePages = {
-    'Guess':'guess.html','Boss':'boss.html','Hugo':'hugo.html',
-    'Levis':'levis.html','Timberland':'timberland.html','Lacoste':'lacoste.html',
-    'Chabrand':'chabrand.html','Redskins':'redskins-brand.html'
-  };
-
-  const id = marque.toLowerCase() + '-' + Date.now();
+  const pages = {Guess:'guess.html',Boss:'boss.html',Hugo:'hugo.html',Levis:'levis.html',Timberland:'timberland.html',Lacoste:'lacoste.html',Chabrand:'chabrand.html',Redskins:'redskins-brand.html'};
   const produit = {
-    id, nom, marque, ref, categorie, desc,
-    prix, tailles, couleurs,
-    promoActif, prixReduit, promoLabel,
-    photos: photosBase64.length > 0 ? photosBase64 : [],
-    page: marquePages[marque] || 'index.html'
+    id: marque.toLowerCase() + '-' + Date.now(),
+    nom, marque,
+    ref: document.getElementById('p-ref').value.trim(),
+    categorie: document.getElementById('p-categorie').value,
+    desc: document.getElementById('p-desc').value.trim(),
+    prix, tailles: document.getElementById('p-tailles').value.split(',').map(t=>t.trim()).filter(Boolean),
+    couleurs: document.getElementById('p-couleurs').value.split(',').map(c=>c.trim()).filter(Boolean),
+    promoActif, prixReduit: promoActif ? parseFloat(document.getElementById('p-prix-reduit').value) : null,
+    promoLabel: promoActif ? document.getElementById('p-promo-label').value.trim() : null,
+    photos: photosBase64, page: pages[marque] || 'index.html'
   };
 
-  // Envoyer à l'API
   try {
-    const res = await fetch(API + '/api/produits', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(produit)
-    });
+    const res = await fetch('/api/produits', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(produit)});
     const data = await res.json();
-    if (!data.success) { showNotif('❌ Erreur lors de l\'ajout'); return; }
-  } catch(e) { showNotif('❌ Erreur serveur'); return; }
+    if (!data.success) { showNotif('❌ Erreur: ' + (data.error||'')); return; }
+  } catch(e) {
+    const local = JSON.parse(localStorage.getItem('rf-produits') || '[]');
+    local.push(produit);
+    localStorage.setItem('rf-produits', JSON.stringify(local));
+  }
 
-  // Reset formulaire
-  ['p-nom','p-ref','p-desc','p-prix','p-tailles','p-couleurs','p-prix-reduit','p-promo-label'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.value = '';
-  });
+  // Reset
+  ['p-nom','p-ref','p-desc','p-prix','p-tailles','p-couleurs','p-prix-reduit','p-promo-label'].forEach(id => { const el = document.getElementById(id); if(el) el.value=''; });
   document.getElementById('p-marque').value = '';
   photosBase64 = [];
   document.getElementById('photos-preview').innerHTML = '';
   if (promoActif) togglePromo();
-
-  showNotif('✓ Produit "' + nom + '" ajouté !');
+  showNotif('✓ Produit ajouté !');
   renderProduits();
 }
 
-// ── AFFICHER PRODUITS ──
 async function renderProduits() {
   const produits = await getProduits();
-  const liste = document.getElementById('liste-produits');
-  if (!liste) return;
-
-  if (produits.length === 0) {
-    liste.innerHTML = '<p class="empty-msg">Aucun produit ajouté pour le moment.</p>';
-    return;
-  }
-
-  liste.innerHTML = produits.map((p, i) => `
-    <div class="produit-item">
-      <img class="produit-thumb" src="${p.photos[0] || ''}" alt="${p.nom}"
-        onerror="this.style.background='#222';this.src=''">
-      <div>
-        <div class="produit-marque">${p.marque} ${p.categorie ? '· ' + p.categorie : ''}</div>
-        <div class="produit-nom">${p.nom}</div>
-        <div style="margin-top:4px;">
-          ${p.promoActif && p.prixReduit
-            ? `<span class="produit-prix-affiche">${p.prixReduit} €</span>
-               <span class="produit-prix-barre">${p.prix} €</span>
-               <span class="badge-promo">${p.promoLabel || 'PROMO'}</span>`
-            : `<span class="produit-prix-affiche">${p.prix} €</span>`}
-        </div>
-        ${p.ref ? `<div style="font-size:0.75rem;color:var(--warm-grey);margin-top:4px;font-family:'Barlow Condensed',sans-serif;letter-spacing:1px;">Réf: ${p.ref}</div>` : ''}
-      </div>
-      <div style="font-size:0.8rem;color:var(--warm-grey);font-family:'Barlow Condensed',sans-serif;letter-spacing:1px;">
-        ${p.tailles ? p.tailles.join(' · ') : ''}
-      </div>
-      <div style="font-size:0.8rem;color:var(--warm-grey);font-family:'Barlow Condensed',sans-serif;letter-spacing:1px;">
-        ${p.couleurs ? p.couleurs.join(' · ') : ''}
-      </div>
-      <button class="btn-edit" onclick="modifierProduit('${p.id}')">Modifier</button>
-      <button class="btn-suppr" onclick="supprimerProduit('${p.id}')">Supprimer</button>
-    </div>`).join('');
+  const el = document.getElementById('liste-produits');
+  if (!el) return;
+  if (!produits.length) { el.innerHTML = '<p style="padding:40px;text-align:center;color:var(--text-light);">Aucun produit. Ajoutez-en un ci-dessus.</p>'; return; }
+  el.innerHTML = `<table>
+    <thead><tr><th>Photo</th><th>Produit</th><th>Marque</th><th>Prix</th><th>Tailles</th><th>Actions</th></tr></thead>
+    <tbody>${produits.map(p => `
+      <tr>
+        <td>${p.photos&&p.photos[0] ? `<img src="${p.photos[0]}" class="prod-thumb" alt="${p.nom}">` : '<div style="width:48px;height:60px;background:var(--bg);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:20px;">📷</div>'}</td>
+        <td><div style="font-weight:600">${p.nom}</div><div style="font-size:11px;color:var(--text-light);">${p.ref||''}</div></td>
+        <td>${p.marque}</td>
+        <td>
+          ${p.promoActif&&p.prixReduit
+            ? `<span style="font-weight:700;color:var(--red)">${p.prixReduit} €</span> <span style="font-size:11px;text-decoration:line-through;color:var(--text-light)">${p.prix} €</span>`
+            : `<span style="font-weight:700">${p.prix} €</span>`}
+        </td>
+        <td><span style="font-size:12px;color:var(--text-mid)">${(p.tailles||[]).join(', ')}</span></td>
+        <td style="display:flex;gap:8px;">
+          <button class="btn-edit" onclick="modifierProduit('${p.id}')">Modifier</button>
+          <button class="btn-danger" onclick="supprimerProduit('${p.id}')">Supprimer</button>
+        </td>
+      </tr>`).join('')}
+    </tbody></table>`;
 }
 
-// ── SUPPRIMER PRODUIT ──
 async function supprimerProduit(id) {
   if (!confirm('Supprimer ce produit ?')) return;
   try {
-    await fetch(API + '/api/produits/' + id, { method: 'DELETE' });
-    showNotif('✓ Produit supprimé');
-    renderProduits();
-  } catch(e) { showNotif('❌ Erreur serveur'); }
+    await fetch('/api/produits/' + id, {method:'DELETE'});
+  } catch(e) {
+    const local = JSON.parse(localStorage.getItem('rf-produits') || '[]').filter(p => p.id !== id);
+    localStorage.setItem('rf-produits', JSON.stringify(local));
+  }
+  showNotif('✓ Produit supprimé'); renderProduits();
 }
 
-// ── SUPPRIMER CLIENT ──
-function supprimerClient(index) {
-  if (!confirm('Supprimer ce compte ?')) return;
-  const users = JSON.parse(localStorage.getItem('rf-users') || '[]');
-  users.splice(index, 1);
-  localStorage.setItem('rf-users', JSON.stringify(users));
-  showNotif('✓ Compte supprimé');
-  renderAdmin();
-}
-
-
-// ── MODAL MODIFICATION ──
-let currentEditId = null;
-let photosModalBase64 = [];
-let promoModalActif = false;
-
-function modifierProduit(id) {
-  const produits = getProduits();
-  const p = produits.find(prod => prod.id === id);
+async function modifierProduit(id) {
+  const produits = await getProduits();
+  const p = produits.find(x => x.id === id);
   if (!p) return;
   currentEditId = id;
-  photosModalBase64 = p.photos ? [...p.photos] : [];
-
-  document.getElementById('m-marque').value = p.marque || '';
-  document.getElementById('m-nom').value = p.nom || '';
-  document.getElementById('m-ref').value = p.ref || '';
-  document.getElementById('m-categorie').value = p.categorie || 'Vêtements';
-  document.getElementById('m-desc').value = p.desc || '';
-  document.getElementById('m-prix').value = p.prix || '';
-  document.getElementById('m-tailles').value = p.tailles ? p.tailles.join(',') : '';
-  document.getElementById('m-couleurs').value = p.couleurs ? p.couleurs.join(',') : '';
-  document.getElementById('m-prix-reduit').value = p.prixReduit || '';
-  document.getElementById('m-promo-label').value = p.promoLabel || '';
-
+  photosModalB64 = p.photos ? [...p.photos] : [];
   promoModalActif = p.promoActif || false;
-  document.getElementById('m-promo-toggle').classList.toggle('on', promoModalActif);
-  document.getElementById('m-promo-fields').classList.toggle('show', promoModalActif);
+
+  document.getElementById('modal-form').innerHTML = `
+    <div class="form-group"><label class="form-label">Marque</label>
+      <select class="form-select" id="m-marque">
+        ${['Guess','Boss','Hugo','Levis','Timberland','Lacoste','Chabrand','Redskins'].map(m=>`<option${m===p.marque?' selected':''}>${m}</option>`).join('')}
+      </select></div>
+    <div class="form-group"><label class="form-label">Nom</label><input type="text" class="form-input" id="m-nom" value="${p.nom||''}"></div>
+    <div class="form-group"><label class="form-label">Référence</label><input type="text" class="form-input" id="m-ref" value="${p.ref||''}"></div>
+    <div class="form-group"><label class="form-label">Catégorie</label>
+      <select class="form-select" id="m-categorie">
+        ${['Vêtements','Chaussures','Accessoires','Cuir'].map(c=>`<option${c===p.categorie?' selected':''}>${c}</option>`).join('')}
+      </select></div>
+    <div class="form-group form-full"><label class="form-label">Description</label><textarea class="form-textarea" id="m-desc">${p.desc||''}</textarea></div>
+    <div class="form-group"><label class="form-label">Prix (€)</label><input type="number" class="form-input" id="m-prix" value="${p.prix||''}"></div>
+    <div class="form-group"><label class="form-label">Tailles</label><input type="text" class="form-input" id="m-tailles" value="${(p.tailles||[]).join(',')}"></div>
+    <div class="form-group form-full"><label class="form-label">Couleurs</label><input type="text" class="form-input" id="m-couleurs" value="${(p.couleurs||[]).join(',')}"></div>
+    <div class="form-group form-full">
+      <div class="toggle-row"><div class="toggle${promoModalActif?' on':''}" id="m-toggle" onclick="togglePromoModal()"></div><span class="toggle-label">Réduction</span></div>
+      <div class="promo-fields${promoModalActif?' show':''}" id="m-promo">
+        <div class="form-group"><label class="form-label">Prix réduit</label><input type="number" class="form-input" id="m-prix-reduit" value="${p.prixReduit||''}"></div>
+        <div class="form-group"><label class="form-label">Libellé</label><input type="text" class="form-input" id="m-promo-label" value="${p.promoLabel||''}"></div>
+      </div>
+    </div>
+    <div class="form-group form-full">
+      <label class="form-label" style="margin-bottom:8px;">Photos</label>
+      <div class="upload-zone" onclick="document.getElementById('m-photos').click()">
+        <input type="file" id="m-photos" accept="image/*,.avif,.webp" multiple onchange="handlePhotosModal(event)">
+        <div class="upload-zone-icon">📸</div>
+        <div class="upload-zone-text">Ajouter/remplacer des photos</div>
+      </div>
+      <div class="photos-preview" id="m-photos-preview"></div>
+    </div>`;
 
   renderPhotosModal();
   document.getElementById('modal-overlay').style.display = 'block';
 }
 
-function fermerModal() {
-  document.getElementById('modal-overlay').style.display = 'none';
-  currentEditId = null;
-}
+function fermerModal() { document.getElementById('modal-overlay').style.display = 'none'; currentEditId = null; }
 
 function togglePromoModal() {
   promoModalActif = !promoModalActif;
-  document.getElementById('m-promo-toggle').classList.toggle('on', promoModalActif);
-  document.getElementById('m-promo-fields').classList.toggle('show', promoModalActif);
+  document.getElementById('m-toggle').classList.toggle('on', promoModalActif);
+  document.getElementById('m-promo').classList.toggle('show', promoModalActif);
 }
 
 function handlePhotosModal(e) {
-  const files = Array.from(e.target.files);
-  files.forEach(file => {
+  Array.from(e.target.files).forEach(file => {
     const reader = new FileReader();
-    reader.onload = (ev) => {
-      photosModalBase64.push(ev.target.result);
-      renderPhotosModal();
-    };
+    reader.onload = ev => { photosModalB64.push(ev.target.result); renderPhotosModal(); };
     reader.readAsDataURL(file);
   });
 }
 
 function renderPhotosModal() {
-  const preview = document.getElementById('m-photos-preview');
-  if (!preview) return;
-  preview.innerHTML = photosModalBase64.map((src, i) => `
-    <div class="photo-preview-item">
-      <img src="${src}" alt="photo ${i+1}">
-      <button onclick="supprimerPhotoModal(${i})">✕</button>
-    </div>`).join('');
+  const el = document.getElementById('m-photos-preview');
+  if (!el) return;
+  el.innerHTML = photosModalB64.map((src,i) => `
+    <div class="photo-item"><img src="${src}"><button class="photo-item-del" onclick="suppPhotoModal(${i})">✕</button></div>`).join('');
 }
 
-function supprimerPhotoModal(i) {
-  photosModalBase64.splice(i, 1);
-  renderPhotosModal();
-}
+function suppPhotoModal(i) { photosModalB64.splice(i,1); renderPhotosModal(); }
 
 async function sauvegarderModif() {
-  const produits = getProduits();
-  const index = produits.findIndex(p => p.id === currentEditId);
-  if (index === -1) return;
-
-  const marquePages = {
-    'Guess':'guess.html','Boss':'boss.html','Hugo':'hugo.html',
-    'Levis':'levis.html','Timberland':'timberland.html','Lacoste':'lacoste.html',
-    'Chabrand':'chabrand.html','Redskins':'redskins-brand.html'
-  };
-
+  const pages = {Guess:'guess.html',Boss:'boss.html',Hugo:'hugo.html',Levis:'levis.html',Timberland:'timberland.html',Lacoste:'lacoste.html',Chabrand:'chabrand.html',Redskins:'redskins-brand.html'};
   const marque = document.getElementById('m-marque').value;
-  produits[index] = {
-    ...produits[index],
-    marque,
-    nom: document.getElementById('m-nom').value.trim().toUpperCase(),
+  const updates = {
+    marque, nom: document.getElementById('m-nom').value.trim().toUpperCase(),
     ref: document.getElementById('m-ref').value.trim(),
     categorie: document.getElementById('m-categorie').value,
     desc: document.getElementById('m-desc').value.trim(),
@@ -774,114 +488,101 @@ async function sauvegarderModif() {
     promoActif: promoModalActif,
     prixReduit: promoModalActif ? parseFloat(document.getElementById('m-prix-reduit').value) : null,
     promoLabel: promoModalActif ? document.getElementById('m-promo-label').value.trim() : null,
-    photos: photosModalBase64,
-    page: marquePages[marque] || 'index.html'
+    photos: photosModalB64,
+    page: pages[marque] || 'index.html'
   };
 
   try {
-    await fetch(API + '/api/produits/' + currentEditId, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(produits[index])
-    });
-    fermerModal();
-    showNotif('✓ Produit modifié avec succès !');
-    renderProduits();
-  } catch(e) { showNotif('❌ Erreur serveur'); }
+    await fetch('/api/produits/' + currentEditId, {method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(updates)});
+  } catch(e) {
+    const local = JSON.parse(localStorage.getItem('rf-produits') || '[]');
+    const i = local.findIndex(p => p.id === currentEditId);
+    if (i !== -1) local[i] = {...local[i], ...updates};
+    localStorage.setItem('rf-produits', JSON.stringify(local));
+  }
+
+  fermerModal(); showNotif('✓ Produit modifié !'); renderProduits();
 }
 
-// ── NOTIF ──
+function supprimerClient(i) {
+  if (!confirm('Supprimer ce compte ?')) return;
+  const users = JSON.parse(localStorage.getItem('rf-users') || '[]');
+  users.splice(i, 1);
+  localStorage.setItem('rf-users', JSON.stringify(users));
+  showNotif('✓ Compte supprimé'); renderAdmin();
+}
+
+function logout() { localStorage.removeItem('rf-session'); window.location.href = 'compte.html'; }
+
+
+// ── VENTE FLASH ──
+let flashActif = false;
+
+function loadFlashAdmin() {
+  const flash = JSON.parse(localStorage.getItem('rf-flash') || 'null');
+  if (!flash) return;
+  flashActif = flash.actif || false;
+  document.getElementById('flash-toggle').classList.toggle('on', flashActif);
+  document.getElementById('flash-titre').value = flash.titre || '';
+  document.getElementById('flash-desc').value = flash.desc || '';
+  document.getElementById('flash-btn-text').value = flash.btnText || '';
+  if (flash.fin) document.getElementById('flash-fin').value = flash.fin.slice(0,16);
+  updatePreview();
+}
+
+function toggleFlash() {
+  flashActif = !flashActif;
+  document.getElementById('flash-toggle').classList.toggle('on', flashActif);
+}
+
+function updatePreview() {
+  const titre = document.getElementById('flash-titre').value || 'Titre de la vente';
+  const desc = document.getElementById('flash-desc').value || 'Description';
+  const btn = document.getElementById('flash-btn-text').value || 'En profiter';
+  const fin = document.getElementById('flash-fin').value;
+  document.getElementById('preview-titre').textContent = titre;
+  document.getElementById('preview-desc').textContent = desc;
+  document.getElementById('preview-btn').textContent = btn;
+  if (fin) {
+    const diff = new Date(fin) - new Date();
+    if (diff > 0) {
+      const h = Math.floor(diff/3600000);
+      const m = Math.floor((diff%3600000)/60000);
+      const s = Math.floor((diff%60000)/1000);
+      document.getElementById('preview-h').textContent = String(h).padStart(2,'0');
+      document.getElementById('preview-m').textContent = String(m).padStart(2,'0');
+      document.getElementById('preview-s').textContent = String(s).padStart(2,'0');
+    }
+  }
+}
+
+function sauvegarderFlash() {
+  const flash = {
+    actif: flashActif,
+    titre: document.getElementById('flash-titre').value,
+    desc: document.getElementById('flash-desc').value,
+    fin: document.getElementById('flash-fin').value,
+    btnText: document.getElementById('flash-btn-text').value || 'En profiter'
+  };
+  localStorage.setItem('rf-flash', JSON.stringify(flash));
+  showNotif('✓ Vente flash sauvegardée !');
+  updatePreview();
+}
+
+// Écouter les changements pour l'aperçu
+setTimeout(() => {
+  ['flash-titre','flash-desc','flash-btn-text','flash-fin'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('input', updatePreview);
+  });
+  loadFlashAdmin();
+}, 500);
+
 function showNotif(msg) {
   const n = document.getElementById('notif');
   n.textContent = msg; n.classList.add('show');
   setTimeout(() => n.classList.remove('show'), 3000);
 }
 </script>
-
-
-<!-- MODAL MODIFICATION -->
-<div id="modal-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:500;overflow-y:auto;padding:60px 24px;">
-  <div style="max-width:700px;margin:0 auto;background:#0e0e0e;border:1px solid rgba(192,0,26,0.4);padding:40px;position:relative;">
-    <button onclick="fermerModal()" style="position:absolute;top:16px;right:16px;background:none;border:none;color:var(--warm-grey);font-size:1.5rem;">✕</button>
-    <div style="font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:3px;margin-bottom:28px;">MODIFIER <span style="color:var(--red)">LE PRODUIT</span></div>
-
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-      <div>
-        <label class="form-label">Marque</label>
-        <select class="form-select" id="m-marque">
-          <option value="Guess">Guess</option><option value="Boss">Boss</option>
-          <option value="Hugo">Hugo</option><option value="Levis">Levis</option>
-          <option value="Timberland">Timberland</option><option value="Lacoste">Lacoste</option>
-          <option value="Chabrand">Chabrand</option><option value="Redskins">Redskins</option>
-        </select>
-      </div>
-      <div>
-        <label class="form-label">Nom du produit</label>
-        <input type="text" class="form-input" id="m-nom">
-      </div>
-      <div>
-        <label class="form-label">Référence</label>
-        <input type="text" class="form-input" id="m-ref">
-      </div>
-      <div>
-        <label class="form-label">Catégorie</label>
-        <select class="form-select" id="m-categorie">
-          <option value="Vêtements">Vêtements</option>
-          <option value="Chaussures">Chaussures</option>
-          <option value="Accessoires">Accessoires</option>
-          <option value="Cuir">Cuir</option>
-        </select>
-      </div>
-      <div style="grid-column:1/-1;">
-        <label class="form-label">Description</label>
-        <textarea class="form-textarea" id="m-desc"></textarea>
-      </div>
-      <div>
-        <label class="form-label">Prix (€)</label>
-        <input type="number" class="form-input" id="m-prix">
-      </div>
-      <div>
-        <label class="form-label">Tailles (séparées par virgule)</label>
-        <input type="text" class="form-input" id="m-tailles">
-      </div>
-      <div style="grid-column:1/-1;">
-        <label class="form-label">Couleurs (séparées par virgule)</label>
-        <input type="text" class="form-input" id="m-couleurs">
-      </div>
-    </div>
-
-    <!-- REDUCTION -->
-    <div style="margin-top:20px;">
-      <div class="promo-toggle">
-        <div class="toggle-switch" id="m-promo-toggle" onclick="togglePromoModal()"></div>
-        <span class="toggle-label">Réduction active</span>
-      </div>
-      <div class="promo-fields" id="m-promo-fields">
-        <div>
-          <label class="form-label">Prix réduit (€)</label>
-          <input type="number" class="form-input" id="m-prix-reduit">
-        </div>
-        <div>
-          <label class="form-label">Libellé promo</label>
-          <input type="text" class="form-input" id="m-promo-label">
-        </div>
-      </div>
-    </div>
-
-    <!-- PHOTOS -->
-    <div style="margin-top:20px;">
-      <label class="form-label">Ajouter des photos</label>
-      <div class="photo-upload-zone" onclick="document.getElementById('m-photos').click()">
-        <input type="file" id="m-photos" accept="image/*,.avif,.webp" multiple onchange="handlePhotosModal(event)">
-        <div class="upload-icon">📸</div>
-        <div class="upload-text">Cliquer pour ajouter/remplacer des photos</div>
-      </div>
-      <div class="photos-preview" id="m-photos-preview"></div>
-    </div>
-
-    <button class="btn-ajouter" onclick="sauvegarderModif()" style="margin-top:24px;">✓ Sauvegarder les modifications</button>
-  </div>
-</div>
-
 </body>
 </html>
