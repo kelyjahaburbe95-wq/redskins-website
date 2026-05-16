@@ -759,115 +759,7 @@ nav {
 .star { transition: color 0.1s; cursor: pointer; }
 .star:hover, .star.active { color: #f59e0b; }
 
-/* ── FIDÉLITÉ ── */
-.fidelite-section {
-  background: #111;
-  color: #fff;
-  padding: 64px 32px;
-}
 
-.fidelite-inner {
-  max-width: 1400px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 80px;
-  align-items: center;
-}
-
-.fidelite-title {
-  font-size: 28px;
-  font-weight: 700;
-  letter-spacing: -0.5px;
-  margin-bottom: 16px;
-}
-.fidelite-title span { color: #e00; }
-
-.fidelite-sub {
-  font-size: 14px;
-  color: rgba(255, 255, 255, 0.5);
-  line-height: 1.8;
-  margin-bottom: 28px;
-  font-weight: 300;
-}
-
-.fidelite-avantages {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin-bottom: 32px;
-}
-
-.fidelite-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  font-size: 13px;
-  color: rgba(255, 255, 255, 0.7);
-}
-
-.fidelite-item-icon {
-  width: 32px;
-  height: 32px;
-  background: rgba(238, 0, 0, 0.15);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
-  flex-shrink: 0;
-}
-
-.fidelite-card {
-  background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-  padding: 32px;
-  position: relative;
-  overflow: hidden;
-}
-
-.fidelite-card::before {
-  content: '';
-  position: absolute;
-  top: -40px;
-  right: -40px;
-  width: 160px;
-  height: 160px;
-  background: rgba(238, 0, 0, 0.08);
-  border-radius: 50%;
-}
-
-.fidelite-card-logo {
-  font-size: 13px;
-  font-weight: 700;
-  color: rgba(255, 255, 255, 0.4);
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  margin-bottom: 32px;
-}
-
-.fidelite-card-points {
-  font-size: 48px;
-  font-weight: 700;
-  color: #fff;
-  line-height: 1;
-  margin-bottom: 4px;
-}
-
-.fidelite-card-label {
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.4);
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  margin-bottom: 28px;
-}
-
-.fidelite-card-name {
-  font-size: 16px;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.8);
-}
 
 /* ── PROMO BANNERS ── */
 .promo-banners {
@@ -939,9 +831,8 @@ nav {
   max-width: 1400px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 80px;
-  align-items: center;
+  grid-template-columns: 1fr;
+  max-width: 700px;
 }
 
 .about-title {
@@ -1345,31 +1236,6 @@ footer {
       <div class="promo-banner-tag">Nouveautés</div>
       <div class="promo-banner-title">Nouveaux<br>Arrivages</div>
       <a href="#nouveautes" class="promo-banner-btn">Découvrir</a>
-    </div>
-  </div>
-</div>
-
-<!-- PROGRAMME FIDÉLITÉ -->
-<div class="fidelite-section">
-  <div class="fidelite-inner">
-    <div>
-      <h2 class="fidelite-title">Programme <span>Fidélité</span><br>Redskins Franconville</h2>
-      <p class="fidelite-sub">Rejoignez notre programme de fidélité et profitez d'avantages exclusifs à chaque achat dans notre boutique.</p>
-      <div class="fidelite-avantages">
-        <div class="fidelite-item"><div class="fidelite-item-icon">🎁</div> 1 point gagné pour chaque euro dépensé</div>
-        <div class="fidelite-item"><div class="fidelite-item-icon">💳</div> Réductions exclusives dès 100 points</div>
-        <div class="fidelite-item"><div class="fidelite-item-icon">⭐</div> Accès en avant-première aux nouvelles collections</div>
-        <div class="fidelite-item"><div class="fidelite-item-icon">🚚</div> Livraison gratuite dès le 1er achat</div>
-      </div>
-      <a href="compte.html" class="btn-primary">Rejoindre le programme</a>
-    </div>
-    <div class="fidelite-card">
-      <div class="fidelite-card-logo">Redskins Franconville</div>
-      <div class="fidelite-card-points">350</div>
-      <div class="fidelite-card-label">Points fidélité</div>
-      <div class="fidelite-card-name" id="fidelite-nom">Connectez-vous</div>
-      <div style="margin-top:20px;height:1px;background:rgba(255,255,255,0.1);"></div>
-      <div style="margin-top:16px;font-size:12px;color:rgba(255,255,255,0.3);">Carte Gold Member</div>
     </div>
   </div>
 </div>
