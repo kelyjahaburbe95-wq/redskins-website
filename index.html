@@ -171,9 +171,20 @@ nav {
   border-bottom: 1px solid #e8e8e8;
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
   z-index: 9999;
-  padding: 28px 48px;
+  padding: 20px 48px;
   gap: 48px;
   animation: fadeDown 0.15s ease;
+  margin-top: -1px;
+}
+
+/* Zone invisible pour éviter que le menu disparaisse */
+.nav-dropdown::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  right: 0;
+  height: 8px;
 }
 
 /* Dropdown Marques — colonne unique bien formée */
@@ -181,12 +192,20 @@ nav {
   position: absolute !important;
   left: 0 !important;
   right: auto !important;
+  top: 100% !important;
   width: 200px;
-  padding: 16px 0 !important;
+  padding: 0 !important;
   gap: 0 !important;
   border-top: 3px solid #e00;
   background: #fff;
   box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+  margin-top: 0 !important;
+  display: none;
+  flex-direction: column !important;
+}
+
+.nav-dropdown:hover > .dropdown-menu-marques {
+  display: block !important;
 }
 
 .dropdown-menu-marques .dropdown-col {
@@ -1276,38 +1295,10 @@ footer {
   </div>
 </div>
 
-<!-- À PROPOS -->
-<div class="about-section" id="about">
-  <div class="about-inner">
-    <div>
-      <h2 class="about-title">Redskins Franconville depuis 1984</h2>
-      <p class="about-text">Votre boutique multimarques de référence dans le Val-d'Oise. Nous sélectionnons pour vous les plus grandes marques de mode, de cuir et d'accessoires.</p>
-      <p class="about-text">Notre équipe passionnée vous accueille dans un espace moderne pour vous aider à trouver la pièce parfaite, au meilleur prix.</p>
-      <a href="#contact" class="btn-primary" style="margin-top:20px;display:inline-block;">Nous contacter</a>
-    </div>
-    <div class="about-stats">
-      <div class="about-stat"><span class="about-stat-num">1984</span><span class="about-stat-label">Fondation</span></div>
-      <div class="about-stat"><span class="about-stat-num">8</span><span class="about-stat-label">Marques</span></div>
-      <div class="about-stat"><span class="about-stat-num">40+</span><span class="about-stat-label">Ans d'expérience</span></div>
-      <div class="about-stat"><span class="about-stat-num">100%</span><span class="about-stat-label">Qualité</span></div>
-    </div>
-  </div>
-</div>
-
-<!-- NEWSLETTER -->
-<div class="newsletter" id="contact">
-  <h2 class="newsletter-title">Restez informé</h2>
-  <p class="newsletter-sub">Nouveautés, offres exclusives et événements. Rejoignez la communauté Redskins Franconville.</p>
-  <div class="newsletter-form">
-    <input type="email" placeholder="Votre adresse e-mail">
-    <button type="button">S'inscrire</button>
-  </div>
-</div>
-
 <!-- FOOTER -->
 <footer>
   <div class="footer-grid">
-    <div><span class="footer-logo">Redskins <span>Franconville</span></span><p class="footer-desc">Votre boutique multimarques à Franconville depuis 1984.</p></div>
+    <div><span class="footer-logo">Redskins <span>Franconville</span></span></div>
     <div class="footer-col"><h4>Nos Marques</h4><ul>
       <li><a href="guess.html">Guess</a></li><li><a href="boss.html">Boss</a></li>
       <li><a href="hugo.html">Hugo</a></li><li><a href="levis.html">Levis</a></li>
