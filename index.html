@@ -1315,10 +1315,10 @@ footer {
       <li><a href="chabrand.html">Chabrand</a></li><li><a href="redskins-brand.html">Redskins</a></li>
     </ul></div>
     <div class="footer-col"><h4>Service Client</h4><ul>
-      <li><a href="#" onclick="ouvrirLivraison(event)">Livraison et Retours</a></li><li><a href="#">Guide des tailles</a></li><li><a href="#">FAQ</a></li>
+      <li><a href="#" onclick="ouvrirLivraison(event)">Livraison et Retours</a></li><li><a href="#" onclick="ouvrirTailles(event)">Guide des tailles</a></li><li><a href="#" onclick="ouvrirFAQ(event)">FAQ</a></li>
     </ul></div>
     <div class="footer-col"><h4>La Boutique</h4><ul>
-      <li><a href="#about">Notre histoire</a></li><li><a href="#contact">Contact</a></li>
+      <li><a href="#contact">Contact</a></li>
       <li><a href="compte.html">Mon compte</a></li><li><a href="admin.html">Administration</a></li>
     </ul></div>
   </div>
@@ -1696,6 +1696,541 @@ function lancerRetour() {
       </div>`;
   }, 1200);
 }
+</script>
+
+
+<!-- MODAL GUIDE DES TAILLES -->
+<div id="modal-tailles" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:9999;align-items:flex-start;justify-content:center;overflow-y:auto;padding:24px;">
+  <div style="background:#fff;border-radius:8px;width:100%;max-width:760px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.3);animation:fadeIn 0.2s ease;margin:auto;">
+
+    <!-- Header -->
+    <div style="padding:24px 28px;border-bottom:1px solid #e8e8e8;display:flex;justify-content:space-between;align-items:center;">
+      <h2 style="font-size:18px;font-weight:700;letter-spacing:-0.3px;">Guide des tailles — Vêtements</h2>
+      <button onclick="fermerTailles()" style="background:none;border:none;font-size:22px;color:#999;cursor:pointer;line-height:1;">✕</button>
+    </div>
+
+    <!-- Onglets -->
+    <div style="display:flex;border-bottom:1px solid #e8e8e8;padding:0 28px;">
+      <button class="taille-tab active" onclick="switchTaille(this,'homme')" style="padding:12px 20px;font-size:13px;font-weight:600;color:#1c1c1c;background:none;border:none;border-bottom:2px solid #1c1c1c;cursor:pointer;margin-bottom:-1px;">Homme</button>
+      <button class="taille-tab" onclick="switchTaille(this,'femme')" style="padding:12px 20px;font-size:13px;font-weight:500;color:#999;background:none;border:none;border-bottom:2px solid transparent;cursor:pointer;margin-bottom:-1px;">Femme</button>
+      <button class="taille-tab" onclick="switchTaille(this,'enfants')" style="padding:12px 20px;font-size:13px;font-weight:500;color:#999;background:none;border:none;border-bottom:2px solid transparent;cursor:pointer;margin-bottom:-1px;">Enfants</button>
+    </div>
+
+    <!-- HOMME -->
+    <div id="taille-homme" class="taille-panel" style="padding:28px;">
+      <p style="font-size:12px;color:#999;margin-bottom:20px;">Les mesures sont en centimètres. Prenez vos mesures sur un sous-vêtement ou des vêtements légers.</p>
+
+      <h3 style="font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#555;margin-bottom:12px;">Hauts — T-shirts, Chemises, Pulls</h3>
+      <div style="overflow-x:auto;margin-bottom:28px;">
+        <table style="width:100%;border-collapse:collapse;font-size:13px;">
+          <thead>
+            <tr style="background:#f5f5f5;">
+              <th style="padding:10px 14px;text-align:left;font-weight:600;border:1px solid #e8e8e8;">Taille</th>
+              <th style="padding:10px 14px;text-align:center;font-weight:600;border:1px solid #e8e8e8;">XS</th>
+              <th style="padding:10px 14px;text-align:center;font-weight:600;border:1px solid #e8e8e8;">S</th>
+              <th style="padding:10px 14px;text-align:center;font-weight:600;border:1px solid #e8e8e8;">M</th>
+              <th style="padding:10px 14px;text-align:center;font-weight:600;border:1px solid #e8e8e8;">L</th>
+              <th style="padding:10px 14px;text-align:center;font-weight:600;border:1px solid #e8e8e8;">XL</th>
+              <th style="padding:10px 14px;text-align:center;font-weight:600;border:1px solid #e8e8e8;">XXL</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="padding:10px 14px;font-weight:500;border:1px solid #e8e8e8;background:#fafafa;">Tour de poitrine (cm)</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">82–86</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">86–90</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">90–98</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">98–106</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">106–114</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">114–122</td>
+            </tr>
+            <tr>
+              <td style="padding:10px 14px;font-weight:500;border:1px solid #e8e8e8;background:#fafafa;">Tour de taille (cm)</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">68–72</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">72–76</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">76–84</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">84–92</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">92–100</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">100–108</td>
+            </tr>
+            <tr>
+              <td style="padding:10px 14px;font-weight:500;border:1px solid #e8e8e8;background:#fafafa;">Taille EU</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">44</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">46</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">48–50</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">52–54</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">56–58</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">60–62</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 style="font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#555;margin-bottom:12px;">Bas — Jeans et Pantalons</h3>
+      <div style="overflow-x:auto;">
+        <table style="width:100%;border-collapse:collapse;font-size:13px;">
+          <thead>
+            <tr style="background:#f5f5f5;">
+              <th style="padding:10px 14px;text-align:left;font-weight:600;border:1px solid #e8e8e8;">Taille EU</th>
+              <th style="padding:10px 14px;text-align:center;font-weight:600;border:1px solid #e8e8e8;">38</th>
+              <th style="padding:10px 14px;text-align:center;font-weight:600;border:1px solid #e8e8e8;">40</th>
+              <th style="padding:10px 14px;text-align:center;font-weight:600;border:1px solid #e8e8e8;">42</th>
+              <th style="padding:10px 14px;text-align:center;font-weight:600;border:1px solid #e8e8e8;">44</th>
+              <th style="padding:10px 14px;text-align:center;font-weight:600;border:1px solid #e8e8e8;">46</th>
+              <th style="padding:10px 14px;text-align:center;font-weight:600;border:1px solid #e8e8e8;">48</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="padding:10px 14px;font-weight:500;border:1px solid #e8e8e8;background:#fafafa;">Tour de taille (cm)</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">74–76</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">78–80</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">82–84</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">86–88</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">90–92</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">94–98</td>
+            </tr>
+            <tr>
+              <td style="padding:10px 14px;font-weight:500;border:1px solid #e8e8e8;background:#fafafa;">Tour de hanches (cm)</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">90–92</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">94–96</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">98–100</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">102–104</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">106–108</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">110–114</td>
+            </tr>
+            <tr>
+              <td style="padding:10px 14px;font-weight:500;border:1px solid #e8e8e8;background:#fafafa;">Taille US (W)</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">29</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">30–31</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">32–33</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">34–35</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">36–37</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">38–40</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- FEMME -->
+    <div id="taille-femme" class="taille-panel" style="padding:28px;display:none;">
+      <p style="font-size:12px;color:#999;margin-bottom:20px;">Les mesures sont en centimètres. Prenez vos mesures sur un sous-vêtement ou des vêtements légers.</p>
+
+      <h3 style="font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#555;margin-bottom:12px;">Hauts — T-shirts, Tops, Vestes</h3>
+      <div style="overflow-x:auto;margin-bottom:28px;">
+        <table style="width:100%;border-collapse:collapse;font-size:13px;">
+          <thead>
+            <tr style="background:#f5f5f5;">
+              <th style="padding:10px 14px;text-align:left;font-weight:600;border:1px solid #e8e8e8;">Taille</th>
+              <th style="padding:10px 14px;text-align:center;font-weight:600;border:1px solid #e8e8e8;">XS</th>
+              <th style="padding:10px 14px;text-align:center;font-weight:600;border:1px solid #e8e8e8;">S</th>
+              <th style="padding:10px 14px;text-align:center;font-weight:600;border:1px solid #e8e8e8;">M</th>
+              <th style="padding:10px 14px;text-align:center;font-weight:600;border:1px solid #e8e8e8;">L</th>
+              <th style="padding:10px 14px;text-align:center;font-weight:600;border:1px solid #e8e8e8;">XL</th>
+              <th style="padding:10px 14px;text-align:center;font-weight:600;border:1px solid #e8e8e8;">XXL</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="padding:10px 14px;font-weight:500;border:1px solid #e8e8e8;background:#fafafa;">Tour de poitrine (cm)</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">76–80</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">80–84</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">84–92</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">92–100</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">100–108</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">108–116</td>
+            </tr>
+            <tr>
+              <td style="padding:10px 14px;font-weight:500;border:1px solid #e8e8e8;background:#fafafa;">Tour de taille (cm)</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">60–64</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">64–68</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">68–76</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">76–84</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">84–92</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">92–100</td>
+            </tr>
+            <tr>
+              <td style="padding:10px 14px;font-weight:500;border:1px solid #e8e8e8;background:#fafafa;">Taille EU</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">34</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">36</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">38–40</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">42–44</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">46–48</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">50–52</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 style="font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#555;margin-bottom:12px;">Bas — Jeans, Pantalons, Jupes, Robes</h3>
+      <div style="overflow-x:auto;">
+        <table style="width:100%;border-collapse:collapse;font-size:13px;">
+          <thead>
+            <tr style="background:#f5f5f5;">
+              <th style="padding:10px 14px;text-align:left;font-weight:600;border:1px solid #e8e8e8;">Taille EU</th>
+              <th style="padding:10px 14px;text-align:center;font-weight:600;border:1px solid #e8e8e8;">34</th>
+              <th style="padding:10px 14px;text-align:center;font-weight:600;border:1px solid #e8e8e8;">36</th>
+              <th style="padding:10px 14px;text-align:center;font-weight:600;border:1px solid #e8e8e8;">38</th>
+              <th style="padding:10px 14px;text-align:center;font-weight:600;border:1px solid #e8e8e8;">40</th>
+              <th style="padding:10px 14px;text-align:center;font-weight:600;border:1px solid #e8e8e8;">42</th>
+              <th style="padding:10px 14px;text-align:center;font-weight:600;border:1px solid #e8e8e8;">44</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="padding:10px 14px;font-weight:500;border:1px solid #e8e8e8;background:#fafafa;">Tour de taille (cm)</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">60–62</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">64–66</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">68–70</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">72–74</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">76–78</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">80–84</td>
+            </tr>
+            <tr>
+              <td style="padding:10px 14px;font-weight:500;border:1px solid #e8e8e8;background:#fafafa;">Tour de hanches (cm)</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">86–88</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">90–92</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">94–96</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">98–100</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">102–104</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">106–110</td>
+            </tr>
+            <tr>
+              <td style="padding:10px 14px;font-weight:500;border:1px solid #e8e8e8;background:#fafafa;">Taille US (W)</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">25</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">26–27</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">28–29</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">30–31</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">32–33</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">34–35</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ENFANTS -->
+    <div id="taille-enfants" class="taille-panel" style="padding:28px;display:none;">
+      <p style="font-size:12px;color:#999;margin-bottom:20px;">Les tailles enfants sont basées sur l'âge et la taille en centimètres.</p>
+
+      <h3 style="font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#555;margin-bottom:12px;">Vêtements Enfants — Garçon et Fille</h3>
+      <div style="overflow-x:auto;margin-bottom:28px;">
+        <table style="width:100%;border-collapse:collapse;font-size:13px;">
+          <thead>
+            <tr style="background:#f5f5f5;">
+              <th style="padding:10px 14px;text-align:left;font-weight:600;border:1px solid #e8e8e8;">Âge</th>
+              <th style="padding:10px 14px;text-align:center;font-weight:600;border:1px solid #e8e8e8;">2 ans</th>
+              <th style="padding:10px 14px;text-align:center;font-weight:600;border:1px solid #e8e8e8;">4 ans</th>
+              <th style="padding:10px 14px;text-align:center;font-weight:600;border:1px solid #e8e8e8;">6 ans</th>
+              <th style="padding:10px 14px;text-align:center;font-weight:600;border:1px solid #e8e8e8;">8 ans</th>
+              <th style="padding:10px 14px;text-align:center;font-weight:600;border:1px solid #e8e8e8;">10 ans</th>
+              <th style="padding:10px 14px;text-align:center;font-weight:600;border:1px solid #e8e8e8;">12 ans</th>
+              <th style="padding:10px 14px;text-align:center;font-weight:600;border:1px solid #e8e8e8;">14 ans</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="padding:10px 14px;font-weight:500;border:1px solid #e8e8e8;background:#fafafa;">Taille (cm)</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">86–92</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">98–104</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">110–116</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">122–128</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">134–140</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">146–152</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">158–164</td>
+            </tr>
+            <tr>
+              <td style="padding:10px 14px;font-weight:500;border:1px solid #e8e8e8;background:#fafafa;">Tour de poitrine (cm)</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">52</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">56</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">60</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">64</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">68</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">72</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">78</td>
+            </tr>
+            <tr>
+              <td style="padding:10px 14px;font-weight:500;border:1px solid #e8e8e8;background:#fafafa;">Tour de taille (cm)</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">51</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">53</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">55</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">58</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">61</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">64</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">68</td>
+            </tr>
+            <tr>
+              <td style="padding:10px 14px;font-weight:500;border:1px solid #e8e8e8;background:#fafafa;">Taille EU</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">92</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">104</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">116</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">128</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">140</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">152</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">164</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 style="font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#555;margin-bottom:12px;">Bébé</h3>
+      <div style="overflow-x:auto;">
+        <table style="width:100%;border-collapse:collapse;font-size:13px;">
+          <thead>
+            <tr style="background:#f5f5f5;">
+              <th style="padding:10px 14px;text-align:left;font-weight:600;border:1px solid #e8e8e8;">Âge</th>
+              <th style="padding:10px 14px;text-align:center;font-weight:600;border:1px solid #e8e8e8;">Naissance</th>
+              <th style="padding:10px 14px;text-align:center;font-weight:600;border:1px solid #e8e8e8;">1 mois</th>
+              <th style="padding:10px 14px;text-align:center;font-weight:600;border:1px solid #e8e8e8;">3 mois</th>
+              <th style="padding:10px 14px;text-align:center;font-weight:600;border:1px solid #e8e8e8;">6 mois</th>
+              <th style="padding:10px 14px;text-align:center;font-weight:600;border:1px solid #e8e8e8;">12 mois</th>
+              <th style="padding:10px 14px;text-align:center;font-weight:600;border:1px solid #e8e8e8;">18 mois</th>
+              <th style="padding:10px 14px;text-align:center;font-weight:600;border:1px solid #e8e8e8;">24 mois</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="padding:10px 14px;font-weight:500;border:1px solid #e8e8e8;background:#fafafa;">Taille (cm)</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">50</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">56</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">62</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">68</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">80</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">86</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">92</td>
+            </tr>
+            <tr>
+              <td style="padding:10px 14px;font-weight:500;border:1px solid #e8e8e8;background:#fafafa;">Poids indicatif (kg)</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">2.5–3.5</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">3.5–4.5</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">5–6</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">7–8</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">9–11</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">11–13</td>
+              <td style="padding:10px 14px;text-align:center;border:1px solid #e8e8e8;">12–14</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Note bas -->
+    <div style="padding:16px 28px;background:#f8f8f8;border-top:1px solid #e8e8e8;">
+      <p style="font-size:12px;color:#999;">💡 En cas de doute entre deux tailles, nous recommandons de choisir la taille supérieure.</p>
+    </div>
+
+  </div>
+</div>
+
+<script>
+function ouvrirTailles(e) {
+  if (e) e.preventDefault();
+  const modal = document.getElementById('modal-tailles');
+  modal.style.display = 'flex';
+}
+
+function fermerTailles() {
+  document.getElementById('modal-tailles').style.display = 'none';
+}
+
+function switchTaille(el, panel) {
+  document.querySelectorAll('.taille-tab').forEach(t => {
+    t.style.color = '#999';
+    t.style.borderBottomColor = 'transparent';
+    t.style.fontWeight = '500';
+  });
+  el.style.color = '#1c1c1c';
+  el.style.borderBottomColor = '#1c1c1c';
+  el.style.fontWeight = '600';
+
+  document.querySelectorAll('.taille-panel').forEach(p => p.style.display = 'none');
+  document.getElementById('taille-' + panel).style.display = 'block';
+}
+
+document.getElementById('modal-tailles').addEventListener('click', function(e) {
+  if (e.target === this) fermerTailles();
+});
+</script>
+
+
+<!-- MODAL FAQ -->
+<div id="modal-faq" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:9999;align-items:flex-start;justify-content:center;overflow-y:auto;padding:24px;">
+  <div style="background:#fff;border-radius:8px;width:100%;max-width:640px;box-shadow:0 20px 60px rgba(0,0,0,0.3);animation:fadeIn 0.2s ease;margin:auto;">
+
+    <div style="padding:24px 28px;border-bottom:1px solid #e8e8e8;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:#fff;z-index:1;">
+      <h2 style="font-size:18px;font-weight:700;letter-spacing:-0.3px;">Questions fréquentes</h2>
+      <button onclick="fermerFAQ()" style="background:none;border:none;font-size:22px;color:#999;cursor:pointer;line-height:1;">✕</button>
+    </div>
+
+    <div style="padding:24px 28px;">
+
+      <!-- Livraison -->
+      <div style="margin-bottom:8px;">
+        <div style="font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#999;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid #e8e8e8;">Livraison</div>
+
+        <div class="faq-item">
+          <button onclick="toggleFAQ(this)" style="width:100%;text-align:left;background:none;border:none;padding:14px 0;font-family:inherit;font-size:14px;font-weight:600;color:#1c1c1c;cursor:pointer;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #f5f5f5;">
+            Quels sont les délais de livraison ?
+            <span style="font-size:18px;color:#999;transition:transform 0.2s;">+</span>
+          </button>
+          <div class="faq-answer" style="display:none;padding:0 0 14px;font-size:13px;color:#555;line-height:1.8;font-weight:300;">
+            La livraison standard est effectuée en <strong>3 à 5 jours ouvrés</strong>. La livraison express est disponible en <strong>24 à 48h</strong> pour un supplément. Vous recevrez un email de confirmation avec un numéro de suivi dès l'expédition de votre commande.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button onclick="toggleFAQ(this)" style="width:100%;text-align:left;background:none;border:none;padding:14px 0;font-family:inherit;font-size:14px;font-weight:600;color:#1c1c1c;cursor:pointer;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #f5f5f5;">
+            La livraison est-elle gratuite ?
+            <span style="font-size:18px;color:#999;transition:transform 0.2s;">+</span>
+          </button>
+          <div class="faq-answer" style="display:none;padding:0 0 14px;font-size:13px;color:#555;line-height:1.8;font-weight:300;">
+            La livraison est <strong>offerte dès 60€ d'achat</strong>. En dessous de ce montant, les frais de livraison sont de 4,90€ pour la livraison standard.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button onclick="toggleFAQ(this)" style="width:100%;text-align:left;background:none;border:none;padding:14px 0;font-family:inherit;font-size:14px;font-weight:600;color:#1c1c1c;cursor:pointer;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #f5f5f5;">
+            Comment suivre ma commande ?
+            <span style="font-size:18px;color:#999;transition:transform 0.2s;">+</span>
+          </button>
+          <div class="faq-answer" style="display:none;padding:0 0 14px;font-size:13px;color:#555;line-height:1.8;font-weight:300;">
+            Dès l'expédition de votre commande, vous recevrez un email avec un numéro de suivi. Vous pouvez également utiliser le lien <strong>"Livraison et Retours"</strong> en bas de page pour suivre votre colis en temps réel.
+          </div>
+        </div>
+      </div>
+
+      <!-- Retours -->
+      <div style="margin-bottom:8px;margin-top:20px;">
+        <div style="font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#999;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid #e8e8e8;">Retours</div>
+
+        <div class="faq-item">
+          <button onclick="toggleFAQ(this)" style="width:100%;text-align:left;background:none;border:none;padding:14px 0;font-family:inherit;font-size:14px;font-weight:600;color:#1c1c1c;cursor:pointer;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #f5f5f5;">
+            Comment faire un retour ?
+            <span style="font-size:18px;color:#999;transition:transform 0.2s;">+</span>
+          </button>
+          <div class="faq-answer" style="display:none;padding:0 0 14px;font-size:13px;color:#555;line-height:1.8;font-weight:300;">
+            Vous disposez de <strong>30 jours</strong> après réception pour retourner un article. Cliquez sur "Livraison et Retours" en bas de page, sélectionnez "Faire un retour" et suivez les instructions. Les retours sont <strong>entièrement gratuits</strong>.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button onclick="toggleFAQ(this)" style="width:100%;text-align:left;background:none;border:none;padding:14px 0;font-family:inherit;font-size:14px;font-weight:600;color:#1c1c1c;cursor:pointer;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #f5f5f5;">
+            Dans quel état doit être l'article pour un retour ?
+            <span style="font-size:18px;color:#999;transition:transform 0.2s;">+</span>
+          </button>
+          <div class="faq-answer" style="display:none;padding:0 0 14px;font-size:13px;color:#555;line-height:1.8;font-weight:300;">
+            L'article doit être retourné dans son <strong>état d'origine</strong>, non porté, non lavé, avec toutes ses étiquettes attachées et dans son emballage d'origine. Les articles endommagés ou sans étiquettes ne pourront pas être acceptés.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button onclick="toggleFAQ(this)" style="width:100%;text-align:left;background:none;border:none;padding:14px 0;font-family:inherit;font-size:14px;font-weight:600;color:#1c1c1c;cursor:pointer;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #f5f5f5;">
+            Sous quel délai suis-je remboursé ?
+            <span style="font-size:18px;color:#999;transition:transform 0.2s;">+</span>
+          </button>
+          <div class="faq-answer" style="display:none;padding:0 0 14px;font-size:13px;color:#555;line-height:1.8;font-weight:300;">
+            Le remboursement est effectué dans un délai de <strong>5 à 10 jours ouvrés</strong> après réception et vérification de votre retour, sur le moyen de paiement utilisé lors de l'achat.
+          </div>
+        </div>
+      </div>
+
+      <!-- Commande -->
+      <div style="margin-bottom:8px;margin-top:20px;">
+        <div style="font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#999;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid #e8e8e8;">Commande</div>
+
+        <div class="faq-item">
+          <button onclick="toggleFAQ(this)" style="width:100%;text-align:left;background:none;border:none;padding:14px 0;font-family:inherit;font-size:14px;font-weight:600;color:#1c1c1c;cursor:pointer;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #f5f5f5;">
+            Quels moyens de paiement acceptez-vous ?
+            <span style="font-size:18px;color:#999;transition:transform 0.2s;">+</span>
+          </button>
+          <div class="faq-answer" style="display:none;padding:0 0 14px;font-size:13px;color:#555;line-height:1.8;font-weight:300;">
+            Nous acceptons les <strong>cartes bancaires</strong> (Visa, Mastercard, American Express), <strong>PayPal</strong> et <strong>Apple Pay</strong>. Tous les paiements sont sécurisés via un protocole de chiffrement SSL.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button onclick="toggleFAQ(this)" style="width:100%;text-align:left;background:none;border:none;padding:14px 0;font-family:inherit;font-size:14px;font-weight:600;color:#1c1c1c;cursor:pointer;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #f5f5f5;">
+            Puis-je modifier ou annuler ma commande ?
+            <span style="font-size:18px;color:#999;transition:transform 0.2s;">+</span>
+          </button>
+          <div class="faq-answer" style="display:none;padding:0 0 14px;font-size:13px;color:#555;line-height:1.8;font-weight:300;">
+            Vous pouvez modifier ou annuler votre commande dans les <strong>2 heures</strong> suivant la validation. Au-delà de ce délai, la commande est prise en charge et ne peut plus être modifiée. Vous devrez alors effectuer un retour à réception.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button onclick="toggleFAQ(this)" style="width:100%;text-align:left;background:none;border:none;padding:14px 0;font-family:inherit;font-size:14px;font-weight:600;color:#1c1c1c;cursor:pointer;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #f5f5f5;">
+            Mon paiement est-il sécurisé ?
+            <span style="font-size:18px;color:#999;transition:transform 0.2s;">+</span>
+          </button>
+          <div class="faq-answer" style="display:none;padding:0 0 14px;font-size:13px;color:#555;line-height:1.8;font-weight:300;">
+            Oui, toutes les transactions sont <strong>100% sécurisées</strong>. Vos données bancaires sont chiffrées et ne sont jamais stockées sur nos serveurs. Nous utilisons le protocole SSL et le système de vérification 3D Secure.
+          </div>
+        </div>
+      </div>
+
+      <!-- Produits -->
+      <div style="margin-top:20px;">
+        <div style="font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#999;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid #e8e8e8;">Produits</div>
+
+        <div class="faq-item">
+          <button onclick="toggleFAQ(this)" style="width:100%;text-align:left;background:none;border:none;padding:14px 0;font-family:inherit;font-size:14px;font-weight:600;color:#1c1c1c;cursor:pointer;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #f5f5f5;">
+            Les produits sont-ils authentiques ?
+            <span style="font-size:18px;color:#999;transition:transform 0.2s;">+</span>
+          </button>
+          <div class="faq-answer" style="display:none;padding:0 0 14px;font-size:13px;color:#555;line-height:1.8;font-weight:300;">
+            Tous nos produits sont <strong>100% authentiques</strong> et proviennent directement des marques ou de distributeurs officiels agréés. Nous vous garantissons l'authenticité de chaque article vendu.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button onclick="toggleFAQ(this)" style="width:100%;text-align:left;background:none;border:none;padding:14px 0;font-family:inherit;font-size:14px;font-weight:600;color:#1c1c1c;cursor:pointer;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #f5f5f5;">
+            Comment choisir ma taille ?
+            <span style="font-size:18px;color:#999;transition:transform 0.2s;">+</span>
+          </button>
+          <div class="faq-answer" style="display:none;padding:0 0 14px;font-size:13px;color:#555;line-height:1.8;font-weight:300;">
+            Consultez notre <strong>guide des tailles</strong> disponible dans le menu "Service Client" en bas de page. En cas de doute entre deux tailles, nous recommandons de choisir la taille supérieure.
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div style="padding:16px 28px;background:#f8f8f8;border-top:1px solid #e8e8e8;">
+      <p style="font-size:12px;color:#999;">Vous ne trouvez pas la réponse à votre question ? Contactez-nous via le formulaire en bas de page.</p>
+    </div>
+
+  </div>
+</div>
+
+<script>
+function ouvrirFAQ(e) {
+  if (e) e.preventDefault();
+  document.getElementById('modal-faq').style.display = 'flex';
+}
+
+function fermerFAQ() {
+  document.getElementById('modal-faq').style.display = 'none';
+}
+
+function toggleFAQ(btn) {
+  const answer = btn.nextElementSibling;
+  const icon = btn.querySelector('span');
+  const isOpen = answer.style.display === 'block';
+  // Fermer tous les autres
+  document.querySelectorAll('.faq-answer').forEach(a => a.style.display = 'none');
+  document.querySelectorAll('.faq-item button span').forEach(i => i.textContent = '+');
+  // Ouvrir celui-ci si était fermé
+  if (!isOpen) {
+    answer.style.display = 'block';
+    icon.textContent = '−';
+  }
+}
+
+document.getElementById('modal-faq').addEventListener('click', function(e) {
+  if (e.target === this) fermerFAQ();
+});
 </script>
 
 </body>
