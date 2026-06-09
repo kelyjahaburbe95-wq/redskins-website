@@ -163,9 +163,9 @@ nav {
 /* ── DROPDOWN MENUS ── */
 .dropdown-menu {
   display: none;
-  position: fixed;
+  position: absolute;
+  top: 100%;
   left: 0;
-  right: 0;
   background: #fff;
   border-top: 3px solid #e00;
   border-bottom: 1px solid #e8e8e8;
@@ -174,7 +174,6 @@ nav {
   padding: 20px 48px;
   gap: 48px;
   animation: fadeDown 0.15s ease;
-  margin-top: -1px;
 }
 
 /* Zone invisible pour éviter que le menu disparaisse */
