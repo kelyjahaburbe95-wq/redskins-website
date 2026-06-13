@@ -1220,10 +1220,10 @@ footer {
 <div class="section">
   <div class="section-header"><h2 class="section-title">Nos Univers</h2></div>
   <div class="categories-grid">
-    <a href="#" class="category-card"><img src="https://images.unsplash.com/photo-1520975954732-35dd22299614?w=600&q=80" alt="Homme"><div class="category-overlay"><div class="category-name">Homme</div><span class="category-btn">Découvrir</span></div></a>
-    <a href="#" class="category-card"><img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=600&q=80" alt="Femme"><div class="category-overlay"><div class="category-name">Femme</div><span class="category-btn">Découvrir</span></div></a>
-    <a href="#" class="category-card"><img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&q=80" alt="Chaussures"><div class="category-overlay"><div class="category-name">Chaussures</div><span class="category-btn">Découvrir</span></div></a>
-    <a href="#" class="category-card"><img src="https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=600&q=80" alt="Accessoires"><div class="category-overlay"><div class="category-name">Accessoires</div><span class="category-btn">Découvrir</span></div></a>
+    <a href="univers.html?u=homme" class="category-card"><img src="https://images.unsplash.com/photo-1520975954732-35dd22299614?w=600&q=80" alt="Homme"><div class="category-overlay"><div class="category-name">Homme</div><span class="category-btn">Découvrir</span></div></a>
+    <a href="univers.html?u=femme" class="category-card"><img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=600&q=80" alt="Femme"><div class="category-overlay"><div class="category-name">Femme</div><span class="category-btn">Découvrir</span></div></a>
+    <a href="univers.html?u=chaussures" class="category-card"><img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&q=80" alt="Chaussures"><div class="category-overlay"><div class="category-name">Chaussures</div><span class="category-btn">Découvrir</span></div></a>
+    <a href="univers.html?u=accessoires" class="category-card"><img src="https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=600&q=80" alt="Accessoires"><div class="category-overlay"><div class="category-name">Accessoires</div><span class="category-btn">Découvrir</span></div></a>
   </div>
 </div>
 
@@ -1391,18 +1391,23 @@ function renderProduits(gridId, produits, isNew) {
             ? `<span class="product-price-promo">${p.prixReduit} €</span><span class="product-price-old">${p.prix} €</span>`
             : `<span class="product-price">${p.prix} €</span>`}
         </div>
-        <button class="btn-add" onclick="event.stopPropagation();addToCart('${p.nom}',${hasPromo?p.prixReduit:p.prix},'${p.marque}')">Ajouter au panier</button>
+        <button class="btn-add" onclick="event.stopPropagation();addToCart('${p.id}')">Ajouter au panier</button>
       </div>
     </div>`;
   }).join('');
 }
 
-function addToCart(name, price, brand) {
+function addToCart(id) {
+  const produits = JSON.parse(localStorage.getItem('rf-produits') || '[]');
+  const p = produits.find(x => x.id === id);
+  if (!p) return;
+  const price = (p.promoActif && p.prixReduit) ? p.prixReduit : p.prix;
+  const image = p.photos && p.photos[0] ? p.photos[0] : '';
   const cart = JSON.parse(localStorage.getItem('redskins-cart') || '[]');
-  const existing = cart.find(i => i.name === name);
-  if (existing) { existing.qty++; } else { cart.push({ name, price, brand, qty: 1 }); }
+  const existing = cart.find(i => i.id === id);
+  if (existing) { existing.qty++; } else { cart.push({ id: p.id, name: p.nom, price, brand: p.marque, image, qty: 1 }); }
   localStorage.setItem('redskins-cart', JSON.stringify(cart));
-  alert('✓ "' + name + '" ajouté au panier !');
+  alert('✓ "' + p.nom + '" ajouté au panier !');
 }
 
 // Smooth scroll
