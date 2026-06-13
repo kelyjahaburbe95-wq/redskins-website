@@ -222,6 +222,16 @@ async function renderAdmin() {
                 <option>Vêtements</option><option>Chaussures</option><option>Accessoires</option><option>Cuir</option>
               </select>
             </div>
+            <div class="form-group"><label class="form-label">Genre</label>
+              <select class="form-select" id="p-genre">
+                <option>Homme</option><option>Femme</option><option>Mixte</option>
+              </select>
+            </div>
+            <div class="form-group"><label class="form-label">Type</label>
+              <select class="form-select" id="p-sous-categorie">
+                <option value="">—</option><option>Pantalon</option><option>Jean</option><option>Pull</option><option>Sweat</option><option>T-shirt</option><option>Chemise</option><option>Polo</option><option>Veste</option><option>Manteau</option><option>Blouson</option><option>Robe</option><option>Jupe</option><option>Sneakers</option><option>Boots</option><option>Mocassins</option><option>Sac</option><option>Ceinture</option><option>Portefeuille</option><option>Lunettes</option><option>Montre</option><option>Casquette</option><option>Écharpe</option><option>Autre</option>
+              </select>
+            </div>
             <div class="form-group form-full"><label class="form-label">Description</label><textarea class="form-textarea" id="p-desc" placeholder="Description du produit..."></textarea></div>
             <div class="form-group"><label class="form-label">Prix (€)</label><input type="number" class="form-input" id="p-prix" placeholder="99"></div>
             <div class="form-group"><label class="form-label">Tailles (séparées par virgule)</label><input type="text" class="form-input" id="p-tailles" placeholder="S,M,L,XL ou 39,40,41"></div>
@@ -322,6 +332,7 @@ function supprimerPhoto(i) { photosBase64.splice(i,1); renderPreviews(); }
 async function getProduits() {
   try {
     const res = await fetch('/api/produits');
+    if (!res.ok) throw new Error();
     return await res.json();
   } catch(e) {
     return JSON.parse(localStorage.getItem('rf-produits') || '[]');
@@ -340,6 +351,8 @@ async function ajouterProduit() {
     nom, marque,
     ref: document.getElementById('p-ref').value.trim(),
     categorie: document.getElementById('p-categorie').value,
+    genre: document.getElementById('p-genre').value,
+    sous_categorie: document.getElementById('p-sous-categorie').value,
     desc: document.getElementById('p-desc').value.trim(),
     prix, tailles: document.getElementById('p-tailles').value.split(',').map(t=>t.trim()).filter(Boolean),
     couleurs: document.getElementById('p-couleurs').value.split(',').map(c=>c.trim()).filter(Boolean),
@@ -350,6 +363,7 @@ async function ajouterProduit() {
 
   try {
     const res = await fetch('/api/produits', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(produit)});
+    if (!res.ok) throw new Error();
     const data = await res.json();
     if (!data.success) { showNotif('❌ Erreur: ' + (data.error||'')); return; }
   } catch(e) {
@@ -397,7 +411,8 @@ async function renderProduits() {
 async function supprimerProduit(id) {
   if (!confirm('Supprimer ce produit ?')) return;
   try {
-    await fetch('/api/produits/' + id, {method:'DELETE'});
+    const res = await fetch('/api/produits/' + id, {method:'DELETE'});
+    if (!res.ok) throw new Error();
   } catch(e) {
     const local = JSON.parse(localStorage.getItem('rf-produits') || '[]').filter(p => p.id !== id);
     localStorage.setItem('rf-produits', JSON.stringify(local));
@@ -423,6 +438,14 @@ async function modifierProduit(id) {
     <div class="form-group"><label class="form-label">Catégorie</label>
       <select class="form-select" id="m-categorie">
         ${['Vêtements','Chaussures','Accessoires','Cuir'].map(c=>`<option${c===p.categorie?' selected':''}>${c}</option>`).join('')}
+      </select></div>
+    <div class="form-group"><label class="form-label">Genre</label>
+      <select class="form-select" id="m-genre">
+        ${['Homme','Femme','Mixte'].map(g=>`<option${g===(p.genre||'')?' selected':''}>${g}</option>`).join('')}
+      </select></div>
+    <div class="form-group"><label class="form-label">Type</label>
+      <select class="form-select" id="m-sous-categorie">
+        <option value="">—</option>${['Pantalon','Jean','Pull','Sweat','T-shirt','Chemise','Polo','Veste','Manteau','Blouson','Robe','Jupe','Sneakers','Boots','Mocassins','Sac','Ceinture','Portefeuille','Lunettes','Montre','Casquette','Écharpe','Autre'].map(t=>`<option${t===(p.sous_categorie||'')?' selected':''}>${t}</option>`).join('')}
       </select></div>
     <div class="form-group form-full"><label class="form-label">Description</label><textarea class="form-textarea" id="m-desc">${p.desc||''}</textarea></div>
     <div class="form-group"><label class="form-label">Prix (€)</label><input type="number" class="form-input" id="m-prix" value="${p.prix||''}"></div>
@@ -481,6 +504,8 @@ async function sauvegarderModif() {
     marque, nom: document.getElementById('m-nom').value.trim().toUpperCase(),
     ref: document.getElementById('m-ref').value.trim(),
     categorie: document.getElementById('m-categorie').value,
+    genre: document.getElementById('m-genre').value,
+    sous_categorie: document.getElementById('m-sous-categorie').value,
     desc: document.getElementById('m-desc').value.trim(),
     prix: parseFloat(document.getElementById('m-prix').value),
     tailles: document.getElementById('m-tailles').value.split(',').map(t=>t.trim()).filter(Boolean),
@@ -493,7 +518,8 @@ async function sauvegarderModif() {
   };
 
   try {
-    await fetch('/api/produits/' + currentEditId, {method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(updates)});
+    const res = await fetch('/api/produits/' + currentEditId, {method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(updates)});
+    if (!res.ok) throw new Error();
   } catch(e) {
     const local = JSON.parse(localStorage.getItem('rf-produits') || '[]');
     const i = local.findIndex(p => p.id === currentEditId);
