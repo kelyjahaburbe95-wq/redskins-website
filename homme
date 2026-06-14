@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nos Univers — Redskins Franconville</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* , *::before , *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --white: #fff;
+  --bg: #f5f5f5;
+  --border: #e8e8e8;
+  --text: #1c1c1c;
+  --text-mid: #555;
+  --text-light: #999;
+  --red: #e00;
+  --black: #111;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--white);
+  color: var(--text);
+  font-size: 14px;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+/* ── TOPBAR ── */
+.topbar {
+  background: #111;
+  color: rgba(255,255,255,0.8);
+  text-align: center;
+  padding: 8px;
+  font-size: 12px;
+}
+
+.topbar strong {
+  color: #fff;
+}
+
+/* ── NAV ── */
+nav {
+  background: #fff;
+  border-bottom: 1px solid #e8e8e8;
+  position: sticky;
+  top: 0;
+  z-index: 200;
+}
+
+.nav-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+  height: 64px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.nav-logo {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  color: #1c1c1c;
+}
+
+.nav-logo span {
+  color: #e00;
+}
+
+.nav-search {
+  flex: 1;
+  max-width: 480px;
+  margin: 0 32px;
+  position: relative;
+}
+
+.nav-search input {
+  width: 100%;
+  padding: 10px 44px 10px 16px;
+  background: #f5f5f5;
+  border: 1px solid #e8e8e8;
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: 13px;
+  outline: none;
+}
+
+.nav-search-icon {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #999;
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.nav-action {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 8px 12px;
+  color: #555;
+  font-size: 10px;
+  font-weight: 500;
+  border-radius: 4px;
+  transition: color 0.2s;
+  text-decoration: none;
+}
+
+.nav-action:hover {
+  color: #1c1c1c;
+  background: #f5f5f5;
+}
+
+.nav-action-icon {
+  font-size: 18px;
+}
+
+.nav-action-cart {
+  background: #e00;
+  color: #fff;
+  border-radius: 4px;
+}
+
+.nav-action-cart:hover {
+  background: #cc0000;
+  color: #fff;
+}
+
+.nav-bottom {
+  border-top: 1px solid #e8e8e8;
+}
+
+.nav-bottom-inner {
+  display: flex;
+  align-items: center;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+.nav-item {
+  padding: 12px 14px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #333;
+  white-space: nowrap;
+  cursor: pointer;
+  display: block;
+  transition: color 0.2s;
+  border: none;
+  background: none;
+  font-family: inherit;
+  text-decoration: none;
+}
+
+.nav-item:hover {
+  color: #1c1c1c;
+}
+
+.nav-item-red {
+  color: #e00 !important;
+  font-weight: 600 !important;
+}
+
+.nav-item-orange {
+  color: #f60 !important;
+  font-weight: 600 !important;
+}
+
+/* ── DROPDOWNS ── */
+.nav-dropdown {
+  position: relative;
+}
+
+.nav-dropdown:hover > .nav-item {
+  color: #1c1c1c;
+  background: #f5f5f5;
+}
+
+/* Dropdown standard (pleine largeur) */
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: #fff;
+  border-top: 3px solid #e00;
+  border-bottom: 1px solid #e8e8e8;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+  z-index: 9999;
+  padding: 28px 48px;
+  gap: 48px;
+  animation: fadeDown 0.15s ease;
+}
+
+.nav-dropdown:hover > .dropdown-menu {
+  display: flex;
+}
+
+/* Dropdown Marques — colonne unique bien formée */
+.dropdown-menu-marques {
+  position: absolute !important;
+  left: 0 !important;
+  right: auto !important;
+  top: 100% !important;
+  width: 200px;
+  padding: 0 !important;
+  gap: 0 !important;
+  border-top: 3px solid #e00;
+  background: #fff;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+  margin-top: 0 !important;
+  display: none;
+  flex-direction: column !important;
+  z-index: 9999;
+  animation: fadeDown 0.15s ease;
+}
+
+.nav-dropdown:hover > .dropdown-menu-marques {
+  display: flex;
+  flex-direction: column;
+}
+
+.dropdown-menu-marques .dropdown-col {
+  width: 100%;
+  gap: 0;
+  min-width: unset;
+}
+
+.dropdown-menu-marques .dropdown-title {
+  padding: 8px 20px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #999;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.dropdown-menu-marques .dropdown-col a {
+  display: block;
+  padding: 9px 20px;
+  font-size: 13px;
+  color: #444;
+  border-bottom: 1px solid #f5f5f5;
+  transition: background 0.15s, color 0.15s;
+}
+
+.dropdown-menu-marques .dropdown-col a:hover {
+  background: #f5f5f5;
+  color: #e00;
+}
+
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.dropdown-col {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 150px;
+}
+
+.dropdown-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #999;
+  margin-bottom: 4px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.dropdown-col a {
+  font-size: 13px;
+  color: #444;
+  font-weight: 400;
+  transition: color 0.2s;
+  white-space: nowrap;
+}
+
+.dropdown-col a:hover {
+  color: #e00;
+}
+
+/* ── BRAND HERO ── */
+.brand-hero {
+  background: #f8f8f8;
+  border-bottom: 1px solid #e8e8e8;
+  padding: 32px;
+}
+
+.brand-hero-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.brand-logo-wrap {
+  background: #fff;
+  border: 1px solid #e8e8e8;
+  border-radius: 4px;
+  padding: 16px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 160px;
+}
+
+.brand-logo-wrap img {
+  max-height: 56px;
+  max-width: 150px;
+  object-fit: contain;
+}
+
+.brand-info h1 {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 4px;
+  letter-spacing: -0.3px;
+}
+
+.brand-info p {
+  font-size: 13px;
+  color: #999;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: #999;
+  margin-bottom: 12px;
+  transition: color 0.2s;
+}
+
+.back-link:hover {
+  color: #e00;
+}
+
+/* ── FILTRES ── */
+.filtres-section {
+  border-bottom: 1px solid #e8e8e8;
+  background: #fff;
+  position: sticky;
+  top: 120px;
+  z-index: 100;
+}
+
+.filtres-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+.cats-bar {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.cat-btn {
+  padding: 14px 20px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #555;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+  white-space: nowrap;
+}
+
+.cat-btn:hover {
+  color: #1c1c1c;
+}
+
+.cat-btn.active {
+  color: #1c1c1c;
+  border-bottom-color: #1c1c1c;
+  font-weight: 600;
+}
+
+.filtres-panel {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 12px 0;
+}
+
+.filtre-btn {
+  padding: 7px 16px;
+  border: 1px solid #e8e8e8;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #555;
+  background: #fff;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+  white-space: nowrap;
+}
+
+.filtre-btn:hover {
+  border-color: #1c1c1c;
+  color: #1c1c1c;
+}
+
+.filtre-btn.active {
+  background: #1c1c1c;
+  color: #fff;
+  border-color: #1c1c1c;
+}
+
+/* ── PRODUITS ── */
+.products-section {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 32px;
+}
+
+.products-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.products-count {
+  font-size: 13px;
+  color: #999;
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.product-card {
+  background: #fff;
+  border: 1px solid #e8e8e8;
+  border-radius: 4px;
+  overflow: hidden;
+  transition: box-shadow 0.2s;
+  cursor: pointer;
+}
+
+.product-card:hover {
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+.product-img-wrap {
+  position: relative;
+  aspect-ratio: 3/4;
+  overflow: hidden;
+  background: #f5f5f5;
+}
+
+.product-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s;
+}
+
+.product-card:hover .product-img-wrap img {
+  transform: scale(1.05);
+}
+
+.product-img-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+  color: #e8e8e8;
+}
+
+.product-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: #e00;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  padding: 3px 8px;
+  border-radius: 2px;
+}
+
+.product-info {
+  padding: 12px;
+}
+
+.product-brand {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #999;
+  margin-bottom: 4px;
+}
+
+.product-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: #1c1c1c;
+  margin-bottom: 8px;
+  line-height: 1.4;
+}
+
+.product-prices {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.product-price {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.product-price-old {
+  font-size: 12px;
+  color: #999;
+  text-decoration: line-through;
+}
+
+.product-price-promo {
+  font-size: 15px;
+  font-weight: 700;
+  color: #e00;
+}
+
+.btn-add {
+  width: 100%;
+  padding: 10px;
+  background: #1c1c1c;
+  color: #fff;
+  border: none;
+  border-radius: 2px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-add:hover {
+  background: #e00;
+}
+
+.empty-state {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 80px 0;
+  color: #999;
+}
+
+.empty-state-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+}
+
+.empty-state h3 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #1c1c1c;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1024px) {
+  .products-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 768px) {
+  .nav-top { padding: 0 16px; }
+  .nav-search { display: none; }
+  .nav-bottom-inner { padding: 0 16px; overflow-x: auto; }
+  .products-grid { grid-template-columns: repeat(2, 1fr); }
+  .products-section { padding: 24px 16px; }
+  .brand-hero { padding: 20px 16px; }
+  .filtres-inner { padding: 0 16px; }
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  🚚 <strong>Livraison offerte</strong> dès 60€ d'achat &nbsp;|&nbsp; Retours gratuits sous 30 jours &nbsp;|&nbsp; Boutique à Franconville
+</div>
+
+<nav>
+  <div class="nav-top">
+    <a href="index.html" class="nav-logo">Redskins <span>Franconville</span></a>
+    <div class="nav-search">
+      <input type="text" placeholder="Rechercher une marque, un produit...">
+      <span class="nav-search-icon">🔍</span>
+    </div>
+    <div class="nav-actions">
+      <a href="compte.html" class="nav-action"><span class="nav-action-icon">👤</span><span>Compte</span></a>
+      <a href="panier.html" class="nav-action nav-action-cart"><span class="nav-action-icon">🛒</span><span>Panier</span></a>
+    </div>
+  </div>
+  <div class="nav-bottom">
+    <div class="nav-bottom-inner">
+      <a href="index.html#nouveautes" class="nav-item nav-item-red">Nouveautés</a>
+      <a href="index.html#top-ventes" class="nav-item">Top ventes</a>
+
+      <div class="nav-dropdown">
+        <span class="nav-item">Vêtements</span>
+        <div class="dropdown-menu">
+          <div class="dropdown-col"><div class="dropdown-title">Homme</div><a href="index.html">Vestes et Blousons</a><a href="index.html">T-shirts et Polos</a><a href="index.html">Jeans et Pantalons</a><a href="index.html">Pulls et Sweats</a></div>
+          <div class="dropdown-col"><div class="dropdown-title">Femme</div><a href="index.html">Robes et Jupes</a><a href="index.html">Tops et T-shirts</a><a href="index.html">Jeans et Pantalons</a><a href="index.html">Vestes et Manteaux</a></div>
+          <div class="dropdown-col"><div class="dropdown-title">Enfants</div><a href="index.html">Garçon</a><a href="index.html">Fille</a><a href="index.html">Bébé</a></div>
+          <div class="dropdown-col"><div class="dropdown-title">Marques</div><a href="guess.html">Guess</a><a href="boss.html">Boss</a><a href="hugo.html">Hugo</a><a href="levis.html">Levis</a><a href="lacoste.html">Lacoste</a></div>
+        </div>
+      </div>
+
+      <div class="nav-dropdown">
+        <span class="nav-item">Chaussures</span>
+        <div class="dropdown-menu">
+          <div class="dropdown-col"><div class="dropdown-title">Homme</div><a href="index.html">Sneakers</a><a href="index.html">Boots et Bottines</a><a href="index.html">Derbies et Mocassins</a></div>
+          <div class="dropdown-col"><div class="dropdown-title">Femme</div><a href="index.html">Sneakers</a><a href="index.html">Boots et Bottines</a><a href="index.html">Escarpins</a></div>
+          <div class="dropdown-col"><div class="dropdown-title">Enfants</div><a href="index.html">Garçon</a><a href="index.html">Fille</a><a href="index.html">Bébé</a></div>
+          <div class="dropdown-col"><div class="dropdown-title">Marques</div><a href="guess.html">Guess</a><a href="boss.html">Boss</a><a href="redskins-brand.html">Redskins</a></div>
+        </div>
+      </div>
+
+      <div class="nav-dropdown">
+        <span class="nav-item">Accessoires</span>
+        <div class="dropdown-menu">
+          <div class="dropdown-col"><div class="dropdown-title">Catégories</div><a href="index.html">Sacs et Maroquinerie</a><a href="index.html">Ceintures</a><a href="index.html">Lunettes</a><a href="index.html">Montres</a></div>
+          <div class="dropdown-col"><div class="dropdown-title">Marques</div><a href="guess.html">Guess</a><a href="chabrand.html">Chabrand</a><a href="redskins-brand.html">Redskins</a><a href="boss.html">Boss</a></div>
+        </div>
+      </div>
+
+      <div class="nav-dropdown">
+        <span class="nav-item">Enfants</span>
+        <div class="dropdown-menu">
+          <div class="dropdown-col"><div class="dropdown-title">Garçon</div><a href="index.html">Vêtements</a><a href="index.html">Chaussures</a><a href="index.html">Accessoires</a></div>
+          <div class="dropdown-col"><div class="dropdown-title">Fille</div><a href="index.html">Vêtements</a><a href="index.html">Chaussures</a><a href="index.html">Accessoires</a></div>
+          <div class="dropdown-col"><div class="dropdown-title">Bébé</div><a href="index.html">Vêtements</a><a href="index.html">Chaussures</a></div>
+        </div>
+      </div>
+
+      <!-- MARQUES : dropdown colonne unique -->
+      <div class="nav-dropdown">
+        <span class="nav-item">Marques</span>
+        <div class="dropdown-menu-marques">
+          <div class="dropdown-col">
+            <div class="dropdown-title">Marques</div>
+            <a href="guess.html">Guess</a>
+            <a href="boss.html">Boss</a>
+            <a href="hugo.html">Hugo</a>
+            <a href="levis.html">Levis</a>
+            <a href="timberland.html">Timberland</a>
+            <a href="lacoste.html">Lacoste</a>
+            <a href="chabrand.html">Chabrand</a>
+            <a href="redskins-brand.html">Redskins</a>
+          </div>
+        </div>
+      </div>
+
+      <a href="index.html#promos" class="nav-item nav-item-red">Promos</a>
+      <a href="index.html#ventes-flash" class="nav-item nav-item-orange">Ventes flash</a>
+    </div>
+  </div>
+</nav>
+
+<!-- UNIVERS HERO -->
+<div class="brand-hero">
+  <div class="brand-hero-inner">
+    <div>
+      <a href="index.html" class="back-link">← Retour</a>
+    </div>
+    <div class="brand-info">
+      <h1 id="univers-titre">Univers</h1>
+      <p id="univers-sous">Tous les produits</p>
+    </div>
+  </div>
+</div>
+
+<!-- FILTRES -->
+<div class="filtres-section">
+  <div class="filtres-inner">
+    <div style="font-size:11px;font-weight:700;color:#999;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px;">Marque</div>
+    <div class="cats-bar" id="brand-bar"></div>
+    <div style="font-size:11px;font-weight:700;color:#999;text-transform:uppercase;letter-spacing:1.5px;margin:18px 0 10px;">Type</div>
+    <div class="cats-bar" id="type-bar"></div>
+  </div>
+</div>
+
+<!-- PRODUITS -->
+<div class="products-section">
+  <div class="products-header">
+    <span class="products-count" id="products-count">Chargement...</span>
+  </div>
+  <div class="products-grid" id="products-grid">
+    <div class="empty-state">
+      <div class="empty-state-icon">⏳</div>
+      <h3>Chargement des produits...</h3>
+    </div>
+  </div>
+</div>
+
+<script>
+const BRANDS = ['Guess','Boss','Hugo','Levis','Timberland','Lacoste','Chabrand','Redskins'];
+const U = 'homme';
+const UNIVERS = {
+  homme:       {titre:'Homme',       sous:'Tous les produits homme',  type:'genre',     val:'homme'},
+  femme:       {titre:'Femme',       sous:'Tous les produits femme',  type:'genre',     val:'femme'},
+  chaussures:  {titre:'Chaussures',  sous:'Toutes les chaussures',    type:'categorie', val:'chaussures'},
+  accessoires: {titre:'Accessoires', sous:'Tous les accessoires',     type:'categorie', val:'accessoires'},
+};
+const conf = UNIVERS[U] || {titre:'Boutique', sous:'Tous les produits', type:null, val:null};
+document.getElementById('univers-titre').textContent = conf.titre;
+document.getElementById('univers-sous').textContent = conf.sous;
+document.title = conf.titre + ' — Redskins Franconville';
+
+let marqueActive = null, typeActif = null, baseProduits = [];
+function norm(s){ return (s||'').toString().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,''); }
+function getProduitsLocaux(){ return JSON.parse(localStorage.getItem('rf-produits') || '[]'); }
+
+async function charger(){
+  let data = [];
+  try { const r = await fetch('/api/produits'); if(!r.ok) throw 0; data = await r.json(); }
+  catch(e){ data = getProduitsLocaux(); }
+  baseProduits = data.filter(p => {
+    if (!conf.type) return true;
+    if (conf.type === 'genre') return norm(p.genre) === conf.val || norm(p.genre) === 'mixte';
+    return norm(p.categorie) === conf.val;
+  });
+  construireFiltres();
+  afficher();
+}
+
+function construireFiltres(){
+  const bb = document.getElementById('brand-bar');
+  bb.innerHTML = '<button class="cat-btn active" data-m="">Toutes les marques</button>' +
+    BRANDS.filter(b => baseProduits.some(p => norm(p.marque)===norm(b)))
+          .map(b => `<button class="cat-btn" data-m="${b}">${b}</button>`).join('');
+  bb.querySelectorAll('.cat-btn').forEach(btn => btn.addEventListener('click', () => {
+    bb.querySelectorAll('.cat-btn').forEach(x=>x.classList.remove('active'));
+    btn.classList.add('active'); marqueActive = btn.dataset.m || null; afficher();
+  }));
+  const types = [...new Set(baseProduits.map(p => p.sous_categorie).filter(Boolean))].sort();
+  const tb = document.getElementById('type-bar');
+  tb.innerHTML = '<button class="cat-btn active" data-t="">Tous les types</button>' +
+    types.map(t => `<button class="cat-btn" data-t="${t}">${t}</button>`).join('');
+  tb.querySelectorAll('.cat-btn').forEach(btn => btn.addEventListener('click', () => {
+    tb.querySelectorAll('.cat-btn').forEach(x=>x.classList.remove('active'));
+    btn.classList.add('active'); typeActif = btn.dataset.t || null; afficher();
+  }));
+}
+
+function afficher(){
+  let prods = baseProduits;
+  if (marqueActive) prods = prods.filter(p => norm(p.marque)===norm(marqueActive));
+  if (typeActif) prods = prods.filter(p => p.sous_categorie===typeActif);
+  const grid = document.getElementById('products-grid');
+  document.getElementById('products-count').textContent = prods.length + ' produit' + (prods.length!==1?'s':'');
+  if (!prods.length){
+    grid.innerHTML = '<div class="empty-state"><div class="empty-state-icon">🛍️</div><h3>Aucun produit pour le moment</h3><p>Aucun produit ne correspond à cette sélection.</p></div>';
+    return;
+  }
+  grid.innerHTML = prods.map(p => {
+    const photo = p.photos && p.photos[0] ? p.photos[0] : null;
+    const hasPromo = p.promoActif && p.prixReduit;
+    return `
+    <div class="product-card" onclick="window.location.href='produit.html?id=${p.id}'">
+      <div class="product-img-wrap">
+        ${photo ? `<img src="${photo}" alt="${p.nom}">` : '<div class="product-img-placeholder">👕</div>'}
+        ${hasPromo ? `<span class="product-badge">${p.promoLabel||'PROMO'}</span>` : ''}
+      </div>
+      <div class="product-info">
+        <div class="product-brand">${p.marque}</div>
+        <div class="product-name">${p.nom}</div>
+        <div class="product-prices">
+          ${hasPromo ? `<span class="product-price-old">${p.prix}€</span><span class="product-price-promo">${p.prixReduit}€</span>` : `<span class="product-price">${p.prix}€</span>`}
+        </div>
+        <button class="btn-add" onclick="event.stopPropagation();addToCart('${p.id}')">Ajouter au panier</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function addToCart(id){
+  const p = getProduitsLocaux().find(x => x.id === id);
+  if (!p) return;
+  const price = (p.promoActif && p.prixReduit) ? p.prixReduit : p.prix;
+  const image = p.photos && p.photos[0] ? p.photos[0] : '';
+  const cart = JSON.parse(localStorage.getItem('redskins-cart') || '[]');
+  const ex = cart.find(i => i.id === id);
+  if (ex) ex.qty++; else cart.push({ id:p.id, name:p.nom, price, brand:p.marque, image, qty:1 });
+  localStorage.setItem('redskins-cart', JSON.stringify(cart));
+  alert('✓ "' + p.nom + '" ajouté au panier !');
+}
+charger();
+</script>
+</body>
+</html>
