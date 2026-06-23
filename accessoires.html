@@ -760,8 +760,7 @@ function getProduitsLocaux(){ return JSON.parse(localStorage.getItem('rf-produit
 
 async function charger(){
   let data = [];
-  try { const r = await fetch('/api/produits'); if(!r.ok) throw 0; data = await r.json(); }
-  catch(e){ data = getProduitsLocaux(); }
+  data = getProduitsLocaux();
   baseProduits = data.filter(p => {
     if (!conf.type) return true;
     if (conf.type === 'genre') return norm(p.genre) === conf.val || norm(p.genre) === 'mixte';
