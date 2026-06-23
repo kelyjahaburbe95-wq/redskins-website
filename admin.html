@@ -291,7 +291,8 @@ async function renderAdmin() {
     </div>
   </div>`;
 
-  renderProduits();
+  verifierLogin();
+renderProduits();
 }
 
 function showPanel(name, el) {
@@ -329,7 +330,35 @@ function renderPreviews() {
 
 function supprimerPhoto(i) { photosBase64.splice(i,1); renderPreviews(); }
 
+// ── Auth admin ──────────────────────────────────────────────────
+function getAdminPassword() { return localStorage.getItem('rf-admin-pwd') || ''; }
+
+async function fetchAdmin(url, options = {}) {
+  return fetch(url, {
+    ...options,
+    headers: { 'Content-Type': 'application/json', 'x-admin-password': getAdminPassword(), ...(options.headers||{}) }
+  });
+}
+
+async function verifierLogin() {
+  const pwd = getAdminPassword();
+  if (!pwd) { window.location.href = 'login.html'; return; }
+  try {
+    const res = await fetchAdmin('/api/login', { method: 'POST', body: JSON.stringify({ password: pwd }) });
+    if (!res.ok) { localStorage.removeItem('rf-admin-pwd'); window.location.href = 'login.html'; }
+  } catch(e) { /* mode local OK */ }
+}
+
+// ── Produits ─────────────────────────────────────────────────────
 async function getProduits() {
+  try {
+    const res = await fetchAdmin('/api/produits');
+    if (res.ok) {
+      const data = await res.json();
+      localStorage.setItem('rf-produits', JSON.stringify(data));
+      return data;
+    }
+  } catch(e) {}
   return JSON.parse(localStorage.getItem('rf-produits') || '[]');
 }
 
@@ -355,9 +384,17 @@ async function ajouterProduit() {
     photos: photosBase64, page: pages[marque] || 'index.html'
   };
 
-  const local = JSON.parse(localStorage.getItem('rf-produits') || '[]');
-  local.push(produit);
-  localStorage.setItem('rf-produits', JSON.stringify(local));
+  try {
+    const res = await fetchAdmin('/api/produits', { method: 'POST', body: JSON.stringify(produit) });
+    if (res.ok) {
+      const data = await getProduits();
+      localStorage.setItem('rf-produits', JSON.stringify(data));
+    } else { throw new Error(); }
+  } catch(e) {
+    const local = JSON.parse(localStorage.getItem('rf-produits') || '[]');
+    local.push(produit);
+    localStorage.setItem('rf-produits', JSON.stringify(local));
+  }
 
   // Reset
   ['p-nom','p-ref','p-desc','p-prix','p-tailles','p-couleurs','p-prix-reduit','p-promo-label'].forEach(id => { const el = document.getElementById(id); if(el) el.value=''; });
@@ -397,8 +434,16 @@ async function renderProduits() {
 
 async function supprimerProduit(id) {
   if (!confirm('Supprimer ce produit ?')) return;
-  const local = JSON.parse(localStorage.getItem('rf-produits') || '[]').filter(p => p.id !== id);
-  localStorage.setItem('rf-produits', JSON.stringify(local));
+  try {
+    const res = await fetchAdmin('/api/produits/' + id, { method: 'DELETE' });
+    if (res.ok) {
+      const data = await getProduits();
+      localStorage.setItem('rf-produits', JSON.stringify(data));
+    } else { throw new Error(); }
+  } catch(e) {
+    const local = JSON.parse(localStorage.getItem('rf-produits') || '[]').filter(p => p.id !== id);
+    localStorage.setItem('rf-produits', JSON.stringify(local));
+  }
   showNotif('✓ Produit supprimé'); renderProduits();
 }
 
@@ -499,10 +544,18 @@ async function sauvegarderModif() {
     page: pages[marque] || 'index.html'
   };
 
-  const local = JSON.parse(localStorage.getItem('rf-produits') || '[]');
-  const i = local.findIndex(p => p.id === currentEditId);
-  if (i !== -1) local[i] = {...local[i], ...updates};
-  localStorage.setItem('rf-produits', JSON.stringify(local));
+  try {
+    const res = await fetchAdmin('/api/produits/' + currentEditId, { method: 'PUT', body: JSON.stringify(updates) });
+    if (res.ok) {
+      const data = await getProduits();
+      localStorage.setItem('rf-produits', JSON.stringify(data));
+    } else { throw new Error(); }
+  } catch(e) {
+    const local = JSON.parse(localStorage.getItem('rf-produits') || '[]');
+    const i = local.findIndex(p => p.id === currentEditId);
+    if (i !== -1) local[i] = {...local[i], ...updates};
+    localStorage.setItem('rf-produits', JSON.stringify(local));
+  }
 
   fermerModal(); showNotif('✓ Produit modifié !'); renderProduits();
 }
