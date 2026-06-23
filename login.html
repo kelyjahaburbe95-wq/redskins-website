@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — Redskins Franconville</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    min-height: 100vh;
+    background: #111;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Inter', sans-serif;
+  }
+  .login-box {
+    background: #1a1a1a;
+    border: 1px solid #2a2a2a;
+    border-radius: 12px;
+    padding: 48px 40px;
+    width: 360px;
+    text-align: center;
+  }
+  .login-logo {
+    font-size: 28px;
+    font-weight: 900;
+    color: #fff;
+    letter-spacing: 2px;
+    margin-bottom: 6px;
+  }
+  .login-logo span { color: #e00; }
+  .login-sub {
+    font-size: 12px;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 36px;
+  }
+  .login-label {
+    display: block;
+    text-align: left;
+    font-size: 11px;
+    font-weight: 700;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 8px;
+  }
+  .login-input {
+    width: 100%;
+    padding: 14px 16px;
+    background: #111;
+    border: 1px solid #333;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 15px;
+    margin-bottom: 24px;
+    outline: none;
+    transition: border 0.2s;
+  }
+  .login-input:focus { border-color: #e00; }
+  .login-btn {
+    width: 100%;
+    padding: 14px;
+    background: #e00;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .login-btn:hover { background: #c00; }
+  .login-error {
+    margin-top: 16px;
+    color: #e00;
+    font-size: 13px;
+    display: none;
+  }
+  .login-error.visible { display: block; }
+</style>
+</head>
+<body>
+
+<div class="login-box">
+  <div class="login-logo">RED<span>SKINS</span></div>
+  <div class="login-sub">Administration</div>
+
+  <label class="login-label">Mot de passe</label>
+  <input type="password" class="login-input" id="pwd" placeholder="••••••••" onkeydown="if(event.key==='Enter') connexion()">
+  <button class="login-btn" onclick="connexion()">Accéder à l'admin</button>
+  <div class="login-error" id="login-error">Mot de passe incorrect.</div>
+</div>
+
+<script>
+async function connexion() {
+  const pwd = document.getElementById('pwd').value.trim();
+  if (!pwd) return;
+
+  try {
+    const res = await fetch('/api/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password: pwd })
+    });
+    if (res.ok) {
+      localStorage.setItem('rf-admin-pwd', pwd);
+      window.location.href = 'admin.html';
+    } else {
+      document.getElementById('login-error').classList.add('visible');
+    }
+  } catch(e) {
+    // Mode local (sans serveur) : accepter n'importe quel mot de passe
+    localStorage.setItem('rf-admin-pwd', pwd);
+    window.location.href = 'admin.html';
+  }
+}
+
+// Si déjà connecté → direct admin
+if (localStorage.getItem('rf-admin-pwd')) {
+  window.location.href = 'admin.html';
+}
+</script>
+</body>
+</html>
