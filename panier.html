@@ -196,7 +196,7 @@
         <li><a href="levis.html">Levi's</a></li>
         <li><a href="timberland.html">Timberland</a></li>
         <li><a href="lacoste.html">Lacoste</a></li>
-        <li><a href="chabranc.html">Chabranc</a></li>
+        <li><a href="chabrand.html">Chabrand</a></li>
         <li><a href="redskins-brand.html">Redskins</a></li>
       </ul>
     </div>
@@ -250,7 +250,7 @@ function renderCart() {
     sousTotal += total;
     html += `
       <div class="panier-item">
-        <div class="panier-item-img">🧥</div>
+        ${item.image ? `<img src="${item.image}" class="panier-item-img" alt="${item.name}">` : `<div class="panier-item-img">🧥</div>`}
         <div>
           <div class="panier-item-brand">${item.brand || 'Redskins Franconville'}</div>
           <div class="panier-item-name">${item.name}</div>
