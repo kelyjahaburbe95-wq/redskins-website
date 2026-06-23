@@ -388,7 +388,7 @@ function addToCart() {
   const itemName = produit.nom + ' — ' + selectedCouleur + ' — T.' + selectedTaille;
   const existing = cart.find(i => i.name === itemName);
   if (existing) { existing.qty++; }
-  else { cart.push({ name: itemName, price: produit.prix, brand: produit.marque, qty: 1 }); }
+  else { cart.push({ name: itemName, price: produit.prix, brand: produit.marque, image: (produit.photos&&produit.photos[0])?produit.photos[0]:'', qty: 1 }); }
   localStorage.setItem('redskins-cart', JSON.stringify(cart));
   const notif = document.getElementById('notif');
   notif.classList.add('show');
