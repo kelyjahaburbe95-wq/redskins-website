@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — Redskins Franconville</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root { --white:#fff; --bg:#f5f5f5; --border:#e8e8e8; --text:#1c1c1c; --text-mid:#555; --text-light:#999; --red:#e00; --black:#111; }
+body { font-family:'Inter',sans-serif; background:var(--white); color:var(--text); font-size:14px; }
+a { text-decoration:none; color:inherit; }
+button { font-family:inherit; cursor:pointer; }
+nav { background:#fff; border-bottom:1px solid #e8e8e8; position:sticky; top:0; z-index:200; }
+.nav-top { display:flex; align-items:center; justify-content:space-between; padding:0 32px; height:64px; max-width:1400px; margin:0 auto; }
+.nav-logo { font-size:18px; font-weight:700; letter-spacing:-0.5px; color:#1c1c1c; }
+.nav-logo span { color:#e00; }
+.nav-search { flex:1; max-width:480px; margin:0 32px; position:relative; }
+.nav-search input { width:100%; padding:10px 44px 10px 16px; background:#f5f5f5; border:1px solid #e8e8e8; border-radius:4px; font-family:inherit; font-size:13px; outline:none; }
+.nav-search-icon { position:absolute; right:14px; top:50%; transform:translateY(-50%); color:#999; }
+.nav-actions { display:flex; align-items:center; gap:4px; }
+.nav-action { display:flex; flex-direction:column; align-items:center; gap:2px; padding:8px 12px; color:#555; font-size:10px; font-weight:500; border-radius:4px; transition:color 0.2s; }
+.nav-action:hover { color:#1c1c1c; background:#f5f5f5; }
+.nav-action-icon { font-size:18px; }
+.nav-action-cart { background:#e00; color:#fff; border-radius:4px; }
+.nav-action-cart:hover { background:#c00; color:#fff; }
+.nav-bottom { border-top:1px solid #e8e8e8; }
+.nav-bottom-inner { display:flex; align-items:center; max-width:1400px; margin:0 auto; padding:0 32px; }
+.nav-item { padding:12px 14px; font-size:13px; font-weight:500; color:#333; white-space:nowrap; cursor:pointer; display:block; transition:color 0.2s; text-decoration:none; }
+.nav-item:hover { color:#1c1c1c; }
+.nav-item-red { color:#e00 !important; font-weight:600 !important; }
+.nav-dropdown { position:relative; }
+.nav-dropdown:hover > .dropdown-menu { display:flex; }
+.nav-dropdown:hover > .nav-item { color:#1c1c1c; background:#f5f5f5; }
+.dropdown-menu { display:none; position:absolute; top:100%; left:0; background:#fff; border-top:3px solid #e00; border-bottom:1px solid #e8e8e8; box-shadow:0 12px 40px rgba(0,0,0,0.15); z-index:9999; padding:20px 48px; gap:48px; animation:fadeDown 0.15s ease; }
+.dropdown-menu-marques { display:none; }
+.nav-dropdown:hover > .dropdown-menu-marques { display:block !important; }
+.dropdown-col { min-width:140px; }
+.dropdown-title { font-size:10px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:#999; margin-bottom:10px; }
+.dropdown-col a { display:block; padding:6px 0; font-size:13px; color:#444; transition:color 0.2s; }
+.dropdown-col a:hover { color:#e00; }
+footer { background:#111; padding:56px 32px 32px; }
+.footer-grid { display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:48px; max-width:1400px; margin:0 auto; padding-bottom:40px; border-bottom:1px solid rgba(255,255,255,0.1); margin-bottom:28px; }
+.footer-logo { font-size:18px; font-weight:700; color:#fff; display:block; margin-bottom:14px; }
+.footer-logo span { color:#e00; }
+.footer-desc { font-size:13px; color:rgba(255,255,255,0.4); line-height:1.8; }
+.footer-col h4 { font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:#fff; margin-bottom:18px; }
+.footer-col ul { list-style:none; }
+.footer-col ul li { margin-bottom:10px; }
+.footer-col ul li a { font-size:13px; color:rgba(255,255,255,0.5); transition:color 0.2s; }
+.footer-col ul li a:hover { color:#fff; }
+@keyframes fadeDown { from{opacity:0;transform:translateY(-6px)} to{opacity:1;transform:translateY(0)} }
+
+.page-hero { background:#111; color:#fff; padding:56px 32px; text-align:center; }
+.page-hero h1 { font-size:36px; font-weight:900; margin-bottom:8px; }
+.page-hero p { color:rgba(255,255,255,0.5); font-size:15px; }
+.contact-section { max-width:1100px; margin:60px auto; padding:0 32px; display:grid; grid-template-columns:1fr 1fr; gap:64px; }
+.contact-form h2 { font-size:20px; font-weight:700; margin-bottom:28px; }
+.form-group { margin-bottom:20px; }
+.form-label { display:block; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1.5px; color:#888; margin-bottom:8px; }
+.form-input, .form-textarea { width:100%; padding:13px 16px; border:1px solid #e8e8e8; border-radius:6px; font-family:inherit; font-size:14px; outline:none; transition:border-color 0.2s; background:#fff; }
+.form-input:focus, .form-textarea:focus { border-color:#111; }
+.form-textarea { min-height:140px; resize:vertical; }
+.btn-submit { background:#e00; color:#fff; border:none; padding:14px 32px; font-size:13px; font-weight:700; letter-spacing:1px; text-transform:uppercase; border-radius:6px; cursor:pointer; transition:background 0.2s; }
+.btn-submit:hover { background:#c00; }
+.contact-info h2 { font-size:20px; font-weight:700; margin-bottom:28px; }
+.info-block { margin-bottom:32px; }
+.info-block h3 { font-size:13px; font-weight:700; text-transform:uppercase; letter-spacing:1.5px; color:#999; margin-bottom:10px; }
+.info-block p { font-size:14px; color:#333; line-height:1.8; }
+.map-placeholder { background:#f5f5f5; border:1px solid #e8e8e8; border-radius:8px; height:220px; display:flex; align-items:center; justify-content:center; color:#999; font-size:14px; margin-top:24px; }
+.success-msg { display:none; background:#d4edda; color:#155724; border:1px solid #c3e6cb; border-radius:6px; padding:14px 18px; margin-top:16px; font-size:14px; }
+.success-msg.visible { display:block; }
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-top">
+    <a href="index.html" class="nav-logo">Redskins <span>Franconville</span></a>
+    <div class="nav-search"><input type="text" placeholder="Rechercher une marque, un produit..."><span class="nav-search-icon">🔍</span></div>
+    <div class="nav-actions">
+      <a href="compte.html" class="nav-action"><span class="nav-action-icon">👤</span><span>Compte</span></a>
+      <a href="panier.html" class="nav-action nav-action-cart"><span class="nav-action-icon">🛒</span><span>Panier</span></a>
+    </div>
+  </div>
+  <div class="nav-bottom">
+    <div class="nav-bottom-inner">
+      <a href="index.html#nouveautes" class="nav-item nav-item-red">Nouveautés</a>
+      <a href="index.html#top-ventes" class="nav-item">Top ventes</a>
+      <div class="nav-dropdown"><span class="nav-item">Vêtements</span><div class="dropdown-menu">
+        <div class="dropdown-col"><div class="dropdown-title">Homme</div><a href="homme.html">Vêtements Homme</a></div>
+        <div class="dropdown-col"><div class="dropdown-title">Femme</div><a href="femme.html">Vêtements Femme</a></div>
+      </div></div>
+      <a href="chaussures.html" class="nav-item">Chaussures</a>
+      <a href="accessoires.html" class="nav-item">Accessoires</a>
+      <div class="nav-dropdown"><span class="nav-item">Marques</span><div class="dropdown-menu dropdown-menu-marques">
+        <div class="dropdown-col">
+          <div class="dropdown-title">Marques</div>
+          <a href="guess.html">Guess</a><a href="boss.html">Boss</a><a href="hugo.html">Hugo</a>
+          <a href="levis.html">Levis</a><a href="timberland.html">Timberland</a>
+          <a href="lacoste.html">Lacoste</a><a href="chabrand.html">Chabrand</a>
+          <a href="redskins-brand.html">Redskins</a>
+        </div>
+      </div></div>
+      <a href="index.html#ventes-flash" class="nav-item nav-item-red">Promos</a>
+    </div>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <h1>Contactez-nous</h1>
+  <p>Notre équipe vous répond dans les 24 heures</p>
+</div>
+
+<div class="contact-section">
+  <div class="contact-form">
+    <h2>Envoyer un message</h2>
+    <div class="form-group">
+      <label class="form-label">Nom complet</label>
+      <input type="text" class="form-input" id="c-nom" placeholder="Jean Dupont">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Email</label>
+      <input type="email" class="form-input" id="c-email" placeholder="jean@exemple.fr">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Sujet</label>
+      <input type="text" class="form-input" id="c-sujet" placeholder="Commande, retour, renseignement...">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Message</label>
+      <textarea class="form-textarea" id="c-message" placeholder="Décrivez votre demande..."></textarea>
+    </div>
+    <button class="btn-submit" onclick="envoyerMessage()">Envoyer le message</button>
+    <div class="success-msg" id="success-msg">Message envoyé ! Nous vous répondrons sous 24h.</div>
+  </div>
+
+  <div class="contact-info">
+    <h2>Nos coordonnées</h2>
+    <div class="info-block">
+      <h3>Adresse</h3>
+      <p>Redskins Franconville<br>Franconville, 95130<br>Val-d'Oise, France</p>
+    </div>
+    <div class="info-block">
+      <h3>Email</h3>
+      <p>contact@redskins-franconville.fr</p>
+    </div>
+    <div class="info-block">
+      <h3>Horaires</h3>
+      <p>Lundi – Samedi : 10h00 – 19h30<br>Dimanche : 11h00 – 18h00</p>
+    </div>
+    <div class="map-placeholder">📍 Franconville, 95130</div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-grid">
+    <div>
+      <a href="index.html" class="footer-logo">Redskins <span>Franconville</span></a>
+      <p class="footer-desc">Votre boutique de mode multimarques à Franconville. Guess, Boss, Hugo, Levis, Timberland, Lacoste, Chabrand et Redskins.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Nos univers</h4>
+      <ul><li><a href="homme.html">Homme</a></li><li><a href="femme.html">Femme</a></li><li><a href="chaussures.html">Chaussures</a></li><li><a href="accessoires.html">Accessoires</a></li></ul>
+    </div>
+    <div class="footer-col">
+      <h4>Informations</h4>
+      <ul><li><a href="apropos.html">À propos</a></li><li><a href="contact.html">Contact</a></li><li><a href="compte.html">Mon compte</a></li></ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul><li>Franconville, 95130</li><li>contact@redskins-franconville.fr</li></ul>
+    </div>
+  </div>
+  <div style="max-width:1400px;margin:0 auto;text-align:center;color:rgba(255,255,255,0.25);font-size:12px;">
+    © 2026 Redskins Franconville — Tous droits réservés
+  </div>
+</footer>
+
+<script>
+function envoyerMessage() {
+  const nom   = document.getElementById('c-nom').value.trim();
+  const email = document.getElementById('c-email').value.trim();
+  const sujet = document.getElementById('c-sujet').value.trim();
+  const msg   = document.getElementById('c-message').value.trim();
+  if (!nom || !email || !sujet || !msg) { alert('Merci de remplir tous les champs.'); return; }
+  document.getElementById('success-msg').classList.add('visible');
+  document.getElementById('c-nom').value = '';
+  document.getElementById('c-email').value = '';
+  document.getElementById('c-sujet').value = '';
+  document.getElementById('c-message').value = '';
+}
+</script>
+</body>
+</html>
