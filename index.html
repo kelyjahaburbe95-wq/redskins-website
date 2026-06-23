@@ -1355,12 +1355,7 @@ function startCountdown(finStr) {
 // ── PRODUITS DYNAMIQUES ──
 async function loadProduits() {
   let produits = [];
-  try {
-    const res = await fetch('/api/produits');
-    produits = await res.json();
-  } catch(e) {
-    produits = JSON.parse(localStorage.getItem('rf-produits') || '[]');
-  }
+  produits = JSON.parse(localStorage.getItem('rf-produits') || '[]');
 
   // Nouveautés = les 4 derniers ajoutés
   const nouveautes = [...produits].reverse().slice(0, 4);
