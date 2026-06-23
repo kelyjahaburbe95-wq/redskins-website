@@ -758,20 +758,18 @@ let catActive = 'tous';
 let filtreActif = null;
 let tousLesProduits = [];
 
+function norm(s){ return (s||'').toString().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,''); }
+function getProduitsLocaux(){ return JSON.parse(localStorage.getItem('rf-produits') || '[]'); }
+
 async function chargerProduits() {
-  try {
-    const res = await fetch('/api/produits');
-    const data = await res.json();
-    tousLesProduits = data.filter(p => p.marque && p.marque.toLowerCase() === 'boss');
-  } catch(e) {
-    tousLesProduits = [];
-  }
+  let data = getProduitsLocaux();
+  tousLesProduits = data.filter(p => p.marque && p.marque.toLowerCase() === 'boss');
   afficherProduits();
 }
 
 function afficherProduits() {
   let produits = tousLesProduits;
-  if (catActive !== 'tous') produits = produits.filter(p => p.categorie && p.categorie.toLowerCase() === catActive);
+  if (catActive !== 'tous') produits = produits.filter(p => norm(p.categorie) === norm(catActive));
   if (filtreActif) produits = produits.filter(p => p.sous_categorie === filtreActif);
 
   const grid = document.getElementById('products-grid');
@@ -783,23 +781,40 @@ function afficherProduits() {
     return;
   }
 
-  grid.innerHTML = produits.map(p => `
-    <div class="product-card">
+  grid.innerHTML = produits.map(p => {
+    const photo = p.photos && p.photos[0] ? p.photos[0] : null;
+    const hasPromo = p.promoActif && p.prixReduit;
+    return `
+    <div class="product-card" onclick="window.location.href='produit.html?id=${p.id}'">
       <div class="product-img-wrap">
-        ${p.image ? `<img src="${p.image}" alt="${p.nom}">` : `<div class="product-img-placeholder">👕</div>`}
-        ${p.promo ? `<span class="product-badge">-${p.promo}%</span>` : ''}
+        ${photo ? `<img src="${photo}" alt="${p.nom}">` : `<div class="product-img-placeholder">👕</div>`}
+        ${hasPromo ? `<span class="product-badge">${p.promoLabel||'PROMO'}</span>` : ''}
       </div>
       <div class="product-info">
         <div class="product-brand">Boss</div>
         <div class="product-name">${p.nom}</div>
         <div class="product-prices">
-          ${p.promo
-            ? `<span class="product-price-old">${p.prix}€</span><span class="product-price-promo">${Math.round(p.prix*(1-p.promo/100))}€</span>`
+          ${hasPromo
+            ? `<span class="product-price-old">${p.prix}€</span><span class="product-price-promo">${p.prixReduit}€</span>`
             : `<span class="product-price">${p.prix}€</span>`}
         </div>
-        <button class="btn-add">Ajouter au panier</button>
+        <button class="btn-add" onclick="event.stopPropagation();addToCart('${p.id}')">Ajouter au panier</button>
       </div>
-    </div>`).join('');
+    </div>`;
+  }).join('');
+}
+
+function addToCart(id) {
+  const p = getProduitsLocaux().find(x => x.id === id);
+  if (!p) return;
+  const price = (p.promoActif && p.prixReduit) ? p.prixReduit : p.prix;
+  const image = p.photos && p.photos[0] ? p.photos[0] : '';
+  const cart = JSON.parse(localStorage.getItem('redskins-cart') || '[]');
+  const existing = cart.find(i => i.id === id);
+  if (existing) existing.qty++;
+  else cart.push({ id: p.id, name: p.nom, price, brand: p.marque, image, qty: 1 });
+  localStorage.setItem('redskins-cart', JSON.stringify(cart));
+  alert('✓ "' + p.nom + '" ajouté au panier !');
 }
 
 document.querySelectorAll('.cat-btn').forEach(btn => {
